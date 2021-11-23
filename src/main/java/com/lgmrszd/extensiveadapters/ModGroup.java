@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class ModGroup {
 
-    public static final ItemGroup MAIN = new ItemGroup(ExtensiveAdapters.MOD_ID+".main") {
+    public static final ItemGroup MAIN = new ItemGroup(CompressedCreativity.MOD_ID+".main") {
         @Override
         public ItemStack makeIcon() {
 //            return new ItemStack(ModItems.TEST_ITEM.get());

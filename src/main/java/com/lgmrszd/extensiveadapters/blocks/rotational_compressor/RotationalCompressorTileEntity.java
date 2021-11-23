@@ -1,6 +1,6 @@
 package com.lgmrszd.extensiveadapters.blocks.rotational_compressor;
 
-import com.lgmrszd.extensiveadapters.ExtensiveAdapters;
+import com.lgmrszd.extensiveadapters.CompressedCreativity;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
@@ -28,7 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 public class RotationalCompressorTileEntity extends KineticTileEntity {
 
-    private static final Logger logger = LogManager.getLogger(ExtensiveAdapters.MOD_ID);
+    private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
     public static final int
             STRESS = 2048,
@@ -57,12 +57,12 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         if (added) {
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(ExtensiveAdapters.MOD_ID + ".tooltip.rotational_compressor.pressure_summary").withStyle(TextFormatting.WHITE)));
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(ExtensiveAdapters.MOD_ID + ".tooltip.rotational_compressor.pressure").withStyle(TextFormatting.GRAY)));
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary").withStyle(TextFormatting.WHITE)));
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure").withStyle(TextFormatting.GRAY)));
             tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + airHandler.getPressure() + " bar")).withStyle(TextFormatting.AQUA));
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(ExtensiveAdapters.MOD_ID + ".tooltip.rotational_compressor.air").withStyle(TextFormatting.GRAY)));
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air").withStyle(TextFormatting.GRAY)));
             tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + airHandler.getAir() + " mL").withStyle(TextFormatting.AQUA)));
-            tooltip.add(new StringTextComponent(spacing).append((new TranslationTextComponent(ExtensiveAdapters.MOD_ID + ".tooltip.rotational_compressor.air_production")).withStyle(TextFormatting.GRAY)));
+            tooltip.add(new StringTextComponent(spacing).append((new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_production")).withStyle(TextFormatting.GRAY)));
             tooltip.add(new StringTextComponent(spacing).append((new StringTextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f) + "mL/t ")).withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
         }
         return added;
@@ -73,8 +73,8 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     public boolean addToTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
         if (isWrongDirection) {
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(ExtensiveAdapters.MOD_ID + ".tooltip.rotational_compressor.wrong_direction").withStyle(TextFormatting.GOLD)));
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(ExtensiveAdapters.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc").withStyle(TextFormatting.GRAY)));
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction").withStyle(TextFormatting.GOLD)));
+            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc").withStyle(TextFormatting.GRAY)));
             added = true;
         }
         return added;
