@@ -1,7 +1,7 @@
-package com.lgmrszd.extensiveadapters;
+package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.extensiveadapters.index.EABlocks;
-import com.lgmrszd.extensiveadapters.index.EATileEntities;
+import com.lgmrszd.compressedcreativity.index.EABlocks;
+import com.lgmrszd.compressedcreativity.index.EATileEntities;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import net.minecraft.block.Block;

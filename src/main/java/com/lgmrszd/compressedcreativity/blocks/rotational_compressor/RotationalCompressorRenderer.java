@@ -1,4 +1,4 @@
-package com.lgmrszd.extensiveadapters.blocks.rotational_compressor;
+package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;

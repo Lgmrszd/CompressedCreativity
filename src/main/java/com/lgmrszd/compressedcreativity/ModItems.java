@@ -1,4 +1,4 @@
-package com.lgmrszd.extensiveadapters;
+package com.lgmrszd.compressedcreativity;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;

@@ -1,13 +1,11 @@
-package com.lgmrszd.extensiveadapters.blocks.rotational_compressor;
+package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
-import com.lgmrszd.extensiveadapters.index.EATileEntities;
+import com.lgmrszd.compressedcreativity.index.EATileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
-import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;

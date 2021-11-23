@@ -1,6 +1,4 @@
-package com.lgmrszd.extensiveadapters;
-
-import com.simibubi.create.foundation.utility.VoxelShaper;
+package com.lgmrszd.compressedcreativity;
 
 
 // Credits to mrh0 for Create: Crafts & Additions mod

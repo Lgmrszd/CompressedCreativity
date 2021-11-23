@@ -1,6 +1,6 @@
-package com.lgmrszd.extensiveadapters;
+package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.extensiveadapters.index.EABlocks;
+import com.lgmrszd.compressedcreativity.index.EABlocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

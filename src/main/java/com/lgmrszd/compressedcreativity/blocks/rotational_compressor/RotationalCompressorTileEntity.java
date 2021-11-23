@@ -1,6 +1,6 @@
-package com.lgmrszd.extensiveadapters.blocks.rotational_compressor;
+package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
-import com.lgmrszd.extensiveadapters.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;

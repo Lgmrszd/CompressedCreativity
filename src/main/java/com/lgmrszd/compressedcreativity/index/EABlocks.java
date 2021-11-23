@@ -1,9 +1,9 @@
-package com.lgmrszd.extensiveadapters.index;
+package com.lgmrszd.compressedcreativity.index;
 
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import com.lgmrszd.extensiveadapters.CompressedCreativity;
-import com.lgmrszd.extensiveadapters.ModGroup;
-import com.lgmrszd.extensiveadapters.blocks.rotational_compressor.RotationalCompressorBlock;
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.ModGroup;
+import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;

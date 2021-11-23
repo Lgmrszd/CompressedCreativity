@@ -1,8 +1,8 @@
-package com.lgmrszd.extensiveadapters.index;
+package com.lgmrszd.compressedcreativity.index;
 
-import com.lgmrszd.extensiveadapters.CompressedCreativity;
-import com.lgmrszd.extensiveadapters.blocks.rotational_compressor.RotationalCompressorRenderer;
-import com.lgmrszd.extensiveadapters.blocks.rotational_compressor.RotationalCompressorTileEntity;
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorRenderer;
+import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
 import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
