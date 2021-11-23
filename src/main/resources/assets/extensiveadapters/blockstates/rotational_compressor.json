@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "extensiveadapters:block/rotational_compressor"
+    },
+    "facing=south": {
+      "model": "extensiveadapters:block/rotational_compressor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "extensiveadapters:block/rotational_compressor",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "extensiveadapters:block/rotational_compressor",
+      "y": 90
+    }
+  }
+}

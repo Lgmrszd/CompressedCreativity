@@ -1,0 +1,10 @@
+{
+  "block.extensiveadapters.rotational_compressor": "Rotational Compressor",
+
+  "extensiveadapters.tooltip.rotational_compressor.pressure_summary": "Pressure Stats:",
+  "extensiveadapters.tooltip.rotational_compressor.pressure": "Pressure:",
+  "extensiveadapters.tooltip.rotational_compressor.air": "Air:",
+  "extensiveadapters.tooltip.rotational_compressor.air_production": "Air generated:",
+  "extensiveadapters.tooltip.rotational_compressor.wrong_direction": "Rotation Direction Requirement:",
+  "extensiveadapters.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction"
+}
