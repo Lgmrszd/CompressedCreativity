@@ -25,17 +25,16 @@ displayName="Compressed Creativity" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+displayURL="https://github.com/Lgmrszd/CompressedCreativity" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks for this example mod goes to Java" #optional
+credits="Create and PNC teams for their mods; MRHminer for 'Create Crafts & Additions' mod that has been source of inspiration" #optional
 # A text field displayed in the mod UI
-authors="Love, Cheese and small house plants" #optional
+authors="Lgmrszd" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This is a long form description of the mod. You can write whatever you want here
-test
+Bridging Create and PneumaticCraft: Repressurized together
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.compressedcreativity]] #optional
@@ -56,4 +55,22 @@ test
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.16.5,1.17)"
     ordering="NONE"
+    side="BOTH"
+[[dependencies.compressedcreativity]]
+    modId="create"
+    mandatory=true
+    versionRange="[mc1.16.5_v0.3.2f,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.compressedcreativity]]
+    modId="flywheel"
+    mandatory=true
+    versionRange="[1.16-0.2.4,1.16-0.3)"
+    ordering="AFTER"
+    side="CLIENT"
+[[dependencies.compressedcreativity]]
+    modId="pneumaticcraft-repressurized"
+    mandatory=true
+    versionRange="[1.16.5-2.14.5-272,)"
+    ordering="AFTER"
     side="BOTH"
