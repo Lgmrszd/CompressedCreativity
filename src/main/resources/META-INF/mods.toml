@@ -69,7 +69,7 @@ Bridging Create and PneumaticCraft: Repressurized together
     ordering="AFTER"
     side="CLIENT"
 [[dependencies.compressedcreativity]]
-    modId="pneumaticcraft-repressurized"
+    modId="pneumaticcraft"
     mandatory=true
     versionRange="[1.16.5-2.14.5-272,)"
     ordering="AFTER"
