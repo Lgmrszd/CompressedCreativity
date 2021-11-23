@@ -4,6 +4,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -18,7 +19,7 @@ public class CCBlocks {
     public static final BlockEntry<RotationalCompressorBlock> ROTATIONAL_COMPRESSOR = REGISTRATE.block("rotational_compressor", RotationalCompressorBlock::new)
             .initialProperties(SharedProperties::stone)
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
-            .transform(BlockStressDefaults.setImpact(2048.0 / 256))
+            .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())
             .register();

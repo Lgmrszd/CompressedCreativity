@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
@@ -31,15 +32,15 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
     public static final int
-            STRESS = 2048,
-            VOLUME = 5000;
-    public static final float
-            DANGER_PRESSURE = 5.0f,
-            CRITICAL_PRESSURE = 7.0f,
-            BASE_PRODUCTION = 10f; // Per tick per 128 RPM
+            STRESS = CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get(),
+            VOLUME = CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get();
+    public static final double
+            DANGER_PRESSURE = CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get(),
+            CRITICAL_PRESSURE = CommonConfig.ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE.get() + CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get(),
+            BASE_PRODUCTION = CommonConfig.ROTATIONAL_COMPRESSOR_BASE_PRODUCTION.get(); // Per tick per 128 RPM
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
-    private float airGeneratedPerTick = 0.0f;
+    private double airGeneratedPerTick = 0.0f;
     private boolean updateGeneratedAir = true;
     private boolean isWrongDirection = false;
 //    private final Map<IAirHandlerMachine, List<Direction>> airHandlerMap = new IdentityHashMap();
@@ -49,7 +50,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     public RotationalCompressorTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
-                .createAirHandler(DANGER_PRESSURE, CRITICAL_PRESSURE, VOLUME);
+                .createAirHandler((float) DANGER_PRESSURE, (float) CRITICAL_PRESSURE, VOLUME);
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 
@@ -168,8 +169,8 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     public void write(CompoundNBT compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
-//        compound.putFloat("airGeneratedPerTick", airGeneratedPerTick);
         if(clientPacket) {
+            compound.putDouble("airGeneratedPerTick", airGeneratedPerTick);
             compound.putBoolean("isWrongDirection", isWrongDirection);
         }
     }
@@ -177,8 +178,8 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
         super.fromTag(state, compound, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
-//        airGeneratedPerTick = compound.getFloat("airGeneratedPerTick");
         if (clientPacket) {
+            airGeneratedPerTick = compound.getDouble("airGeneratedPerTick");
             isWrongDirection = compound.getBoolean("isWrongDirection");
         }
     }

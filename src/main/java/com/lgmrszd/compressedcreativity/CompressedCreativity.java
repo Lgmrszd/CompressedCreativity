@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity;
 
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -9,7 +10,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -46,10 +49,11 @@ public class CompressedCreativity
 
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModItems.register(eventBus);
         CCBlocks.register();
         CCTileEntities.register();
 
-        ModItems.register(eventBus);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_SPEC);
     }
 
     private void setup(final FMLCommonSetupEvent event)
