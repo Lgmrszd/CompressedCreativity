@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.compressedcreativity.index.EABlocks;
+import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -10,7 +10,7 @@ public class ModGroup {
         @Override
         public ItemStack makeIcon() {
 //            return new ItemStack(ModItems.TEST_ITEM.get());
-            return new ItemStack(EABlocks.ROTATIONAL_COMPRESSOR.get());
+            return new ItemStack(CCBlocks.ROTATIONAL_COMPRESSOR.get());
         }
     };
 }

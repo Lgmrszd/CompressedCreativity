@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
-import com.lgmrszd.compressedcreativity.index.EATileEntities;
+import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import net.minecraft.block.Block;
@@ -41,7 +41,7 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
 
     @Override
     public TileEntity createTileEntity(BlockState blockState, IBlockReader iBlockReader) {
-        return EATileEntities.ROTATIONAL_COMPRESSOR.create();
+        return CCTileEntities.ROTATIONAL_COMPRESSOR.create();
     }
 
     @Override

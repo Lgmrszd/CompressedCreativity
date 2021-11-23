@@ -10,7 +10,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 
-public class EABlocks {
+public class CCBlocks {
 
     private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate()
             .itemGroup(() -> ModGroup.MAIN);

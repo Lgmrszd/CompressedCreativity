@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "extensiveadapters:rotational_compressor",
+      "name": "compressedcreativity:rotational_compressor",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "extensiveadapters:rotational_compressor"
+          "name": "compressedcreativity:rotational_compressor"
         }
       ],
       "conditions": [
