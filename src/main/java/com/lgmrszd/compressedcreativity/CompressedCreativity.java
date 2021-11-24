@@ -3,9 +3,11 @@ package com.lgmrszd.compressedcreativity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -13,12 +15,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,6 +33,12 @@ public class CompressedCreativity
     public static final String MOD_ID = "compressedcreativity";
 
     private static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
+    private static final String PROTOCOL = "1";
+    public static final SimpleChannel Network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MOD_ID, "main"))
+            .clientAcceptedVersions(PROTOCOL::equals)
+            .serverAcceptedVersions(PROTOCOL::equals)
+            .networkProtocolVersion(() -> PROTOCOL)
+            .simpleChannel();
 
     public CompressedCreativity() {
         // Register the setup method for modloading
@@ -42,6 +49,7 @@ public class CompressedCreativity
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -96,6 +104,13 @@ public class CompressedCreativity
             // register a new block here
             LOGGER.info("HELLO from Register Block");
         }
+    }
+
+
+    public void postInit(FMLLoadCompleteEvent evt) {
+        int i = 0;
+        Network.registerMessage(i++, ObservePacket.class, ObservePacket::encode, ObservePacket::decode, ObservePacket::handle);
+
     }
 
     public static CreateRegistrate registrate() {

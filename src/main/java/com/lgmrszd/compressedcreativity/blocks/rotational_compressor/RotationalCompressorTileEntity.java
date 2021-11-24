@@ -2,12 +2,15 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
+import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntityType;
@@ -27,7 +30,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RotationalCompressorTileEntity extends KineticTileEntity {
+public class RotationalCompressorTileEntity extends KineticTileEntity implements IObserveTileEntity {
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
@@ -72,6 +75,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
     // TODO: Need to make data consistent between server and client
     @Override
     public boolean addToTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+        ObservePacket.send(worldPosition, 0);
         boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
         if (isWrongDirection) {
             tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction").withStyle(TextFormatting.GOLD)));
@@ -186,5 +190,10 @@ public class RotationalCompressorTileEntity extends KineticTileEntity {
 
     public boolean shouldRenderNormally() {
         return true;
+    }
+
+    @Override
+    public void onObserved(ServerPlayerEntity var1, ObservePacket var2) {
+//        logger.debug("I am being observed!");
     }
 }
