@@ -1,4 +1,6 @@
 {
+  "itemGroup.compressedcreativity.main": "Compressed Creativity",
+
   "block.compressedcreativity.rotational_compressor": "Rotational Compressor",
 
   "compressedcreativity.tooltip.rotational_compressor.pressure_summary": "Pressure Stats:",
@@ -6,5 +8,14 @@
   "compressedcreativity.tooltip.rotational_compressor.air": "Air:",
   "compressedcreativity.tooltip.rotational_compressor.air_production": "Air generated:",
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Rotation Direction Requirement:",
-  "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction"
+  "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction",
+
+
+  "compressedcreativity.ponder.rotational_compressor.header": "Generating Pressure using a Rotational Compressor",
+  "compressedcreativity.ponder.rotational_compressor.text_1": "The Rotational Compressor is used to generate pressure",
+  "compressedcreativity.ponder.rotational_compressor.text_2": "Specific Rotational Direction needed in order for Compressor to work.",
+  "compressedcreativity.ponder.rotational_compressor.text_3": "Air will leak from unconnected sides of tubes or some machines!",
+  "compressedcreativity.ponder.rotational_compressor.text_4": "Don't let pressure built up in the machines.",
+  "compressedcreativity.ponder.rotational_compressor.text_5": "If the pressure builds up...",
+  "compressedcreativity.ponder.rotational_compressor.text_6": "Machine could explode!"
 }

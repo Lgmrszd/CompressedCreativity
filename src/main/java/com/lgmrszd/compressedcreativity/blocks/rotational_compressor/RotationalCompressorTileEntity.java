@@ -123,6 +123,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         }
 
         if (getLevel() != null && !getLevel().isClientSide) {
+//        if (getLevel() != null) {
             if(airGeneratedPerTick > 0) {
                 airBuffer += airGeneratedPerTick;
                 if (airBuffer >= 1f) {
@@ -173,7 +174,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
     public void write(CompoundNBT compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
-        if(clientPacket) {
+        if (clientPacket) {
             compound.putDouble("airGeneratedPerTick", airGeneratedPerTick);
             compound.putBoolean("isWrongDirection", isWrongDirection);
         }

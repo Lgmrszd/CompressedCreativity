@@ -2,6 +2,7 @@ package com.lgmrszd.compressedcreativity;
 
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.CCBlocks;
+import com.lgmrszd.compressedcreativity.index.CCPonder;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -72,6 +73,7 @@ public class CompressedCreativity
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
+        event.enqueueWork(CCPonder::register);
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
     }
 
