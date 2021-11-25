@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import net.minecraft.client.renderer.RenderType;
 
 public class CCBlocks {
 
@@ -19,6 +20,7 @@ public class CCBlocks {
     public static final BlockEntry<RotationalCompressorBlock> ROTATIONAL_COMPRESSOR = REGISTRATE.block("rotational_compressor", RotationalCompressorBlock::new)
             .initialProperties(SharedProperties::stone)
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .addLayer(() -> RenderType::cutoutMipped)
             .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())

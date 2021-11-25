@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorInstance;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorRenderer;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
 import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
@@ -13,7 +14,7 @@ public class CCTileEntities {
 
     public static final TileEntityEntry<RotationalCompressorTileEntity> ROTATIONAL_COMPRESSOR = REGISTRATE
             .tileEntity("rotational_compressor", RotationalCompressorTileEntity::new)
-            .instance(() -> HorizontalHalfShaftInstance::new)
+            .instance(() -> RotationalCompressorInstance::new)
             .validBlock(CCBlocks.ROTATIONAL_COMPRESSOR)
             .renderer(() -> RotationalCompressorRenderer::new)
             .register();

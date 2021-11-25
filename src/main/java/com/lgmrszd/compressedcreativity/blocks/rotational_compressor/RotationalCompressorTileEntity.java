@@ -12,6 +12,7 @@ import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -120,18 +121,48 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
             airGeneratedPerTick = (speed > 0 && isSpeedRequirementFulfilled()) ? BASE_PRODUCTION * speed / 128f : 0f;
             logger.debug("New air/t generated: " + airGeneratedPerTick);
             updateGeneratedAir = false;
+            notifyUpdate();
         }
 
-        if (getLevel() != null && !getLevel().isClientSide) {
-//        if (getLevel() != null) {
+        if (getLevel() != null) {
             if(airGeneratedPerTick > 0) {
-                airBuffer += airGeneratedPerTick;
-                if (airBuffer >= 1f) {
-                    int toAdd = (int) airBuffer;
-                    airHandler.addAir(toAdd);
-                    airBuffer -= toAdd;
+                if (!getLevel().isClientSide) {
+                    airBuffer += airGeneratedPerTick;
+                    if (airBuffer >= 1f) {
+                        int toAdd = (int) airBuffer;
+                        airHandler.addAir(toAdd);
+                        airBuffer -= toAdd;
+                    }
+                } else {
+                    spawnAirParticle();
                 }
             }
+        }
+    }
+
+
+    private void spawnAirParticle() {
+        Direction orientation = getBlockState().getValue(RotationalCompressorBlock.HORIZONTAL_FACING);
+        if (this.getLevel().random.nextInt(5) == 0) {
+            float px = (float)this.getBlockPos().getX() + 0.5F;
+            float py = (float)this.getBlockPos().getY() + 0.5F + this.getLevel().random.nextFloat() * 0.4F;
+            float pz = (float)this.getBlockPos().getZ() + 0.5F;
+            float f3 = 0.9F;
+            float f4 = this.getLevel().random.nextFloat() * 0.4F;
+            switch(orientation) {
+                case EAST:
+                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px + f3), (double)py, (double)(pz + f4), -0.1D, 0.0D, 0.0D);
+                    break;
+                case WEST:
+                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px - f3), (double)py, (double)(pz + f4), 0.1D, 0.0D, 0.0D);
+                    break;
+                case SOUTH:
+                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px + f4), (double)py, (double)(pz + f3), 0.0D, 0.0D, -0.1D);
+                    break;
+                case NORTH:
+                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px + f4), (double)py, (double)(pz - f3), 0.0D, 0.0D, 0.1D);
+            }
+
         }
     }
 
