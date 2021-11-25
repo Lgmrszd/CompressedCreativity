@@ -1,6 +1,10 @@
 {
   "itemGroup.compressedcreativity.main": "Compressed Creativity",
 
+  "compressedcreativity.unit.bar": "bar",
+  "compressedcreativity.unit.air": "mL",
+  "compressedcreativity.unit.air_per_tick": "mL/t",
+
   "block.compressedcreativity.rotational_compressor": "Rotational Compressor",
 
   "compressedcreativity.tooltip.rotational_compressor.pressure_summary": "Pressure Stats:",

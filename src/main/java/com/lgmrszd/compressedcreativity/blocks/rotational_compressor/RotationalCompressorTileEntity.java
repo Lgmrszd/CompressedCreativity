@@ -62,13 +62,39 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         if (added) {
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary").withStyle(TextFormatting.WHITE)));
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure").withStyle(TextFormatting.GRAY)));
-            tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + airHandler.getPressure() + " bar")).withStyle(TextFormatting.AQUA));
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air").withStyle(TextFormatting.GRAY)));
-            tooltip.add(new StringTextComponent(spacing).append(new StringTextComponent(" " + airHandler.getAir() + " mL").withStyle(TextFormatting.AQUA)));
-            tooltip.add(new StringTextComponent(spacing).append((new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_production")).withStyle(TextFormatting.GRAY)));
-            tooltip.add(new StringTextComponent(spacing).append((new StringTextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f) + "mL/t ")).withStyle(TextFormatting.AQUA)).append(Lang.translate("gui.goggles.at_current_speed").withStyle(TextFormatting.DARK_GRAY)));
+            // "Pressure Stats:"
+            tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
+            // "Pressure:"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
+                            .withStyle(TextFormatting.GRAY)));
+            // "0.0bar"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new StringTextComponent(" " + airHandler.getPressure())
+                            .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
+                            .withStyle(TextFormatting.AQUA)));
+            // "Air:"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
+                            .withStyle(TextFormatting.GRAY)));
+            // "0.0mL"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new StringTextComponent(" " + airHandler.getAir())
+                            .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air"))
+                            .withStyle(TextFormatting.AQUA)));
+            // "Air generated:"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_production")
+                            .withStyle(TextFormatting.GRAY)));
+            // "0.0mL/t"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new StringTextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f))
+                            .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
+                            .append(" ")
+                            .withStyle(TextFormatting.AQUA))
+                    .append(Lang.translate("gui.goggles.at_current_speed")
+                            .withStyle(TextFormatting.DARK_GRAY)));
         }
         return added;
     }
@@ -79,8 +105,14 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         ObservePacket.send(worldPosition, 0);
         boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
         if (isWrongDirection) {
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction").withStyle(TextFormatting.GOLD)));
-            tooltip.add(new StringTextComponent(spacing).append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc").withStyle(TextFormatting.GRAY)));
+            // "Rotation Direction Requirement:"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction")
+                            .withStyle(TextFormatting.GOLD)));
+            // "This machine would not work with rotation in this direction"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc")
+                            .withStyle(TextFormatting.GRAY)));
             added = true;
         }
         return added;
