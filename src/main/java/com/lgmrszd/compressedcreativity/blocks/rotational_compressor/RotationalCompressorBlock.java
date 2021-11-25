@@ -30,6 +30,8 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) return this.defaultBlockState()
+                .setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
         return this.defaultBlockState()
                 .setValue(HORIZONTAL_FACING, context.getHorizontalDirection());
     }
