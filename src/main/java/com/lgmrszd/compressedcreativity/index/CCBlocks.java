@@ -3,6 +3,7 @@ package com.lgmrszd.compressedcreativity.index;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
+import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.AllTags;
@@ -22,6 +23,12 @@ public class CCBlocks {
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<AirBlowerBlock> AIR_BLOWER = REGISTRATE.block("air_blower", AirBlowerBlock::new)
+            .initialProperties(SharedProperties::stone)
             .item()
             .transform(customItemModel())
             .register();

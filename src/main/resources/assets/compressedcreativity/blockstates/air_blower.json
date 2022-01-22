@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "compressedcreativity:block/air_blower"
+    },
+    "facing=south": {
+      "model": "compressedcreativity:block/air_blower",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "compressedcreativity:block/air_blower",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "compressedcreativity:block/air_blower",
+      "y": 90
+    },
+    "facing=up": {
+      "model": "compressedcreativity:block/air_blower",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "compressedcreativity:block/air_blower",
+      "x": 90
+    }
+  }
+}

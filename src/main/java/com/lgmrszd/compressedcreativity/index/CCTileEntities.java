@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorInstance;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorRenderer;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
@@ -17,6 +18,11 @@ public class CCTileEntities {
             .instance(() -> RotationalCompressorInstance::new)
             .validBlock(CCBlocks.ROTATIONAL_COMPRESSOR)
             .renderer(() -> RotationalCompressorRenderer::new)
+            .register();
+
+    public static final TileEntityEntry<AirBlowerTileEntity> AIR_BLOWER = REGISTRATE
+            .tileEntity("air_blower", AirBlowerTileEntity::new)
+            .validBlock(CCBlocks.AIR_BLOWER)
             .register();
 
     public static void register() {
