@@ -35,13 +35,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
-    public static final int
-            STRESS = CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get(),
-            VOLUME = CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get();
-    public static final double
-            DANGER_PRESSURE = CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get(),
-            CRITICAL_PRESSURE = CommonConfig.ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE.get() + CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get(),
-            BASE_PRODUCTION = CommonConfig.ROTATIONAL_COMPRESSOR_BASE_PRODUCTION.get(); // Per tick per 128 RPM
+
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
     private double airGeneratedPerTick = 0.0f;
@@ -54,7 +48,10 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
     public RotationalCompressorTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
-                .createAirHandler((float) DANGER_PRESSURE, (float) CRITICAL_PRESSURE, VOLUME);
+                .createAirHandler(
+                        CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get().floatValue(),
+                        CommonConfig.ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE.get().floatValue() + CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get().floatValue(),
+                        CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 
@@ -120,7 +117,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
     @Override
     public float calculateStressApplied() {
-        float impact = STRESS/256f;
+        float impact = CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get()/256f;
         this.lastStressApplied = impact;
         return impact;
     }
@@ -146,11 +143,12 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         super.tick();
         airHandler.tick(this);
 
+        // TODO: Listen to config update
         if (updateGeneratedAir) {
             Direction facing = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             float speed = convertToDirection(getSpeed(), facing);
             isWrongDirection = speed < 0;
-            airGeneratedPerTick = (speed > 0 && isSpeedRequirementFulfilled()) ? BASE_PRODUCTION * speed / 128f : 0f;
+            airGeneratedPerTick = (speed > 0 && isSpeedRequirementFulfilled()) ? CommonConfig.ROTATIONAL_COMPRESSOR_BASE_PRODUCTION.get() * speed / 128f : 0f;
             logger.debug("New air/t generated: " + airGeneratedPerTick);
             updateGeneratedAir = false;
             notifyUpdate();

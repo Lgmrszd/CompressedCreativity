@@ -3,16 +3,25 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
+import me.desht.pneumaticcraft.api.PNCCapabilities;
+import me.desht.pneumaticcraft.common.core.ModSounds;
+import me.desht.pneumaticcraft.common.network.NetworkHandler;
+import me.desht.pneumaticcraft.common.network.PacketSpawnParticle;
+import me.desht.pneumaticcraft.common.particle.AirParticleData;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 
 
 //public class RotationalCompressorBlock extends HorizontalKineticBlock implements ITE<RotationalCompressorTileEntity>, IRotate {
@@ -65,6 +74,24 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
             RotationalCompressorTileEntity rcte = (RotationalCompressorTileEntity) te;
             rcte.updateAirHandler();
         }
+    }
+
+    @Override
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity te = world.getBlockEntity(pos);
+            if (te instanceof RotationalCompressorTileEntity) {
+                te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent(handler -> {
+                    if (handler.getAir() > 0) {
+                        NetworkHandler.sendToAllTracking(new PacketSpawnParticle(AirParticleData.DENSE, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), 0.0D, 0.0D, 0.0D, (int)(5.0F * handler.getPressure()), 1.0D, 1.0D, 1.0D), world, pos);
+                        world.playSound((PlayerEntity)null, pos, (SoundEvent) ModSounds.SHORT_HISS.get(), SoundCategory.BLOCKS, 0.3F, 0.8F);
+//                        world.explode(null, pos.getX() + 0.5F, pos.getY() + 0.5, pos.getZ() + 0.5F, 1.0F, false, Explosion.Mode.BREAK);
+//                        world.explode(null, pos.getX() + 0.5F, pos.getY() + 0.5, pos.getZ() + 0.5F, 1.5F, Explosion.Mode.NONE);
+                    }
+                });
+            }
+        }
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     public SpeedLevel getMinimumRequiredSpeedLevel() {
