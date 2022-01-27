@@ -142,10 +142,10 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-    implementation fg.deobf("curse.maven:create-328085:3499718")
+    implementation fg.deobf("curse.maven:create-328085:3536025")
     implementation fg.deobf("curse.maven:flywheel-486392:3459739")
 //    implementation fg.deobf("curse.maven:cc-tweaked-282001:3368207")
-    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3521250")
+    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3613175")
     implementation fg.deobf("curse.maven:patchouli-306770:3459118")
 
 }

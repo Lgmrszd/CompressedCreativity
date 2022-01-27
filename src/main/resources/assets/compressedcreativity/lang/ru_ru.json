@@ -1,0 +1,25 @@
+{
+  "itemGroup.compressedcreativity.main": "Compressed Creativity",
+
+  "compressedcreativity.unit.bar": "бар",
+  "compressedcreativity.unit.air": "мл",
+  "compressedcreativity.unit.air_per_tick": "мл/тик",
+
+  "block.compressedcreativity.rotational_compressor": "Вращательный компрессор",
+
+  "compressedcreativity.tooltip.rotational_compressor.pressure_summary": "Статистика давления:",
+  "compressedcreativity.tooltip.rotational_compressor.pressure": "Давление:",
+  "compressedcreativity.tooltip.rotational_compressor.air": "Воздух:",
+  "compressedcreativity.tooltip.rotational_compressor.air_production": "Производство воздуха:",
+  "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Требование направления вращения:",
+  "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "Эта машина не работает при вращении в этом направлении",
+
+
+  "compressedcreativity.ponder.rotational_compressor.header": "Генерация давления с Вращательным компрессором",
+  "compressedcreativity.ponder.rotational_compressor.text_1": "Вращательный компрессор используется для создания давления.",
+  "compressedcreativity.ponder.rotational_compressor.text_2": "Для его работы нужно соблюдать направление вращения.",
+  "compressedcreativity.ponder.rotational_compressor.text_3": "Воздух будет утекать с отсоединённых сторон труб и некоторых машин!",
+  "compressedcreativity.ponder.rotational_compressor.text_4": "Не допускайте накопления давления в машинах.",
+  "compressedcreativity.ponder.rotational_compressor.text_5": "Если давление нарастёт выше предела...",
+  "compressedcreativity.ponder.rotational_compressor.text_6": "Машина может взорваться!"
+}
