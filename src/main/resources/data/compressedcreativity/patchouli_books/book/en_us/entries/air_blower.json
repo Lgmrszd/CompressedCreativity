@@ -1,0 +1,12 @@
+{
+  "name": "Air Blower",
+  "icon": "compressedcreativity:air_blower",
+  "category": "compressed_creativity",
+  "advancement": "create:its_alive",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This is a test entry, but it should show up!"
+    }
+  ]
+}
