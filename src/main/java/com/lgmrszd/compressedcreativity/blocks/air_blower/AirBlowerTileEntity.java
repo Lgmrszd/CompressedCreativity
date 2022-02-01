@@ -27,20 +27,25 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource {
 
+    private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
+
     public static final int
-            VOLUME = 1000;
+            VOLUME = 500;
     public static final double
             DANGER_PRESSURE = 5.0D,
             CRITICAL_PRESSURE = 7.0D,
-            OVERWORK_PRESSURE = 2.0D,
-            BASE_USAGE = 10.0D;
+            OVERWORK_PRESSURE = 4.8D;
+    public static final double WORKING_PRESSURE = 0.5;
 
     public AirCurrent airCurrent;
     protected int entitySearchCooldown;
@@ -52,6 +57,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
 
     private float airBuffer;
+    private float airUsage = 0.0f;
 
     public AirBlowerTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
@@ -93,7 +99,32 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
                 .append(new StringTextComponent(" " + airHandler.getAir())
                         .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air"))
                         .withStyle(TextFormatting.AQUA)));
+        // "Air usage:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_usage")
+                        .withStyle(TextFormatting.GRAY)));
+        // "0.0mL/t"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new StringTextComponent(" " + airUsage)
+                        .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
+                        .withStyle(TextFormatting.AQUA)));
         return true;
+    }
+
+
+    private float calculateAirUsage() {
+        return (float) Math.floor((double) airHandler.getPressure() * 10) / 10 * 4;
+    }
+
+    public void updateAirHandler() {
+        ArrayList<Direction> sides = new ArrayList<>();
+        for (Direction side: new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP, Direction.DOWN}) {
+            if (canConnectPneumatic(side)) {
+                sides.add(side);
+            }
+        }
+        airHandler.setConnectedFaces(sides);
+        logger.debug("Updated Air Handler! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
     }
 
 
@@ -104,16 +135,18 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
         boolean server = !level.isClientSide || isVirtual();
 
+        airUsage = calculateAirUsage();
+
         if (server) {
             if (airCurrentUpdateCooldown-- <= 0) {
                 airCurrentUpdateCooldown = AllConfigs.SERVER.kinetics.fanBlockCheckRate.get();
                 updateAirFlow = true;
             }
-//            isWorking = airHandler.getPressure() > WORK_PRESSURE;
-//            isWorking = airHandler.getPressure() > 0;
-            if (airHandler.getPressure() > 0) {
-                airBuffer += BASE_USAGE;
-                if (airHandler.getPressure() > OVERWORK_PRESSURE) airBuffer += BASE_USAGE;
+
+
+            if (airHandler.getPressure() > WORKING_PRESSURE) {
+                airBuffer += airUsage;
+//                if (airHandler.getPressure() > OVERWORK_PRESSURE) airBuffer += airHandler.getPressure() * 4;
                 if (airBuffer > 1f) {
                     int toRemove = Math.min((int) airBuffer, airHandler.getAir());
                     airHandler.addAir(-toRemove);
@@ -137,8 +170,34 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
             airCurrent.findEntities();
         }
 
-        if ((airHandler.getPressure() > OVERWORK_PRESSURE)) airCurrent.tick();
-        airCurrent.tick();
+        if (airHandler.getPressure() > WORKING_PRESSURE) {
+            airCurrent.tick();
+            if ((airHandler.getPressure() > OVERWORK_PRESSURE)) airCurrent.tick();
+        }
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        this.updateAirHandler();
+    }
+
+    @Override
+    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+        super.handleUpdateTag(state, tag);
+        this.updateAirHandler();
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        airHandlerCap.invalidate();
+    }
+
+    @Override
+    public void clearCache() {
+        super.clearCache();
+        updateAirHandler();
     }
 
     @Nonnull
@@ -196,7 +255,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     @Override
     public float getSpeed() {
-        return airHandler.getPressure() > 0 ? (airHandler.getPressure() > OVERWORK_PRESSURE ? 64.0f : 32.0f) : 0.0f;
+        return airHandler.getPressure() > WORKING_PRESSURE ? (float) (Math.ceil((airUsage / 10 * 128.0f) / 8.0f) * 8.0f) : 0.0f;
     }
 
     @Override

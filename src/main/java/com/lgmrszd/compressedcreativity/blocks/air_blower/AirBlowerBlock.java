@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 
 import javax.annotation.Nullable;
 
@@ -53,6 +54,16 @@ public class AirBlowerBlock extends Block implements IWrenchable {
                 .setValue(FACING, context.getNearestLookingDirection());
         return this.defaultBlockState()
                 .setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+    @Override
+    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
+        super.onNeighborChange(state, world, pos, neighbor);
+        TileEntity te = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
+        if (te instanceof AirBlowerTileEntity) {
+            AirBlowerTileEntity abte = (AirBlowerTileEntity) te;
+            abte.updateAirHandler();
+        }
     }
 
     @Override
