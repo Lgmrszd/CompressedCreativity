@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.compressedcreativity.items.potato_cannon_mk2.PotatoCannonMk2;
 import com.simibubi.create.content.curiosities.weapons.PotatoCannonItemRenderer;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
