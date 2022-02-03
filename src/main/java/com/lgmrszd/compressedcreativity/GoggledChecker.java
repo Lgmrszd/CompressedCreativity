@@ -1,11 +1,9 @@
 package com.lgmrszd.compressedcreativity;
 
-import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.api.distmarker.Dist;
