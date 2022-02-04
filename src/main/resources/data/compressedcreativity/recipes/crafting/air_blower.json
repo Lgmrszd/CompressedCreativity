@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "ICI",
+    " G "
+  ],
+  "key": {
+    "I": {
+      "item": "pneumaticcraft:ingot_iron_compressed"
+    },
+    "C": {
+      "item": "create:andesite_casing"
+    },
+    "G": {
+      "item": "pneumaticcraft:air_grate_module"
+    }
+  },
+  "result": {
+    "item": "compressedcreativity:air_blower"
+  }
+}

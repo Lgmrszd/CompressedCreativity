@@ -77,7 +77,6 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking){
         ObservePacket.send(worldPosition, 0);
-        tooltip.add(new StringTextComponent("      Test!"));
         // "Pressure Stats:"
         tooltip.add(componentSpacing.plainCopy()
                 .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
