@@ -7,6 +7,8 @@
 
   "block.compressedcreativity.rotational_compressor": "Rotational Compressor",
 
+  "block.compressedcreativity.air_blower": "Air Blower",
+
   "compressedcreativity.tooltip.rotational_compressor.pressure_summary": "Pressure Stats:",
   "compressedcreativity.tooltip.rotational_compressor.pressure": "Pressure:",
   "compressedcreativity.tooltip.rotational_compressor.air": "Air:",
@@ -21,5 +23,10 @@
   "compressedcreativity.ponder.rotational_compressor.text_3": "Air will leak from unconnected sides of tubes or some machines!",
   "compressedcreativity.ponder.rotational_compressor.text_4": "Don't let pressure built up in the machines.",
   "compressedcreativity.ponder.rotational_compressor.text_5": "If the pressure builds up...",
-  "compressedcreativity.ponder.rotational_compressor.text_6": "Machine could explode!"
+  "compressedcreativity.ponder.rotational_compressor.text_6": "Machine could explode!",
+
+
+  "compressedcreativity.ponder.air_blower.header": "Air Flow from Air Pressure",
+  "compressedcreativity.ponder.air_blower.text_1": "Air Blower uses pressurized air to create Air Current",
+  "compressedcreativity.ponder.air_blower.text_2": "Air Current speed, as well as air consumption rate, depends on current Air Pressure"
 }
