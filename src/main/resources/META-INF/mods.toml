@@ -27,7 +27,7 @@ displayName="Compressed Creativity" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://github.com/Lgmrszd/CompressedCreativity" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+logoFile="compressedcreativity.png" #optional
 # A text field displayed in the mod UI
 credits="Create and PNC teams for their mods; MRHminer for 'Create Crafts & Additions' mod that has been source of inspiration" #optional
 # A text field displayed in the mod UI
@@ -43,7 +43,7 @@ Bridging Create and PneumaticCraft: Repressurized together
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[36,)" #mandatory
+    versionRange="[36.2.0,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
