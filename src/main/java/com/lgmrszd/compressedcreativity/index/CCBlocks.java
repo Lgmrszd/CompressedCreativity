@@ -29,6 +29,8 @@ public class CCBlocks {
 
     public static final BlockEntry<AirBlowerBlock> AIR_BLOWER = REGISTRATE.block("air_blower", AirBlowerBlock::new)
             .initialProperties(SharedProperties::stone)
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .addLayer(() -> RenderType::cutoutMipped)
             .item()
             .transform(customItemModel())
             .register();
