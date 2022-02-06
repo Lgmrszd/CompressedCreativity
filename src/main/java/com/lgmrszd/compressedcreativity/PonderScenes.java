@@ -22,7 +22,7 @@ public class PonderScenes {
     private static void updatePressure(SceneBuilder scene, BlockPos air_blower) {
         scene.world.modifyTileEntity(air_blower, AirBlowerTileEntity.class, te -> {
             te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent(cap -> {
-                cap.setPressure((float)AirBlowerTileEntity.DANGER_PRESSURE);
+                cap.setPressure(cap.getDangerPressure());
             });
         });
     }

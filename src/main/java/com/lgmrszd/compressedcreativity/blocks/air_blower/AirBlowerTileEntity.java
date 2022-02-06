@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
@@ -15,8 +16,6 @@ import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -39,14 +38,6 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
-    public static final int
-            VOLUME = 500;
-    public static final double
-            DANGER_PRESSURE = 5.0D,
-            CRITICAL_PRESSURE = 7.0D,
-            OVERWORK_PRESSURE = 4.8D;
-    public static final double WORKING_PRESSURE = 0.5;
-
     public AirCurrent airCurrent;
     protected int entitySearchCooldown;
     protected int airCurrentUpdateCooldown;
@@ -62,7 +53,10 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
     public AirBlowerTileEntity(TileEntityType<?> typeIn) {
         super(typeIn);
         airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
-                .createAirHandler((float) DANGER_PRESSURE, (float) CRITICAL_PRESSURE, VOLUME);
+                .createAirHandler(
+                        CommonConfig.AIR_BLOWER_DANGER_PRESSURE.get().floatValue(),
+                        CommonConfig.AIR_BLOWER_DANGER_PRESSURE.get().floatValue() + CommonConfig.AIR_BLOWER_CRITICAL_PRESSURE.get().floatValue(),
+                        CommonConfig.AIR_BLOWER_VOLUME.get());
         airHandlerCap = LazyOptional.of(() -> airHandler);
 
         airCurrent = new AirCurrent(this);
@@ -111,8 +105,9 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
     }
 
 
-    private float calculateAirUsage() {
-        return (float) Math.floor((double) airHandler.getPressure() * 10) / 10 * 4;
+    private float calculateAirUsage(float pressure) {
+        return (float) Math.floor(pressure * CommonConfig.AIR_BLOWER_AIR_USAGE_PER_BAR.get().floatValue() * 100) / 100;
+//        return (float) Math.floor((double) airHandler.getPressure() * 10) / 10 * CommonConfig.AIR_BLOWER_AIR_USAGE_PER_BAR.get().floatValue();
     }
 
     public void updateAirHandler() {
@@ -134,7 +129,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
         boolean server = !level.isClientSide || isVirtual();
 
-        airUsage = calculateAirUsage();
+        airUsage = calculateAirUsage(airHandler.getPressure());
 
         if (server) {
             if (airCurrentUpdateCooldown-- <= 0) {
@@ -143,9 +138,8 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
             }
 
 
-            if (airHandler.getPressure() > WORKING_PRESSURE) {
+            if (airHandler.getPressure() > CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
                 airBuffer += airUsage;
-//                if (airHandler.getPressure() > OVERWORK_PRESSURE) airBuffer += airHandler.getPressure() * 4;
                 if (airBuffer > 1f) {
                     int toRemove = Math.min((int) airBuffer, airHandler.getAir());
                     airHandler.addAir(-toRemove);
@@ -169,9 +163,9 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
             airCurrent.findEntities();
         }
 
-        if (airHandler.getPressure() > WORKING_PRESSURE) {
+        if (airHandler.getPressure() > CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
             airCurrent.tick();
-            if ((airHandler.getPressure() > OVERWORK_PRESSURE)) airCurrent.tick();
+            if ((airHandler.getPressure() > CommonConfig.AIR_BLOWER_OVERWORK_PRESSURE.get())) airCurrent.tick();
         }
     }
 
@@ -254,7 +248,8 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     @Override
     public float getSpeed() {
-        return airHandler.getPressure() > WORKING_PRESSURE ? (float) (Math.ceil((airUsage / 10 * 128.0f) / 8.0f) * 8.0f) : 0.0f;
+        float speed_ratio = 256f / calculateAirUsage(airHandler.getDangerPressure());
+        return airHandler.getPressure() > CommonConfig.AIR_BLOWER_WORK_PRESSURE.get() ? (float) (Math.ceil(airUsage * speed_ratio / 8) * 8) : 0.0f;
     }
 
     @Override
