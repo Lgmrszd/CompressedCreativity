@@ -5,6 +5,7 @@ import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
+import com.lgmrszd.compressedcreativity.blocks.rotational_compressor_mk_ii.RotationalCompressorMkIIBlock;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
@@ -26,6 +27,13 @@ public class CCBlocks {
             .item()
             .transform(customItemModel())
             .register();
+
+    public static final BlockEntry<RotationalCompressorMkIIBlock> ROTATIONAL_COMPRESSOR_MK_II = REGISTRATE.block("rotational_compressor_mk_ii", RotationalCompressorMkIIBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .item()
+            .transform(customItemModel())
+            .register();
+
 
     public static final BlockEntry<AirBlowerBlock> AIR_BLOWER = REGISTRATE.block("air_blower", AirBlowerBlock::new)
             .initialProperties(SharedProperties::stone)
