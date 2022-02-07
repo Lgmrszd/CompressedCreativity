@@ -5,6 +5,7 @@ import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCPonder;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
+import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
 import net.minecraft.block.Block;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -75,6 +77,8 @@ public class CompressedCreativity
         // do something that can only be done on the client
         event.enqueueWork(CCPonder::register);
         LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+        if (ModList.get().isLoaded("create"))
+            GoggleOverlayRenderer.registerCustomGoggleCondition(GoggledChecker::hasBlockTrackerUpgrade);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
