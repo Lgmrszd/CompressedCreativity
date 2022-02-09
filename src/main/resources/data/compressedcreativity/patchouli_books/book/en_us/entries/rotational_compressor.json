@@ -1,0 +1,13 @@
+{
+  "name": "Rotational Compressor",
+  "icon": "compressedcreativity:rotational_compressor",
+  "category": "compressors",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "compressedcreativity:rotational_compressor",
+      "text": "This type of compressor uses Create's kinetic power to generate air. Please check $(l:compressedcreativity:rotational_compressor_verbose)corresponding entry$() in \"Adding Creativity\" category for more info!"
+    }
+  ]
+}

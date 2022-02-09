@@ -1,0 +1,17 @@
+{
+  "name": "Rotational Compressor",
+  "icon": "compressedcreativity:rotational_compressor",
+  "category": "compressed_creativity",
+  "advancement": "create:its_alive",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "With this compressor, you can use Rotation from Create to compress air!"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "compressedcreativity:crafting/rotational_compressor",
+      "text": "This is a test entry, but it should show up!"
+    }
+  ]
+}

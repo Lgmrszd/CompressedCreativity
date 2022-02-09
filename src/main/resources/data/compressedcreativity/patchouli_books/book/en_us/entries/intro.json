@@ -1,0 +1,13 @@
+{
+  "name": "Adding Creativity",
+  "icon": "create:cogwheel",
+  "category": "compressed_creativity",
+  "advancement": "create:its_alive",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This is a test entry, but it should show up!"
+    }
+  ]
+}
