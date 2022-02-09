@@ -4,6 +4,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
+import com.lgmrszd.compressedcreativity.blocks.other.MachineScaffoldingBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor_mk_ii.RotationalCompressorMkIIBlock;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
@@ -34,6 +35,11 @@ public class CCBlocks {
             .transform(customItemModel())
             .register();
 
+
+    public static final BlockEntry<MachineScaffoldingBlock> MACHINE_SCAFFOLDING_BLOCK = REGISTRATE.block("machine_scaffolding", MachineScaffoldingBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .simpleItem()
+            .register();
 
     public static final BlockEntry<AirBlowerBlock> AIR_BLOWER = REGISTRATE.block("air_blower", AirBlowerBlock::new)
             .initialProperties(SharedProperties::stone)

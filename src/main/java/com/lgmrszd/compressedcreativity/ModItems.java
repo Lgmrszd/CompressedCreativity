@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity;
 
+import com.lgmrszd.compressedcreativity.items.MachineConstructItem;
 import com.simibubi.create.content.curiosities.weapons.PotatoCannonItemRenderer;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -16,6 +17,8 @@ public class ModItems {
 
 //    public static final DeferredRegister<Item> ITEMS
 //            = DeferredRegister.create(ForgeRegistries.ITEMS, CompressedCreativity.MOD_ID);
+
+    public static final ItemEntry<MachineConstructItem> TEST_CONSTRUCT = REGISTRATE.item("test_construct", MachineConstructItem::new).register();
 
 
     public static void register(IEventBus eventBus) {
