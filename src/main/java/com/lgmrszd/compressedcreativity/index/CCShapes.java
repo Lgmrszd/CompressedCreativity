@@ -24,9 +24,9 @@ public class CCShapes {
 
     private static VoxelShape airBlowerShape(){
         VoxelShape shape = VoxelShapes.empty();
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0, 0, 1, 1, 0.125), IBooleanFunction.OR);
+        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0, 0.875, 1, 1, 1), IBooleanFunction.OR);
         shape = VoxelShapes.join(shape, VoxelShapes.box(0.125, 0.125, 0.125, 0.875, 0.875, 0.875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.3125, 0.3125, 0.875, 0.6875, 0.6875, 1), IBooleanFunction.OR);
+        shape = VoxelShapes.join(shape, VoxelShapes.box(0.3125, 0.3125, 0, 0.6875, 0.6875, 0.125), IBooleanFunction.OR);
         shape = VoxelShapes.join(shape, VoxelShapes.box(0.875, 0.3125, 0.3125, 1, 0.6875, 0.6875), IBooleanFunction.OR);
         shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0.3125, 0.3125, 0.125, 0.6875, 0.6875), IBooleanFunction.OR);
         shape = VoxelShapes.join(shape, VoxelShapes.box(0.3125, 0.875, 0.3125, 0.6875, 1, 0.6875), IBooleanFunction.OR);
@@ -38,5 +38,5 @@ public class CCShapes {
 
     public static final VoxelShaper
         ROTATIONAL_COMPRESSOR = new AllShapes.Builder(rotationalCompressorShape()).forHorizontal(Direction.NORTH),
-        AIR_BLOWER = new AllShapes.Builder(airBlowerShape()).forDirectional(Direction.NORTH);
+        AIR_BLOWER = new AllShapes.Builder(airBlowerShape()).forDirectional(Direction.SOUTH);
 }
