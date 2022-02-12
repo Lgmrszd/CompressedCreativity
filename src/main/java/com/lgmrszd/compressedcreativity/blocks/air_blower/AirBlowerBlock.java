@@ -2,6 +2,7 @@ package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,7 +25,7 @@ public class AirBlowerBlock extends Block implements IWrenchable {
 
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
 
-    public static final VoxelShape shape = Block.box(1, 1, 1, 15, 15, 15);
+//    public static final VoxelShape shape = Block.box(2, 2, 2, 12, 12, 12);
 
     public AirBlowerBlock(Properties properties) {
         super(properties);
@@ -68,6 +69,6 @@ public class AirBlowerBlock extends Block implements IWrenchable {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return shape;
+        return CCShapes.AIR_BLOWER.get(state.getValue(FACING));
     }
 }

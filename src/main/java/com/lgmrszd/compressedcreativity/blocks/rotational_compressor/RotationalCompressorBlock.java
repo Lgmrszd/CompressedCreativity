@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
@@ -8,7 +9,6 @@ import me.desht.pneumaticcraft.common.core.ModSounds;
 import me.desht.pneumaticcraft.common.network.NetworkHandler;
 import me.desht.pneumaticcraft.common.network.PacketSpawnParticle;
 import me.desht.pneumaticcraft.common.particle.AirParticleData;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -27,14 +27,14 @@ import net.minecraft.world.World;
 //public class RotationalCompressorBlock extends HorizontalKineticBlock implements ITE<RotationalCompressorTileEntity>, IRotate {
 public class RotationalCompressorBlock extends HorizontalKineticBlock implements IRotate {
 
-    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 12, 16);
+//    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 10, 16);
 
     public RotationalCompressorBlock(Properties properties) {
         super(properties);
     }
 
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
-        return RotationalCompressorBlock.shape;
+    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
+        return CCShapes.ROTATIONAL_COMPRESSOR.get(state.getValue(HORIZONTAL_FACING)) ;
     }
 
     @Override
