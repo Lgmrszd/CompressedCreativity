@@ -5,9 +5,13 @@
   "advancement": "pneumaticcraft:pressure_tube",
   "pages": [
     {
-      "type": "patchouli:spotlight",
-      "item": "compressedcreativity:rotational_compressor",
-      "text": "This type of compressor uses Create's kinetic power to generate air. Please check $(l:compressedcreativity:rotational_compressor_verbose)corresponding entry$() in \"Adding Creativity\" category for more info!"
+      "type": "patchouli:text",
+      "text": "The $(item)Rotational Compressor$() is a type of compressor that uses rotation from Create to generate pressure."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "compressedcreativity:crafting/rotational_compressor",
+      "text": "Creating a $(item)Rotational Compressor$()"
     }
   ]
 }
