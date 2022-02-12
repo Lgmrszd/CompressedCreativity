@@ -69,6 +69,13 @@ public class AirBlowerBlock extends Block implements IWrenchable {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        // TODO: I don't know why it does this, this should be fixed. Too bad!
+        switch (state.getValue(FACING)) {
+            case UP:
+                return CCShapes.AIR_BLOWER.get(Direction.DOWN);
+            case DOWN:
+                return CCShapes.AIR_BLOWER.get(Direction.UP);
+        }
         return CCShapes.AIR_BLOWER.get(state.getValue(FACING));
     }
 }
