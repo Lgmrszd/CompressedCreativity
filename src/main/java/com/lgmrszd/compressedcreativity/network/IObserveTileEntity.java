@@ -5,8 +5,8 @@ package com.lgmrszd.compressedcreativity.network;
     taken with the permission of the original creator
  */
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 
 public interface IObserveTileEntity {
-    void onObserved(ServerPlayerEntity var1, ObservePacket var2);
+    void onObserved(ServerPlayer var1, ObservePacket var2);
 }

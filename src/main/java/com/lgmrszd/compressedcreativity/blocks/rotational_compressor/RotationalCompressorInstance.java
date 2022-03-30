@@ -6,16 +6,17 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
     Source code: https://github.com/Creators-of-Create/Create
 */
 
-import com.jozufozu.flywheel.backend.material.MaterialManager;
+import com.jozufozu.flywheel.api.MaterialManager;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticTileInstance;
-import com.simibubi.create.content.contraptions.base.RotatingData;
+import com.simibubi.create.content.contraptions.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 
-import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+//import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class RotationalCompressorInstance extends KineticTileInstance<RotationalCompressorTileEntity> {
 
@@ -24,10 +25,10 @@ public class RotationalCompressorInstance extends KineticTileInstance<Rotational
     final Direction direction;
     private final Direction opposite;
 
-    public RotationalCompressorInstance(MaterialManager<?> modelManager, RotationalCompressorTileEntity tile) {
+    public RotationalCompressorInstance(MaterialManager modelManager, RotationalCompressorTileEntity tile) {
         super(modelManager, tile);
 
-        direction = blockState.getValue(HORIZONTAL_FACING);
+        direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         opposite = direction.getOpposite();
         shaft = getRotatingMaterial().getModel(AllBlockPartials.SHAFT_HALF, blockState, opposite).createInstance();
@@ -41,11 +42,11 @@ public class RotationalCompressorInstance extends KineticTileInstance<Rotational
     }
 
     private float getFanSpeed() {
-        float speed = tile.getSpeed() * 5;
+        float speed = ((RotationalCompressorTileEntity)this.blockEntity).getSpeed() * 5;
         if (speed > 0)
-            speed = MathHelper.clamp(speed, 80, 64 * 20);
+            speed = Mth.clamp(speed, 80, 64 * 20);
         if (speed < 0)
-            speed = MathHelper.clamp(speed, -64 * 20, -80);
+            speed = Mth.clamp(speed, -64 * 20, -80);
         return speed;
     }
 

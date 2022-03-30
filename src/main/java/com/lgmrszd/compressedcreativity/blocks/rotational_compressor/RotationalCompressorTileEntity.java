@@ -8,18 +8,20 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -45,71 +47,70 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
     private float airBuffer = 0f;
 
-    public RotationalCompressorTileEntity(TileEntityType<?> typeIn) {
-        super(typeIn);
+    public RotationalCompressorTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get().floatValue(),
-                        CommonConfig.ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE.get().floatValue() + CommonConfig.ROTATIONAL_COMPRESSOR_DANGER_PRESSURE.get().floatValue(),
+                        PressureTier.TIER_ONE,
                         CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 
     @Override
-    public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         if (added) {
             // "Pressure Stats:"
             tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
             // "Pressure:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
-                            .withStyle(TextFormatting.GRAY)));
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
+                            .withStyle(ChatFormatting.GRAY)));
             // "0.0bar"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new StringTextComponent(" " + airHandler.getPressure())
-                            .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
-                            .withStyle(TextFormatting.AQUA)));
+                    .append(new TextComponent(" " + airHandler.getPressure())
+                            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
+                            .withStyle(ChatFormatting.AQUA)));
             // "Air:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
-                            .withStyle(TextFormatting.GRAY)));
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
+                            .withStyle(ChatFormatting.GRAY)));
             // "0.0mL"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new StringTextComponent(" " + airHandler.getAir())
-                            .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air"))
-                            .withStyle(TextFormatting.AQUA)));
+                    .append(new TextComponent(" " + airHandler.getAir())
+                            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
+                            .withStyle(ChatFormatting.AQUA)));
             // "Air generated:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_production")
-                            .withStyle(TextFormatting.GRAY)));
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_production")
+                            .withStyle(ChatFormatting.GRAY)));
             // "0.0mL/t"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new StringTextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f))
-                            .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
+                    .append(new TextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f))
+                            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
                             .append(" ")
-                            .withStyle(TextFormatting.AQUA))
+                            .withStyle(ChatFormatting.AQUA))
                     .append(Lang.translate("gui.goggles.at_current_speed")
-                            .withStyle(TextFormatting.DARK_GRAY)));
+                            .withStyle(ChatFormatting.DARK_GRAY)));
         }
         return added;
     }
 
     // TODO: Need to make data consistent between server and client
     @Override
-    public boolean addToTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking) {
+    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         ObservePacket.send(worldPosition, 0);
         boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
         if (isWrongDirection) {
             // "Rotation Direction Requirement:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction")
-                            .withStyle(TextFormatting.GOLD)));
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction")
+                            .withStyle(ChatFormatting.GOLD)));
             // "This machine would not work with rotation in this direction"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc")
-                            .withStyle(TextFormatting.GRAY)));
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc")
+                            .withStyle(ChatFormatting.GRAY)));
             added = true;
         }
         return added;
@@ -128,11 +129,22 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         this.updateAirHandler();
     }
 
-    @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        super.handleUpdateTag(state, tag);
-        this.updateAirHandler();
-    }
+
+// TODO: check if overrides needed
+
+//    @Override
+//    public void handleUpdateTag(BlockState state, CompoundTag tag) {
+//        super.handleUpdateTag(state, tag);
+//        this.updateAirHandler();
+//    }
+
+
+//    @Override
+//    public void clearCache() {
+//        super.clearCache();
+//        updateAirHandler();
+//    }
+
 
     public void setRemoved() {
         super.setRemoved();
@@ -226,13 +238,8 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         return dir != Direction.UP && dir != Direction.DOWN && dir != orientation && dir != orientation.getOpposite();
     }
 
-    @Override
-    public void clearCache() {
-        super.clearCache();
-        updateAirHandler();
-    }
 
-    public void write(CompoundNBT compound, boolean clientPacket) {
+    public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
         if (clientPacket) {
@@ -241,8 +248,9 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         }
     }
 
-    protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
-        super.fromTag(state, compound, clientPacket);
+    @Override
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
         if (clientPacket) {
             airGeneratedPerTick = compound.getDouble("airGeneratedPerTick");
@@ -255,7 +263,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
     }
 
     @Override
-    public void onObserved(ServerPlayerEntity var1, ObservePacket var2) {
+    public void onObserved(ServerPlayer var1, ObservePacket var2) {
 //        logger.debug("I am being observed!");
     }
 }

@@ -1,11 +1,5 @@
 package com.lgmrszd.compressedcreativity;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -15,15 +9,17 @@ public class GoggledChecker {
 
     @OnlyIn(Dist.CLIENT)
     public static boolean hasBlockTrackerUpgrade() {
-        Minecraft mc = Minecraft.getInstance();
-        ItemStack helm = mc.player.getItemBySlot(EquipmentSlotType.HEAD);
-        if (helm.isEmpty() || !helm.hasTag() || !helm.getTag().contains(NBT_UPGRADE_INVENTORY)) return false;
-        CompoundNBT upgradeInventory = helm.getTag().getCompound(NBT_UPGRADE_INVENTORY);
-        ListNBT itemList = upgradeInventory.getList("Items", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < itemList.size(); i++) {
-            CompoundNBT slotEntry = itemList.getCompound(i);
-            if (slotEntry.getString("id").equals("pneumaticcraft:block_tracker_upgrade")) return true;
-        }
+
+        // TODO: rewrite using new PNC:R API
+//        Minecraft mc = Minecraft.getInstance();
+//        ItemStack helm = mc.player.getItemBySlot(EquipmentSlot.HEAD);
+//        if (helm.isEmpty() || !helm.hasTag() || !helm.getTag().contains(NBT_UPGRADE_INVENTORY)) return false;
+//        CompoundTag upgradeInventory = helm.getTag().getCompound(NBT_UPGRADE_INVENTORY);
+//        ListTag itemList = upgradeInventory.getList("Items", Constants.NBT.TAG_COMPOUND);
+//        for (int i = 0; i < itemList.size(); i++) {
+//            CompoundTag slotEntry = itemList.getCompound(i);
+//            if (slotEntry.getString("id").equals("pneumaticcraft:block_tracker_upgrade")) return true;
+//        }
         return false;
     }
 }

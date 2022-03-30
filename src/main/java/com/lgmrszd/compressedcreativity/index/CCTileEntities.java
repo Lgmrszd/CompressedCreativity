@@ -7,20 +7,20 @@ import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalC
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
 import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
+import com.simibubi.create.repack.registrate.util.entry.BlockEntityEntry;
 
 public class CCTileEntities {
 
     private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate();
 
-    public static final TileEntityEntry<RotationalCompressorTileEntity> ROTATIONAL_COMPRESSOR = REGISTRATE
+    public static final BlockEntityEntry<RotationalCompressorTileEntity> ROTATIONAL_COMPRESSOR = REGISTRATE
             .tileEntity("rotational_compressor", RotationalCompressorTileEntity::new)
-            .instance(() -> RotationalCompressorInstance::new)
+            .instance(() -> RotationalCompressorInstance::new, false)
             .validBlock(CCBlocks.ROTATIONAL_COMPRESSOR)
             .renderer(() -> RotationalCompressorRenderer::new)
             .register();
 
-    public static final TileEntityEntry<AirBlowerTileEntity> AIR_BLOWER = REGISTRATE
+    public static final BlockEntityEntry<AirBlowerTileEntity> AIR_BLOWER = REGISTRATE
             .tileEntity("air_blower", AirBlowerTileEntity::new)
             .validBlock(CCBlocks.AIR_BLOWER)
             .register();

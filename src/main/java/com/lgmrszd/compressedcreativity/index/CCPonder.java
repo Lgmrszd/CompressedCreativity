@@ -3,8 +3,8 @@ package com.lgmrszd.compressedcreativity.index;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.PonderScenes;
 import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
-import com.simibubi.create.foundation.ponder.content.PonderTag;
-import net.minecraft.util.ResourceLocation;
+import com.simibubi.create.foundation.ponder.PonderTag;
+import net.minecraft.resources.ResourceLocation;
 
 public class CCPonder {
     public static final PonderTag PRESSURE = new PonderTag(new ResourceLocation(CompressedCreativity.MOD_ID, "pressure")).item(CCBlocks.ROTATIONAL_COMPRESSOR.get(), true, false)

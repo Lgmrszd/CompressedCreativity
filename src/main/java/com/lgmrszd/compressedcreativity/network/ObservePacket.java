@@ -9,12 +9,14 @@ import java.util.function.Supplier;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 public class ObservePacket {
     private BlockPos pos;
@@ -26,12 +28,12 @@ public class ObservePacket {
         this.node = node;
     }
 
-    public static void encode(ObservePacket packet, PacketBuffer tag) {
+    public static void encode(ObservePacket packet, FriendlyByteBuf tag) {
         tag.writeBlockPos(packet.pos);
         tag.writeInt(packet.node);
     }
 
-    public static ObservePacket decode(PacketBuffer buf) {
+    public static ObservePacket decode(FriendlyByteBuf buf) {
         ObservePacket scp = new ObservePacket(buf.readBlockPos(), buf.readInt());
         return scp;
     }
@@ -39,7 +41,7 @@ public class ObservePacket {
     public static void handle(ObservePacket pkt, Supplier<Context> ctx) {
         ((Context)ctx.get()).enqueueWork(() -> {
             try {
-                ServerPlayerEntity player = ((Context)ctx.get()).getSender();
+                ServerPlayer player = ((Context)ctx.get()).getSender();
                 if (player != null) {
                     sendUpdate(pkt, player);
                 }
@@ -51,11 +53,11 @@ public class ObservePacket {
         ((Context)ctx.get()).setPacketHandled(true);
     }
 
-    private static void sendUpdate(ObservePacket pkt, ServerPlayerEntity player) {
-        TileEntity te = player.level.getBlockEntity(pkt.pos);
+    private static void sendUpdate(ObservePacket pkt, ServerPlayer player) {
+        BlockEntity te = player.level.getBlockEntity(pkt.pos);
         if (te instanceof IObserveTileEntity) {
             ((IObserveTileEntity)te).onObserved(player, pkt);
-            SUpdateTileEntityPacket supdatetileentitypacket = te.getUpdatePacket();
+            Packet<ClientGamePacketListener> supdatetileentitypacket = te.getUpdatePacket();
             if (supdatetileentitypacket != null) {
                 player.connection.send(supdatetileentitypacket);
             }

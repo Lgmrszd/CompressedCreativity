@@ -8,8 +8,8 @@ import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
-import net.minecraft.block.Block;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,10 +19,10 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+//import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -76,9 +76,10 @@ public class CompressedCreativity
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         event.enqueueWork(CCPonder::register);
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
-        if (ModList.get().isLoaded("create"))
-            GoggleOverlayRenderer.registerCustomGoggleCondition(GoggledChecker::hasBlockTrackerUpgrade);
+        // TODO: fix goggles overlay support
+//        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+//        if (ModList.get().isLoaded("create"))
+//            GoggleOverlayRenderer.registerCustomGoggleCondition(GoggledChecker::hasBlockTrackerUpgrade);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -95,11 +96,11 @@ public class CompressedCreativity
 //                collect(Collectors.toList()));
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
-        // do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
+//    @SubscribeEvent
+//    public void onServerStarting(FMLServerStartingEvent event) {
+//        // do something when the server starts
+//        LOGGER.info("HELLO from server starting");
+//    }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
     // Event bus for receiving Registry Events)

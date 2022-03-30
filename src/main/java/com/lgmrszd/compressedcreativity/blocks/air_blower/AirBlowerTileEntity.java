@@ -12,18 +12,19 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import org.apache.logging.log4j.LogManager;
@@ -50,13 +51,13 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
     private float airBuffer;
     private float airUsage = 0.0f;
 
-    public AirBlowerTileEntity(TileEntityType<?> typeIn) {
-        super(typeIn);
+    public AirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
         airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        CommonConfig.AIR_BLOWER_DANGER_PRESSURE.get().floatValue(),
-                        CommonConfig.AIR_BLOWER_DANGER_PRESSURE.get().floatValue() + CommonConfig.AIR_BLOWER_CRITICAL_PRESSURE.get().floatValue(),
-                        CommonConfig.AIR_BLOWER_VOLUME.get());
+                        PressureTier.TIER_ONE,
+                        CommonConfig.AIR_BLOWER_VOLUME.get()
+                );
         airHandlerCap = LazyOptional.of(() -> airHandler);
 
         airCurrent = new AirCurrent(this);
@@ -69,38 +70,38 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     }
 
-    public boolean addToGoggleTooltip(List<ITextComponent> tooltip, boolean isPlayerSneaking){
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking){
         ObservePacket.send(worldPosition, 0);
         // "Pressure Stats:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
         // "Pressure:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
-                        .withStyle(TextFormatting.GRAY)));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
+                        .withStyle(ChatFormatting.GRAY)));
         // "0.0bar"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new StringTextComponent(" " + airHandler.getPressure())
-                        .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
-                        .withStyle(TextFormatting.AQUA)));
+                .append(new TextComponent(" " + airHandler.getPressure())
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
+                        .withStyle(ChatFormatting.AQUA)));
         // "Air:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
-                        .withStyle(TextFormatting.GRAY)));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
+                        .withStyle(ChatFormatting.GRAY)));
         // "0.0mL"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new StringTextComponent(" " + airHandler.getAir())
-                        .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air"))
-                        .withStyle(TextFormatting.AQUA)));
+                .append(new TextComponent(" " + airHandler.getAir())
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
+                        .withStyle(ChatFormatting.AQUA)));
         // "Air usage:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_usage")
-                        .withStyle(TextFormatting.GRAY)));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_usage")
+                        .withStyle(ChatFormatting.GRAY)));
         // "0.0mL/t"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new StringTextComponent(" " + airUsage)
-                        .append(new TranslationTextComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
-                        .withStyle(TextFormatting.AQUA)));
+                .append(new TextComponent(" " + airUsage)
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
+                        .withStyle(ChatFormatting.AQUA)));
         return true;
     }
 
@@ -175,11 +176,6 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
         this.updateAirHandler();
     }
 
-    @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        super.handleUpdateTag(state, tag);
-        this.updateAirHandler();
-    }
 
     @Override
     public void setRemoved() {
@@ -187,11 +183,20 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
         airHandlerCap.invalidate();
     }
 
-    @Override
-    public void clearCache() {
-        super.clearCache();
-        updateAirHandler();
-    }
+// TODO: check if other overrides are needed
+
+//    @Override
+//    public void handleUpdateTag(BlockState state, CompoundTag tag) {
+//        super.handleUpdateTag(state, tag);
+//        this.updateAirHandler();
+//    }
+
+
+//    @Override
+//    public void clearCache() {
+//        super.clearCache();
+//        updateAirHandler();
+//    }
 
     @Nonnull
     @Override
@@ -209,15 +214,15 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
     }
 
     @Override
-    public void write(CompoundNBT compound, boolean clientPacket) {
+    public void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
 //        compound.putBoolean("isWorking", isWorking);
     }
 
     @Override
-    protected void fromTag(BlockState state, CompoundNBT compound, boolean clientPacket) {
-        super.fromTag(state, compound, clientPacket);
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
 //        isWorking = compound.getBoolean("isWorking");
         if (clientPacket)
@@ -225,7 +230,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
     }
 
     @Override
-    public void onObserved(ServerPlayerEntity var1, ObservePacket var2) {
+    public void onObserved(ServerPlayer var1, ObservePacket var2) {
 
     }
 
@@ -237,7 +242,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     @Nullable
     @Override
-    public World getAirCurrentWorld() {
+    public Level getAirCurrentWorld() {
         return level;
     }
 

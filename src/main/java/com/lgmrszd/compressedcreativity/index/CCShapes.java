@@ -3,34 +3,34 @@ package com.lgmrszd.compressedcreativity.index;
 
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.utility.VoxelShaper;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
 
 
 public class CCShapes {
 
     private static VoxelShape rotationalCompressorShape() {
-        VoxelShape shape = VoxelShapes.empty();
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0, 0, 1, 1, 0.375), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.125, 0.125, 0.375, 0.875, 0.875, 0.875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0.3125, 0.375, 0.125, 0.6875, 0.6875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.875, 0.3125, 0.375, 1, 0.6875, 0.6875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0, 0.375, 1, 0.125, 1), IBooleanFunction.OR);
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(0, 0, 0, 1, 1, 0.375), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.125, 0.125, 0.375, 0.875, 0.875, 0.875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0, 0.3125, 0.375, 0.125, 0.6875, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.875, 0.3125, 0.375, 1, 0.6875, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0, 0, 0.375, 1, 0.125, 1), BooleanOp.OR);
 
         return shape;
     }
 
     private static VoxelShape airBlowerShape(){
-        VoxelShape shape = VoxelShapes.empty();
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0, 0.875, 1, 1, 1), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.125, 0.125, 0.125, 0.875, 0.875, 0.875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.3125, 0.3125, 0, 0.6875, 0.6875, 0.125), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.875, 0.3125, 0.3125, 1, 0.6875, 0.6875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0, 0.3125, 0.3125, 0.125, 0.6875, 0.6875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.3125, 0.875, 0.3125, 0.6875, 1, 0.6875), IBooleanFunction.OR);
-        shape = VoxelShapes.join(shape, VoxelShapes.box(0.3125, 0, 0.3125, 0.6875, 0.125, 0.6875), IBooleanFunction.OR);
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(0, 0, 0.875, 1, 1, 1), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.125, 0.125, 0.125, 0.875, 0.875, 0.875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.3125, 0.3125, 0, 0.6875, 0.6875, 0.125), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.875, 0.3125, 0.3125, 1, 0.6875, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0, 0.3125, 0.3125, 0.125, 0.6875, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.3125, 0.875, 0.3125, 0.6875, 1, 0.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.3125, 0, 0.3125, 0.6875, 0.125, 0.6875), BooleanOp.OR);
 
 
         return shape;

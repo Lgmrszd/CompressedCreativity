@@ -13,10 +13,11 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
 
+
 public class CCBlocks {
 
     private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate()
-            .itemGroup(() -> ModGroup.MAIN);
+            .creativeModeTab(() -> ModGroup.MAIN);
 
     public static final BlockEntry<RotationalCompressorBlock> ROTATIONAL_COMPRESSOR = REGISTRATE.block("rotational_compressor", RotationalCompressorBlock::new)
             .initialProperties(SharedProperties::stone)

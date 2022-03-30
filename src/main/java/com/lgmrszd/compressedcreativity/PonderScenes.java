@@ -4,14 +4,14 @@ import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
-import com.simibubi.create.foundation.ponder.content.PonderPalette;
-import com.simibubi.create.foundation.ponder.instructions.EmitParticlesInstruction;
+import com.simibubi.create.foundation.ponder.PonderPalette;
+import com.simibubi.create.foundation.ponder.instruction.EmitParticlesInstruction;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.particle.AirParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,8 +86,8 @@ public class PonderScenes {
                 .placeNearTarget()
                 .pointAt(util.vector.topOf(compressor));
         scene.idle(5);
-        Vector3d itemVec = util.vector.blockSurface(util.grid.at(1, 2, 3), Direction.UP);
-        scene.effects.emitParticles(itemVec, EmitParticlesInstruction.Emitter.simple(AirParticleData.DENSE, new Vector3d(0.0D, 0.1D, 0.0D)), 1.0F, 120);
+        Vec3 itemVec = util.vector.blockSurface(util.grid.at(1, 2, 3), Direction.UP);
+        scene.effects.emitParticles(itemVec, EmitParticlesInstruction.Emitter.simple(AirParticleData.DENSE, new Vec3(0.0D, 0.1D, 0.0D)), 1.0F, 120);
         scene.idle(60);
 
         scene.overlay.showText(50)
@@ -118,8 +118,8 @@ public class PonderScenes {
         scene.idle(60);
 
         scene.world.destroyBlock(compressor);
-        scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.simple(ParticleTypes.EXPLOSION, Vector3d.ZERO), 2.0F, 1);
-        scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.withinBlockSpace(AirParticleData.DENSE, Vector3d.ZERO), 40.0F, 10);
+        scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.simple(ParticleTypes.EXPLOSION, Vec3.ZERO), 2.0F, 1);
+        scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.withinBlockSpace(AirParticleData.DENSE, Vec3.ZERO), 40.0F, 10);
         scene.idle(10);
         scene.overlay.showText(50)
                 .text("Machine could explode!").colored(PonderPalette.RED)
