@@ -4,12 +4,14 @@ import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
+import com.simibubi.create.foundation.block.ITE;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.core.ModSounds;
 import me.desht.pneumaticcraft.common.network.NetworkHandler;
 import me.desht.pneumaticcraft.common.network.PacketSpawnParticle;
 import me.desht.pneumaticcraft.common.particle.AirParticleData;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -29,7 +31,7 @@ import net.minecraft.world.level.Level;
 import com.simibubi.create.content.contraptions.base.IRotate.SpeedLevel;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class RotationalCompressorBlock extends HorizontalKineticBlock implements IRotate {
+public class RotationalCompressorBlock extends HorizontalKineticBlock implements IRotate, ITE<RotationalCompressorTileEntity> {
 
 //    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 10, 16);
 
@@ -49,19 +51,6 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
                 .setValue(HORIZONTAL_FACING, context.getHorizontalDirection());
     }
 
-
-    // TODO: check if it's needed at all
-
-
-//    @Override
-//    public boolean hasTileEntity(BlockState state) {
-//        return true;
-//    }
-
-//    @Override
-//    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-//        return CCTileEntities.ROTATIONAL_COMPRESSOR.create(pos, state);
-//    }
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
@@ -113,6 +102,15 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
         return SpeedLevel.FAST;
     }
 
+    @Override
+    public Class<RotationalCompressorTileEntity> getTileEntityClass() {
+        return RotationalCompressorTileEntity.class;
+    }
+
+    @Override
+    public BlockEntityType<? extends RotationalCompressorTileEntity> getTileEntityType() {
+        return CCTileEntities.ROTATIONAL_COMPRESSOR.get();
+    }
 
 
 //    @Override

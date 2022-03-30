@@ -4,7 +4,9 @@ package com.lgmrszd.compressedcreativity.blocks.air_blower;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
+import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -23,7 +25,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class AirBlowerBlock extends Block implements IWrenchable {
+public class AirBlowerBlock extends Block implements IWrenchable, ITE<AirBlowerTileEntity> {
 
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
 
@@ -33,19 +35,6 @@ public class AirBlowerBlock extends Block implements IWrenchable {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
     }
-
-    // TODO: check if it's needed at all
-
-//    @Override
-//    public boolean hasTileEntity(BlockState state) {
-//        return true;
-//    }
-//
-//    @Nullable
-//    @Override
-//    public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-//        return CCTileEntities.AIR_BLOWER.create();
-//    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -74,5 +63,15 @@ public class AirBlowerBlock extends Block implements IWrenchable {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return CCShapes.AIR_BLOWER.get(state.getValue(FACING));
+    }
+
+    @Override
+    public Class<AirBlowerTileEntity> getTileEntityClass() {
+        return AirBlowerTileEntity.class;
+    }
+
+    @Override
+    public BlockEntityType<? extends AirBlowerTileEntity> getTileEntityType() {
+        return CCTileEntities.AIR_BLOWER.get();
     }
 }
