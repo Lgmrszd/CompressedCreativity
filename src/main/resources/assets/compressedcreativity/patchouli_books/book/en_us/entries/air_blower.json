@@ -1,7 +1,7 @@
 {
   "name": "Air Blower",
   "icon": "compressedcreativity:air_blower",
-  "category": "machines",
+  "category": "pneumaticcraft:machines",
   "advancement": "pneumaticcraft:pressure_tube",
   "pages": [
     {
