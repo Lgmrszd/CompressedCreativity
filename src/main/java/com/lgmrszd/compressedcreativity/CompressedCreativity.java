@@ -4,6 +4,7 @@ import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCPonder;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCUpgrades;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -63,6 +64,8 @@ public class CompressedCreativity
         ModItems.register(eventBus);
         CCBlocks.register();
         CCTileEntities.register();
+
+        CCUpgrades.UPGRADES_DEFERRED.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_SPEC);
     }
