@@ -7,7 +7,7 @@ import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,7 +35,7 @@ public class CompressedCreativity
 
     public static final String MOD_ID = "compressedcreativity";
 
-    private static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
+    private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
     private static final String PROTOCOL = "1";
     public static final SimpleChannel Network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MOD_ID, "main"))
             .clientAcceptedVersions(PROTOCOL::equals)
