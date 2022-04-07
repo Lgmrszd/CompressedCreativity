@@ -5,7 +5,7 @@ import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCPonder;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
-import com.simibubi.create.content.contraptions.goggles.GoggleOverlayRenderer;
+import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.world.level.block.Block;
@@ -78,8 +78,8 @@ public class CompressedCreativity
         event.enqueueWork(CCPonder::register);
         // TODO: fix goggles overlay support
 //        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
-//        if (ModList.get().isLoaded("create"))
-//            GoggleOverlayRenderer.registerCustomGoggleCondition(GoggledChecker::hasBlockTrackerUpgrade);
+        if (ModList.get().isLoaded("create"))
+            GogglesItem.addIsWearingPredicate(GoggledChecker::hasBlockTrackerUpgrade);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

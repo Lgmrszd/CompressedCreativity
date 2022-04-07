@@ -1,7 +1,7 @@
 {
   "name": "Adding Creativity",
   "icon": "create:cogwheel",
-  "category": "pneumaticcraft:compressed_creativity",
+  "category": "compressedcreativity:compressed_creativity",
   "advancement": "create:its_alive",
   "priority": "true",
   "pages": [
