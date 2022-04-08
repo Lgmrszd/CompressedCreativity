@@ -2,6 +2,7 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
@@ -51,7 +52,10 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        PressureTier.TIER_ONE,
+                        CommonConfig.ROTATIONAL_COMPRESSOR_PRESSURE_TIER.get()
+                                .getPressureTierDefinedOrCustom(
+                                        PressureTierConfig.CustomTier.ROTATIONAL_COMPRESSOR_CUSTOM_TIER
+                                ),
                         CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }

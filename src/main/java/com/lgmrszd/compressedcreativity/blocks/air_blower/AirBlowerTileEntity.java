@@ -2,6 +2,7 @@ package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
@@ -12,7 +13,6 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,7 +55,10 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
         super(type, pos, state);
         airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        PressureTier.TIER_ONE,
+                        CommonConfig.AIR_BLOWER_PRESSURE_TIER.get()
+                                .getPressureTierDefinedOrCustom(
+                                        PressureTierConfig.CustomTier.AIR_BLOWER_CUSTOM_TIER
+                                ),
                         CommonConfig.AIR_BLOWER_VOLUME.get()
                 );
         airHandlerCap = LazyOptional.of(() -> airHandler);
