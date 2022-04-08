@@ -9,10 +9,12 @@
 
   "block.compressedcreativity.air_blower": "Air Blower",
 
-  "compressedcreativity.tooltip.rotational_compressor.pressure_summary": "Pressure Stats:",
-  "compressedcreativity.tooltip.rotational_compressor.pressure": "Pressure:",
-  "compressedcreativity.tooltip.rotational_compressor.air": "Air:",
-  "compressedcreativity.tooltip.rotational_compressor.air_production": "Air generated:",
+  "compressedcreativity.tooltip.pressure_summary": "Pressure Stats:",
+  "compressedcreativity.tooltip.pressure": "Pressure:",
+  "compressedcreativity.tooltip.air": "Air:",
+  "compressedcreativity.tooltip.air_production": "Air generated:",
+  "compressedcreativity.tooltip.air_usage": "Air used:",
+
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Rotation Direction Requirement:",
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction",
 

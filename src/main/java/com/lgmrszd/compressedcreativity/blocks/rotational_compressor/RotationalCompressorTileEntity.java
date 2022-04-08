@@ -66,10 +66,10 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         if (added) {
             // "Pressure Stats:"
             tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
             // "Pressure:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
                             .withStyle(ChatFormatting.GRAY)));
             // "0.0bar"
             tooltip.add(componentSpacing.plainCopy()
@@ -78,7 +78,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
                             .withStyle(ChatFormatting.AQUA)));
             // "Air:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
                             .withStyle(ChatFormatting.GRAY)));
             // "0.0mL"
             tooltip.add(componentSpacing.plainCopy()
@@ -87,7 +87,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
                             .withStyle(ChatFormatting.AQUA)));
             // "Air generated:"
             tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_production")
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_production")
                             .withStyle(ChatFormatting.GRAY)));
             // "0.0mL/t"
             tooltip.add(componentSpacing.plainCopy()

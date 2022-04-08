@@ -77,10 +77,10 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
         ObservePacket.send(worldPosition, 0);
         // "Pressure Stats:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure_summary")));
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
         // "Pressure:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.pressure")
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
                         .withStyle(ChatFormatting.GRAY)));
         // "0.0bar"
         tooltip.add(componentSpacing.plainCopy()
@@ -89,7 +89,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
                         .withStyle(ChatFormatting.AQUA)));
         // "Air:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air")
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
                         .withStyle(ChatFormatting.GRAY)));
         // "0.0mL"
         tooltip.add(componentSpacing.plainCopy()
@@ -98,7 +98,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
                         .withStyle(ChatFormatting.AQUA)));
         // "Air usage:"
         tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.air_usage")
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_usage")
                         .withStyle(ChatFormatting.GRAY)));
         // "0.0mL/t"
         tooltip.add(componentSpacing.plainCopy()
