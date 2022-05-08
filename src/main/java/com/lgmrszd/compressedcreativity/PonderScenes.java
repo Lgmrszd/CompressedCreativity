@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.PonderPalette;
 import com.simibubi.create.foundation.ponder.instruction.EmitParticlesInstruction;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
+import me.desht.pneumaticcraft.common.block.entity.CompressedIronBlockBlockEntity;
 import me.desht.pneumaticcraft.common.particle.AirParticleData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
@@ -19,11 +20,21 @@ public class PonderScenes {
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
-    private static void updatePressure(SceneBuilder scene, BlockPos air_blower) {
-        scene.world.modifyTileEntity(air_blower, AirBlowerTileEntity.class, te -> {
+    private static void updatePressure(SceneBuilder scene, BlockPos airBlock) {
+        scene.world.modifyTileEntity(airBlock, AirBlowerTileEntity.class, te -> {
             te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent(cap -> {
                 cap.setPressure(cap.getDangerPressure());
             });
+        });
+    }
+
+    private static void updateTemperature(SceneBuilder scene, BlockPos temperatureBlock, double temperature) {
+        scene.world.modifyTileEntity(temperatureBlock, CompressedIronBlockBlockEntity.class, te -> {
+            te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY).ifPresent(cap -> {
+                cap.setTemperature(temperature);
+                cap.tick();
+            });
+            te.tickServer();
         });
     }
 
@@ -163,6 +174,76 @@ public class PonderScenes {
 
         updatePressure(scene, air_blower);
 
+        scene.markAsFinished();
+    }
+
+    public static void pressureTiers(SceneBuilder scene, SceneBuildingUtil util) {
+        scene.title("pressure_tiers", "Different Pressure Tiers");
+        scene.configureBasePlate(0, 0, 7);
+
+        BlockPos tier_1 = util.grid.at(5, 1, 2);
+        BlockPos tier_1_5 = util.grid.at(3, 1, 2);
+        BlockPos tier_2 = util.grid.at(1, 1, 2);
+
+        scene.world.showSection(util.select.layer(0).substract(util.select.fromTo(1, 0, 5, 5, 0, 5)), Direction.UP);
+        scene.idle(10);
+
+        scene.world.showSection(util.select.layer(1).add(util.select.fromTo(1, 0, 5, 5, 0, 5)), Direction.DOWN);
+        scene.idle(40);
+
+        scene.overlay.showText(320).text("tiers_info")
+                .independent()
+                .attachKeyFrame();
+        scene.idle(80);
+
+        scene.overlay.showText(60).text("tier_1")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(tier_1))
+                .colored(PonderPalette.BLACK);
+        scene.idle(80);
+
+        scene.overlay.showText(60).text("tier_1_5")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(tier_1_5))
+                .colored(PonderPalette.RED);
+        scene.idle(80);
+
+        scene.overlay.showText(60).text("tier_2")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(util.vector.centerOf(tier_2))
+                .colored(PonderPalette.BLUE);
+        scene.idle(100);
+
+        scene.overlay.showText(80).text("tiers_info_additional")
+                .independent()
+                .attachKeyFrame();
+        scene.idle(80);
+
+        scene.markAsFinished();
+    }
+
+
+    public static void temperatureOne(SceneBuilder scene, SceneBuildingUtil util) {
+        scene.title("temperature_1", "Basics about temperature");
+        scene.configureBasePlate(0, 0, 5);
+
+        BlockPos compIron_1 = util.grid.at(3, 1, 2);
+
+        scene.world.showSection(util.select.layer(0), Direction.UP);
+        scene.idle(10);
+
+        scene.world.showSection(util.select.layer(1), Direction.DOWN);
+        scene.idle(10);
+
+//        scene.world.destroyBlock(compIron_1);
+
+        updateTemperature(scene, compIron_1, 300);
+        scene.idle(20);
+        updateTemperature(scene, compIron_1, 10);
+        scene.idle(20);
         scene.markAsFinished();
     }
 

@@ -30,5 +30,12 @@
 
   "compressedcreativity.ponder.air_blower.header": "Air Flow from Air Pressure",
   "compressedcreativity.ponder.air_blower.text_1": "Air Blower uses pressurized air to create Air Current",
-  "compressedcreativity.ponder.air_blower.text_2": "Air Current speed, as well as air consumption rate, depends on current Air Pressure"
+  "compressedcreativity.ponder.air_blower.text_2": "Air Current speed, as well as air consumption rate, depends on current Air Pressure",
+
+
+  "compressedcreativity.ponder.pressure_tiers.text_1": "PneumaticCraft: Repressurized has three Pressure Tiers for pneumatic machines:",
+  "compressedcreativity.ponder.pressure_tiers.text_2": "Tier 1 machines are capable of nominally resisting 5 bar of pressure ",
+  "compressedcreativity.ponder.pressure_tiers.text_3": "Tier 1.5 machines can resist up to 10 bar",
+  "compressedcreativity.ponder.pressure_tiers.text_4": "Tier 2 machines can resist up to 10 bar",
+  "compressedcreativity.ponder.pressure_tiers.text_5": "Note that bar in PNC:R represents the pressure above atmospheric pressure, so 0 bar is unpressurized air, and -1 bar is a vacuum."
 }
