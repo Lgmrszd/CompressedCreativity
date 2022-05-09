@@ -4,18 +4,22 @@ import com.lgmrszd.compressedcreativity.index.CCUpgradeItem;
 import com.lgmrszd.compressedcreativity.index.CCUpgrades;
 import com.lgmrszd.compressedcreativity.items.EngineerGogglesUpgradeItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import me.desht.pneumaticcraft.api.item.PNCUpgrade;
-import me.desht.pneumaticcraft.common.core.ModUpgrades;
-import me.desht.pneumaticcraft.common.item.UpgradeItem;
+import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IPneumaticHelmetRegistry;
+import me.desht.pneumaticcraft.api.item.IUpgradeRegistry;
+import me.desht.pneumaticcraft.common.item.ItemRegistry;
+import me.desht.pneumaticcraft.common.item.PneumaticArmorItem;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.stream.IntStream;
+
+import static me.desht.pneumaticcraft.common.core.ModItems.PNEUMATIC_HELMET;
 
 public class ModItems {
 
     private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate()
             .creativeModeTab(() -> ModGroup.MAIN);
+
+    private static final IUpgradeRegistry upgradeRegistry = ItemRegistry.getInstance().getUpgradeRegistry();
 
 
     public static void register(IEventBus eventBus) {
@@ -23,7 +27,8 @@ public class ModItems {
 
 
     static {
-        REGISTRATE.item("engineer_goggles_upgrade", EngineerGogglesUpgradeItem::new).register();
+        REGISTRATE.item("engineer_goggles_upgrade", (properties) -> upgradeRegistry.makeUpgradeItem(CCUpgrades.ENGINEER_GOGGLES::get, 1)).register();
+        upgradeRegistry.addApplicableUpgrades(PNEUMATIC_HELMET.get(), new IUpgradeRegistry.Builder().with(CCUpgrades.ENGINEER_GOGGLES.get(), 1));
     }
 
 
