@@ -11,6 +11,6 @@ public class GoggledChecker {
 //    @OnlyIn(Dist.CLIENT)
     public static boolean hasBlockTrackerUpgrade(Player player) {
         ItemStack helm = player.getItemBySlot(EquipmentSlot.HEAD);
-        return UpgradableItemUtils.getUpgrades(helm, BLOCK_TRACKER.get()) > 0;
+        return UpgradableItemUtils.getUpgradeCount(helm, BLOCK_TRACKER.get()) > 0;
     }
 }
