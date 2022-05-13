@@ -147,7 +147,7 @@ dependencies {
     implementation fg.deobf("curse.maven:flywheel-486392:3737402")
 //    implementation fg.deobf("curse.maven:cc-tweaked-282001:3368207")
 //    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3784238")
-    implementation fg.deobf(files("./pneumaticcraft-repressurized-1.18.2-3.2.2-79.jar"))
+    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3784238")
     implementation fg.deobf("curse.maven:patchouli-306770:3729975")
 
 }

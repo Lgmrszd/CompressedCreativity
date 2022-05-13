@@ -1,10 +1,7 @@
 package com.lgmrszd.compressedcreativity;
 
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
-import com.lgmrszd.compressedcreativity.index.CCBlocks;
-import com.lgmrszd.compressedcreativity.index.CCPonder;
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
-import com.lgmrszd.compressedcreativity.index.CCUpgrades;
+import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -74,6 +71,7 @@ public class CompressedCreativity
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
+        CCUpgradesDBSetup.init();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
