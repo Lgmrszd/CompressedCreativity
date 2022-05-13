@@ -8,10 +8,12 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -52,6 +54,9 @@ public class CompressedCreativity
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
 
+
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> CCClientSetup::initEarly);
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -71,6 +76,7 @@ public class CompressedCreativity
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
+        CCCommonUpgradeHandlers.init();
         CCUpgradesDBSetup.init();
     }
 
