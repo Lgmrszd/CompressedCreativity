@@ -9,7 +9,6 @@ public class ModGroup {
     public static final CreativeModeTab MAIN = new CreativeModeTab(CompressedCreativity.MOD_ID+".main") {
         @Override
         public ItemStack makeIcon() {
-//            return new ItemStack(ModItems.TEST_ITEM.get());
             return new ItemStack(CCBlocks.ROTATIONAL_COMPRESSOR.get());
         }
     };
