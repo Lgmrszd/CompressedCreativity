@@ -4,12 +4,7 @@ import com.lgmrszd.compressedcreativity.index.CCUpgrades;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.item.IUpgradeRegistry;
-import me.desht.pneumaticcraft.common.item.ItemRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
-
-import java.util.stream.IntStream;
-
-import static me.desht.pneumaticcraft.common.core.ModItems.PNEUMATIC_HELMET;
 
 public class ModItems {
 
@@ -21,9 +16,9 @@ public class ModItems {
 
 
     static {
-        REGISTRATE.item("engineer_goggles_upgrade", (properties) -> {
-            IUpgradeRegistry upgradeRegistry = PneumaticRegistry.getInstance().getItemRegistry().getUpgradeRegistry();
-            return upgradeRegistry.makeUpgradeItem(CCUpgrades.ENGINEER_GOGGLES::get, 1);
+        REGISTRATE.item("mechanical_visor_upgrade", (properties) -> {
+            IUpgradeRegistry upgradeRegistry = PneumaticRegistry.getInstance().getUpgradeRegistry();
+            return upgradeRegistry.makeUpgradeItem(CCUpgrades.MECHANICAL_VISOR::get, 1);
         }).register();
     }
 
