@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity.upgrades;
 
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.index.CCUpgrades;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.api.pneumatic_armor.BaseArmorUpgradeHandler;
@@ -8,17 +9,16 @@ import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 
-import static me.desht.pneumaticcraft.api.PneumaticRegistry.RL;
 
-public class EngineersGogglesHandler extends BaseArmorUpgradeHandler<IArmorExtensionData> {
+public class MechanicalVisorHandler extends BaseArmorUpgradeHandler<IArmorExtensionData> {
     @Override
     public ResourceLocation getID() {
-        return RL("engineers_goggles");
+        return new ResourceLocation(CompressedCreativity.MOD_ID, "mechanical_visor");
     }
 
     @Override
     public PNCUpgrade[] getRequiredUpgrades() {
-        return new PNCUpgrade[] {CCUpgrades.ENGINEER_GOGGLES.get()};
+        return new PNCUpgrade[] {CCUpgrades.MECHANICAL_VISOR.get()};
     }
 
     @Override

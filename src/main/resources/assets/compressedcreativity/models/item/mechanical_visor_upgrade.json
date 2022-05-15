@@ -1,0 +1,7 @@
+{
+  "textures" : {
+    "layer0" : "pneumaticcraft:item/upgrades/upgrade_layer0",
+    "layer1" : "compressedcreativity:item/mechanical_visor_upgrade"
+  },
+  "parent" : "item/generated"
+}

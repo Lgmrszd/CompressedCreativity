@@ -9,6 +9,8 @@
 
   "block.compressedcreativity.air_blower": "Air Blower",
 
+  "item.compressedcreativity.mechanical_visor_upgrade": "Mechanical Visor Upgrade",
+
   "compressedcreativity.tooltip.pressure_summary": "Pressure Stats:",
   "compressedcreativity.tooltip.pressure": "Pressure:",
   "compressedcreativity.tooltip.air": "Air:",
@@ -30,5 +32,10 @@
 
   "compressedcreativity.ponder.air_blower.header": "Air Flow from Air Pressure",
   "compressedcreativity.ponder.air_blower.text_1": "Air Blower uses pressurized air to create Air Current",
-  "compressedcreativity.ponder.air_blower.text_2": "Air Current speed, as well as air consumption rate, depends on current Air Pressure"
+  "compressedcreativity.ponder.air_blower.text_2": "Air Current speed, as well as air consumption rate, depends on current Air Pressure",
+
+  "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Mechanical Visor",
+
+  "pneumaticcraft.gui.tab.info.item.armor.head.compressedcreativity.mechanical_visorUpgrade": "§0Mechanical Visor will allow you to see mechanical stats of some machines, as if you were wearing Engineer's Goggles."
+
 }
