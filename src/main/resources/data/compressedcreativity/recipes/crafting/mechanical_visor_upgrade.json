@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UTU",
+    "CGC",
+    "UBU"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass/colorless"
+    },
+    "U": {
+      "tag": "pneumaticcraft:upgrade_components"
+    },
+    "T": {
+      "item": "create:electron_tube"
+    },
+    "B": {
+      "tag": "forge:plates/brass"
+    },
+    "C": {
+      "tag": "forge:ingots/compressed_iron"
+    }
+  },
+  "result": {
+    "item": "compressedcreativity:mechanical_visor_upgrade"
+  }
+}

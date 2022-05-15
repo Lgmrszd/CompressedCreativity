@@ -21,8 +21,8 @@
     },
     {
       "type": "patchouli:spotlight",
-      "item": "pneumaticcraft:block_tracker_upgrade",
-      "text": "When installed in $(l:armor/pneumatic_helmet)Pneumatic Helmet$(), $(l:base_concepts/upgrades#block_tracker)Block Tracker Upgrade$() will also provide Engineer's Goggles functionality."
+      "item": "compressedcreativity:mechanical_visor_upgrade",
+      "text": "When installed in $(l:armor/pneumatic_helmet)Pneumatic Helmet$(), $(l:compressedcreativity:mechanical_visor_upgrade)Mechanical Visor Upgrade$() will provide Engineer's Goggles functionality."
     }
   ]
 }
