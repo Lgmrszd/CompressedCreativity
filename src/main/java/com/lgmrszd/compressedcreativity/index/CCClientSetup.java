@@ -1,10 +1,11 @@
 package com.lgmrszd.compressedcreativity.index;
 
+import com.lgmrszd.compressedcreativity.GoggledChecker;
 import com.lgmrszd.compressedcreativity.upgrades.MechanicalVisorClientHandler;
+import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IPneumaticHelmetRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class CCClientSetup {
     private static void registerArmorClientUpgradeHandlers() {
@@ -12,15 +13,13 @@ public class CCClientSetup {
         clientRegistry.registerRenderHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, new MechanicalVisorClientHandler());
     }
 
-    public static void initEarly() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(CCClientSetup::init);
-    }
-
-    static void init(FMLClientSetupEvent event) {
+    public static void init(FMLClientSetupEvent event) {
         registerArmorClientUpgradeHandlers();
+        GogglesItem.addIsWearingPredicate(GoggledChecker::hasBlockTrackerUpgrade);
         event.enqueueWork(CCClientSetup::initLate);
     }
 
     private static void initLate() {
+        CCPonder.register();
     }
 }

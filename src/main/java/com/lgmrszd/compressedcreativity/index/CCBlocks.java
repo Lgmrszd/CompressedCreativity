@@ -37,6 +37,5 @@ public class CCBlocks {
             .register();
 
     public static void register() {
-//        Create.registrate().addToSection();
     }
 }
