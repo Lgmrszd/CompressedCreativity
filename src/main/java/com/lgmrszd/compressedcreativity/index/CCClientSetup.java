@@ -1,15 +1,15 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.upgrades.MechanicalVisorClientHandler;
-// TODO use API
-import me.desht.pneumaticcraft.client.pneumatic_armor.ArmorUpgradeClientRegistry;
+import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IPneumaticHelmetRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class CCClientSetup {
     private static void registerArmorClientUpgradeHandlers() {
-        ArmorUpgradeClientRegistry cr = ArmorUpgradeClientRegistry.getInstance();
-        cr.registerHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, new MechanicalVisorClientHandler());
+        IPneumaticHelmetRegistry clientRegistry = PneumaticRegistry.getInstance().getHelmetRegistry();
+        clientRegistry.registerRenderHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, new MechanicalVisorClientHandler());
     }
 
     public static void initEarly() {
@@ -17,10 +17,10 @@ public class CCClientSetup {
     }
 
     static void init(FMLClientSetupEvent event) {
+        registerArmorClientUpgradeHandlers();
         event.enqueueWork(CCClientSetup::initLate);
     }
 
     private static void initLate() {
-        registerArmorClientUpgradeHandlers();
     }
 }
