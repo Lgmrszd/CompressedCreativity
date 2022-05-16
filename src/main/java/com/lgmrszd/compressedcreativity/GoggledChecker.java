@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 public class GoggledChecker {
 
 //    @OnlyIn(Dist.CLIENT)
-    public static boolean hasBlockTrackerUpgrade(Player player) {
+    public static boolean hasMechanicalVisorUpgrade(Player player) {
         ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
         ICommonArmorHandler handler = reg.getCommonArmorHandler(player);
         return handler.upgradeUsable(CCCommonUpgradeHandlers.mechanicalVisorHandler, true);

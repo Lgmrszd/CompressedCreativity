@@ -15,7 +15,7 @@ public class CCClientSetup {
 
     public static void init(FMLClientSetupEvent event) {
         registerArmorClientUpgradeHandlers();
-        GogglesItem.addIsWearingPredicate(GoggledChecker::hasBlockTrackerUpgrade);
+        GogglesItem.addIsWearingPredicate(GoggledChecker::hasMechanicalVisorUpgrade);
         event.enqueueWork(CCClientSetup::initLate);
     }
 
