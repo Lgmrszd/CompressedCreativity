@@ -5,6 +5,9 @@ import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
+import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,10 +23,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 
-import javax.annotation.Nullable;
-
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class AirBlowerBlock extends Block implements IWrenchable, ITE<AirBlowerTileEntity> {
 
@@ -54,10 +53,21 @@ public class AirBlowerBlock extends Block implements IWrenchable, ITE<AirBlowerT
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof AirBlowerTileEntity) {
-            AirBlowerTileEntity abte = (AirBlowerTileEntity) te;
+        if (te instanceof AirBlowerTileEntity abte) {
             abte.updateAirHandler();
         }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity te = world.getBlockEntity(pos);
+            if (te instanceof AirBlowerTileEntity abte) {
+                IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
+                miscHelpers.playMachineBreakEffect(abte);
+            }
+        }
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     @Override
