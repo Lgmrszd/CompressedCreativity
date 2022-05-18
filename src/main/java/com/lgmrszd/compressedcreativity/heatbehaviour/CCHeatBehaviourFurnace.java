@@ -20,6 +20,21 @@ import static me.desht.pneumaticcraft.api.PneumaticRegistry.RL;
 
 public class CCHeatBehaviourFurnace extends HeatBehaviour {
 
+    public enum FurnaceEngineHeatSettings {
+        NONE(0),
+        STALL(0),
+        MISCHIEF(1),
+        EVIL(2);
+
+        private final float strength;
+        public float getExplosionStrength() {
+            return strength;
+        }
+        FurnaceEngineHeatSettings(float explosionStrength) {
+            strength = explosionStrength;
+        }
+    }
+
     static final ResourceLocation ID = RL("furnace");
     
     private boolean wasFurnaceEngineConnected = false;
@@ -63,7 +78,7 @@ public class CCHeatBehaviourFurnace extends HeatBehaviour {
                     getWorld().destroyBlock(furnacePos, true);
 //                    getWorld().explode(null, furnacePos.getX() + 0.5F, furnacePos.getY() + 0.5, furnacePos.getZ() + 0.5F, 2F, false, Explosion.BlockInteraction.BREAK);
 //                    getWorld().explode(null, furnacePos.getX() + 0.5F, furnacePos.getY() + 0.5, furnacePos.getZ() + 0.5F, 2F, false, Explosion.BlockInteraction.NONE);
-                    getWorld().explode(null, OVERCLOCKED_ENGINE, null, furnacePos.getX() + 0.5F, furnacePos.getY() + 0.5, furnacePos.getZ() + 0.5F, 2F, false, Explosion.BlockInteraction.NONE);
+                    getWorld().explode(null, OVERCLOCKED_ENGINE, null, furnacePos.getX() + 0.5F, furnacePos.getY() + 0.5, furnacePos.getZ() + 0.5F, 1F, false, Explosion.BlockInteraction.NONE);
                     wasFurnaceEngineConnected = true;
                 }
                 return;
