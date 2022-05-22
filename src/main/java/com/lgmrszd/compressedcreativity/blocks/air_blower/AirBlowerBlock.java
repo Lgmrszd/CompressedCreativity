@@ -3,14 +3,21 @@ package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
+import com.mojang.math.Vector3f;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -21,13 +28,15 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 
 
-public class AirBlowerBlock extends Block implements IWrenchable, ITE<AirBlowerTileEntity> {
+public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWrenchable, ITE<AirBlowerTileEntity> {
 
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty UP = BlockStateProperties.UP;
@@ -85,16 +94,29 @@ public class AirBlowerBlock extends Block implements IWrenchable, ITE<AirBlowerT
         }
     }
 
-    // TODO: prevent tube part from remaining on main face after rotation (getCapability returns true as it gets old blockstate data)
+    // TODO: prevent tube part from remaining on main face after rotation
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        BlockEntity te = worldIn.getBlockEntity(currentPos);
-        if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing).isPresent()) {
+//        BlockEntity te = worldIn.getBlockEntity(currentPos);
+//        if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing).isPresent()) {
+        if (facing != stateIn.getValue(FACING)) {
             BlockEntity other_te = worldIn.getBlockEntity(currentPos.relative(facing));
             boolean has_connection = other_te != null && other_te.getCapability (PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
             stateIn = stateIn.setValue(CONNECTION_PROPERTIES[facing.get3DDataValue()], has_connection);
+        } else {
+            stateIn = stateIn.setValue(CONNECTION_PROPERTIES[facing.get3DDataValue()], false);
         }
         return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        InteractionResult result = IWrenchable.super.onWrenched(state, context);
+        if (result == InteractionResult.SUCCESS) {
+            IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
+            miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
+        }
+        return result;
     }
 
     @Override
@@ -122,5 +144,15 @@ public class AirBlowerBlock extends Block implements IWrenchable, ITE<AirBlowerT
     @Override
     public BlockEntityType<? extends AirBlowerTileEntity> getTileEntityType() {
         return CCTileEntities.AIR_BLOWER.get();
+    }
+
+    @Override
+    public boolean onWrenched(Level world, Player player, BlockPos pos, Direction side, InteractionHand hand) {
+        UseOnContext ctx = new UseOnContext(player, hand, new BlockHitResult(new Vec3(pos.getX(), pos.getY(), pos.getX()), side, pos, false));
+        return ctx.getPlayer() != null && (
+                ctx.getPlayer().isCrouching() ?
+                        onSneakWrenched(world.getBlockState(pos), ctx) :
+                        onWrenched(world.getBlockState(pos), ctx)
+        )  == InteractionResult.SUCCESS;
     }
 }
