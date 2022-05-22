@@ -6,13 +6,20 @@ import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.content.contraptions.base.IRotate;
 import com.simibubi.create.foundation.block.ITE;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
@@ -24,7 +31,7 @@ import net.minecraft.world.level.Level;
 import com.simibubi.create.content.contraptions.base.IRotate.SpeedLevel;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class RotationalCompressorBlock extends HorizontalKineticBlock implements IRotate, ITE<RotationalCompressorTileEntity> {
+public class RotationalCompressorBlock extends HorizontalKineticBlock implements IPneumaticWrenchable, IRotate, ITE<RotationalCompressorTileEntity> {
 
 //    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 10, 16);
 
@@ -62,8 +69,7 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof RotationalCompressorTileEntity) {
-            RotationalCompressorTileEntity rcte = (RotationalCompressorTileEntity) te;
+        if (te instanceof RotationalCompressorTileEntity rcte) {
             rcte.updateAirHandler();
         }
     }
@@ -99,8 +105,22 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
         return CCTileEntities.ROTATIONAL_COMPRESSOR.get();
     }
 
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        InteractionResult result = super.onWrenched(state, context);
+        if (result == InteractionResult.SUCCESS) {
+            IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
+            miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
+        }
+        return result;
+    }
 
 //    @Override
+//    public BlockState updateAfterWrenched(BlockState newState, UseOnContext context) {
+//        return super.updateAfterWrenched(newState, context);
+//    }
+
+    //    @Override
 //    public BlockState updateAfterWrenched(BlockState newState, ItemUseContext context) {
 //        BlockState updatedState = super.updateAfterWrenched(newState, context);
 //        TileEntity te = context.getLevel().getBlockEntity(context.getClickedPos());
@@ -115,4 +135,14 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
 //    public Class<RotationalCompressorTileEntity> getTileEntityClass() {
 //        return RotationalCompressorTileEntity.class;
 //    }
+
+    @Override
+    public boolean onWrenched(Level world, Player player, BlockPos pos, Direction side, InteractionHand hand) {
+        UseOnContext ctx = new UseOnContext(player, hand, new BlockHitResult(new Vec3(pos.getX(), pos.getY(), pos.getX()), side, pos, false));
+        return ctx.getPlayer() != null && (
+                ctx.getPlayer().isCrouching() ?
+                        onSneakWrenched(world.getBlockState(pos), ctx) :
+                        onWrenched(world.getBlockState(pos), ctx)
+        )  == InteractionResult.SUCCESS;
+    }
 }
