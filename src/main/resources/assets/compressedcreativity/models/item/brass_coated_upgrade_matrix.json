@@ -1,0 +1,6 @@
+{
+  "textures" : {
+    "layer0" : "compressedcreativity:item/brass_coated_upgrade_matrix"
+  },
+  "parent" : "item/generated"
+}
