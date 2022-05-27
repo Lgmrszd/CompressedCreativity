@@ -14,14 +14,17 @@ public class CCItems {
             .creativeModeTab(() -> ModGroup.MAIN);
 
     public static final ItemEntry<Item> MECHANICAL_VISOR_UPGRADE = REGISTRATE.item(
-            "mechanical_visor_upgrade", (properties) -> {
-                return (Item) new CCUpgradeItem(properties, CCUpgrades.MECHANICAL_VISOR, 1);
-            }
+            "mechanical_visor_upgrade", (properties) -> (Item) new CCUpgradeItem(properties, CCUpgrades.MECHANICAL_VISOR, 1)
+    ).register();
+
+    public static final ItemEntry<Item> BRASS_GILDED_LAPIS_LAZULI = REGISTRATE.item(
+            "brass_gilded_lapis_lazuli", Item::new
+    ).register();
+
+    public static final ItemEntry<Item> BRASS_COATED_UPGRADE_MATRIX = REGISTRATE.item(
+            "brass_coated_upgrade_matrix", Item::new
     ).register();
 
     public static void register(IEventBus eventBus) {
     }
-
-
-
 }
