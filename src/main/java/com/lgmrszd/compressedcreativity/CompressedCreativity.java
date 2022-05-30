@@ -70,8 +70,7 @@ public class CompressedCreativity
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
-        CCCommonUpgradeHandlers.init();
-        CCUpgradesDBSetup.init();
+        CCCommonSetup.init(event);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
