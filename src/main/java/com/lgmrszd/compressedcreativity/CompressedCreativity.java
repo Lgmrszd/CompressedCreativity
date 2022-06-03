@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity;
 
+import com.lgmrszd.compressedcreativity.config.ClientConfig;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
@@ -42,6 +43,9 @@ public class CompressedCreativity
 
     public CompressedCreativity() {
         // Register the setup method for modloading
+
+        CCConfigHelper.init();
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
@@ -62,8 +66,6 @@ public class CompressedCreativity
         CCTileEntities.register();
 
         CCUpgrades.UPGRADES_DEFERRED.register(eventBus);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_SPEC);
     }
 
     private void setup(final FMLCommonSetupEvent event)

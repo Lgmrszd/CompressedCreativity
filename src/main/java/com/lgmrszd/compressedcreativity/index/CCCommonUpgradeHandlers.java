@@ -9,7 +9,6 @@ public class CCCommonUpgradeHandlers {
     public static MechanicalVisorHandler mechanicalVisorHandler;
 
     public static void init() {
-//        ArmorUpgradeRegistry r = ArmorUpgradeRegistry.getInstance();
         ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
         mechanicalVisorHandler = reg.registerUpgradeHandler(new MechanicalVisorHandler());
     }

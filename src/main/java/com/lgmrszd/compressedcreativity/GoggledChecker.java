@@ -1,5 +1,7 @@
 package com.lgmrszd.compressedcreativity;
 
+import com.lgmrszd.compressedcreativity.config.MechanicalVisorConfig;
+import com.lgmrszd.compressedcreativity.index.CCClientSetup;
 import com.lgmrszd.compressedcreativity.index.CCCommonUpgradeHandlers;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
@@ -13,6 +15,7 @@ public class GoggledChecker {
     public static boolean hasMechanicalVisorUpgrade(Player player) {
         ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
         ICommonArmorHandler handler = reg.getCommonArmorHandler(player);
-        return handler.upgradeUsable(CCCommonUpgradeHandlers.mechanicalVisorHandler, true);
+        return CCClientSetup.mechanicalVisorClientHandler.tooltipMode.isGoggled() &&
+                handler.upgradeUsable(CCCommonUpgradeHandlers.mechanicalVisorHandler, true);
     }
 }
