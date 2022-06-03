@@ -10,12 +10,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class CCClientSetup {
 
+    public static MechanicalVisorClientHandler mechanicalVisorClientHandler;
     public static void init(FMLClientSetupEvent event) {
         IPneumaticHelmetRegistry clientRegistry = PneumaticRegistry.getInstance().getHelmetRegistry();
 
-        clientRegistry.registerBlockTrackEntry(BlockTrackerEntryKinetic::new);
+        clientRegistry.registerBlockTrackEntry(BlockTrackerEntryKinetic.ID, BlockTrackerEntryKinetic::new);
 
-        clientRegistry.registerRenderHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, new MechanicalVisorClientHandler());
+        mechanicalVisorClientHandler = new MechanicalVisorClientHandler();
+        clientRegistry.registerRenderHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, mechanicalVisorClientHandler);
+
         GogglesItem.addIsWearingPredicate(GoggledChecker::hasMechanicalVisorUpgrade);
         event.enqueueWork(CCClientSetup::initLate);
 

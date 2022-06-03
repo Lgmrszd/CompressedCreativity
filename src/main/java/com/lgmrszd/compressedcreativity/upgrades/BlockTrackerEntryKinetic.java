@@ -1,13 +1,20 @@
 package com.lgmrszd.compressedcreativity.upgrades;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.config.ClientConfig;
+import com.lgmrszd.compressedcreativity.config.MechanicalVisorConfig;
+import com.lgmrszd.compressedcreativity.index.CCClientSetup;
+import com.lgmrszd.compressedcreativity.index.CCCommonUpgradeHandlers;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.goggles.IHaveHoveringInformation;
+import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IBlockTrackEntry;
+import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -19,8 +26,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class BlockTrackerEntryKinetic implements IBlockTrackEntry {
+
+    public static final ResourceLocation ID = new ResourceLocation(CompressedCreativity.MOD_ID, "block_tracker_module_kinetic");
     @Override
     public boolean shouldTrackWithThisEntry(BlockGetter world, BlockPos pos, BlockState state, BlockEntity te) {
+        Player player = Minecraft.getInstance().player;
+        ICommonArmorHandler handler = PneumaticRegistry.getInstance().getCommonArmorRegistry().getCommonArmorHandler(player);
+        if (!handler.upgradeUsable(CCCommonUpgradeHandlers.mechanicalVisorHandler, true)) return false;
         if (te == null) return false;
         if (te instanceof IHaveHoveringInformation) return true;
         return te instanceof IHaveGoggleInformation;
@@ -40,16 +52,20 @@ public class BlockTrackerEntryKinetic implements IBlockTrackEntry {
     public void addInformation(Level world, BlockPos pos, BlockEntity te, Direction face, List<Component> infoList) {
         Player player = Minecraft.getInstance().player;
         boolean sneaking = (player != null && player.isShiftKeyDown());
-        if (te instanceof IHaveHoveringInformation kte) {
+        MechanicalVisorConfig.BlockTrackerMode mode = CCClientSetup.mechanicalVisorClientHandler.blockTrackerMode;
+        if (mode.showsTooltip() && te instanceof IHaveHoveringInformation kte) {
             kte.addToTooltip(infoList, sneaking);
         }
-        if (te instanceof IHaveGoggleInformation gte) {
+        if (mode.showsGoggles() && te instanceof IHaveGoggleInformation gte) {
             gte.addToGoggleTooltip(infoList, sneaking);
+        }
+        if (mode == MechanicalVisorConfig.BlockTrackerMode.MIN) {
+            infoList.add(new TranslatableComponent("compressedcreativity.mechanical_visor.armor.gui.block_tracker.min"));
         }
     }
 
     @Override
     public ResourceLocation getEntryID() {
-        return new ResourceLocation(CompressedCreativity.MOD_ID, "block_tracker_module_kinetic");
+        return ID;
     }
 }
