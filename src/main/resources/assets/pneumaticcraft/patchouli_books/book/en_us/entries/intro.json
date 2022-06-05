@@ -1,7 +1,7 @@
 {
   "name": "Adding Creativity",
   "icon": "create:cogwheel",
-  "category": "compressedcreativity:compressed_creativity",
+  "category": "pneumaticcraft:compressed_creativity",
   "advancement": "create:its_alive",
   "priority": "true",
   "pages": [
@@ -12,17 +12,17 @@
     {
       "type": "patchouli:spotlight",
       "item": "compressedcreativity:rotational_compressor",
-      "text": "The $(l:compressedcreativity:rotational_compressor)Rotational Compressor$() is a type of compressor that uses rotation from Create to generate pressure."
+      "text": "The $(l:pneumaticcraft:rotational_compressor)Rotational Compressor$() is a type of compressor that uses rotation from Create to generate pressure."
     },
     {
       "type": "patchouli:spotlight",
       "item": "compressedcreativity:air_blower",
-      "text": "The $(l:compressedcreativity:air_blower)Air Blower$() is a machine that uses pressurized air to create Air Current, similar to a $(item)Encased Fan$()."
+      "text": "The $(l:pneumaticcraft:air_blower)Air Blower$() is a machine that uses pressurized air to create Air Current, similar to a $(item)Encased Fan$()."
     },
     {
       "type": "patchouli:spotlight",
       "item": "compressedcreativity:mechanical_visor_upgrade",
-      "text": "When installed in $(l:armor/pneumatic_helmet)Pneumatic Helmet$(), $(l:compressedcreativity:mechanical_visor_upgrade)Mechanical Visor Upgrade$() will provide Engineer's Goggles functionality."
+      "text": "When installed in $(l:armor/pneumatic_helmet)Pneumatic Helmet$(), $(l:pneumaticcraft:mechanical_visor_upgrade)Mechanical Visor Upgrade$() will provide Engineer's Goggles functionality."
     }
   ]
 }
