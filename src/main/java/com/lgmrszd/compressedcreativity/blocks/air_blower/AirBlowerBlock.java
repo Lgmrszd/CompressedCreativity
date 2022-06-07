@@ -94,7 +94,6 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
         }
     }
 
-    // TODO: prevent tube part from remaining on main face after rotation
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
 //        BlockEntity te = worldIn.getBlockEntity(currentPos);
@@ -115,6 +114,11 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
         if (result == InteractionResult.SUCCESS) {
             IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
             miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
+            if(!context.getLevel().isClientSide()){
+                if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof AirBlowerTileEntity abte) {
+                    abte.updateAirHandler();
+                }
+            }
         }
         return result;
     }

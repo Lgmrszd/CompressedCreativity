@@ -111,6 +111,11 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
         if (result == InteractionResult.SUCCESS) {
             IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
             miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
+            if(!context.getLevel().isClientSide()){
+                if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof RotationalCompressorTileEntity rcte) {
+                    rcte.updateAirHandler();
+                }
+            }
         }
         return result;
     }
