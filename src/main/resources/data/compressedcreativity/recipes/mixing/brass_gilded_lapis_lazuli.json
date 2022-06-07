@@ -1,0 +1,17 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "tag": "forge:ingots/brass"
+    }
+  ],
+  "results": [
+    {
+      "item": "compressedcreativity:brass_gilded_lapis_lazuli"
+    }
+  ],
+  "heatRequirement": "heated"
+}

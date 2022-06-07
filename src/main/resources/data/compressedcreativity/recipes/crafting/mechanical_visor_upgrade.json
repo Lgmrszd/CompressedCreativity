@@ -3,20 +3,20 @@
   "pattern": [
     "UTU",
     "CGC",
-    "UBU"
+    "UPU"
   ],
   "key": {
     "G": {
-      "tag": "forge:glass/colorless"
+      "item": "create:goggles"
     },
     "U": {
-      "tag": "pneumaticcraft:upgrade_components"
+      "tag": "compressedcreativity:upgrade_components"
     },
     "T": {
       "item": "create:electron_tube"
     },
-    "B": {
-      "tag": "forge:plates/brass"
+    "P": {
+      "item": "create:precision_mechanism"
     },
     "C": {
       "tag": "forge:ingots/compressed_iron"
