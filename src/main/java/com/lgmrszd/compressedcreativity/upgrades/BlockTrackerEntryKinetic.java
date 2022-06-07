@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,8 +35,21 @@ public class BlockTrackerEntryKinetic implements IBlockTrackEntry {
         ICommonArmorHandler handler = PneumaticRegistry.getInstance().getCommonArmorRegistry().getCommonArmorHandler(player);
         if (!handler.upgradeUsable(CCCommonUpgradeHandlers.mechanicalVisorHandler, true)) return false;
         if (te == null) return false;
-        if (te instanceof IHaveHoveringInformation) return true;
-        return te instanceof IHaveGoggleInformation;
+        if (te instanceof IHaveHoveringInformation && (
+                !ClientConfig.BLOCK_TRACKER_ADVANCED_CHECK.get()
+                || (
+                    ((IHaveHoveringInformation) te).addToTooltip(new ArrayList<>(), true)
+                    && ((IHaveHoveringInformation) te).addToTooltip(new ArrayList<>(), false)
+                )
+        ))
+            return true;
+        return te instanceof IHaveGoggleInformation && (
+                !ClientConfig.BLOCK_TRACKER_ADVANCED_CHECK.get()
+                || (
+                    ((IHaveGoggleInformation) te).addToGoggleTooltip(new ArrayList<>(), true)
+                    && ((IHaveGoggleInformation) te).addToGoggleTooltip(new ArrayList<>(), false)
+                )
+        );
     }
 
     @Override
@@ -53,11 +67,11 @@ public class BlockTrackerEntryKinetic implements IBlockTrackEntry {
         Player player = Minecraft.getInstance().player;
         boolean sneaking = (player != null && player.isShiftKeyDown());
         MechanicalVisorConfig.BlockTrackerMode mode = CCClientSetup.mechanicalVisorClientHandler.blockTrackerMode;
-        if (mode.showsTooltip() && te instanceof IHaveHoveringInformation kte) {
-            kte.addToTooltip(infoList, sneaking);
-        }
         if (mode.showsGoggles() && te instanceof IHaveGoggleInformation gte) {
             gte.addToGoggleTooltip(infoList, sneaking);
+        }
+        if (mode.showsTooltip() && te instanceof IHaveHoveringInformation kte) {
+            kte.addToTooltip(infoList, sneaking);
         }
         if (mode == MechanicalVisorConfig.BlockTrackerMode.MIN) {
             infoList.add(new TranslatableComponent("compressedcreativity.mechanical_visor.armor.gui.block_tracker.min"));

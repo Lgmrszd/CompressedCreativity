@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MechanicalVisorClientHandler extends IArmorUpgradeClientHandler.SimpleToggleableHandler<MechanicalVisorHandler>{
@@ -58,27 +59,25 @@ public class MechanicalVisorClientHandler extends IArmorUpgradeClientHandler.Sim
     public void tickClient(ICommonArmorHandler armorHandler) {
         super.tickClient(armorHandler);
 
+        if (!tooltipMode.isWidget()) {
+            visorInfo.setText(Collections.emptyList());
+            return;
+        }
+
         Player player = armorHandler.getPlayer();
         
         List<Component> textList = new ArrayList<>();
 
-        if (tooltipMode.isWidget() && focusedBlockEntity instanceof IHaveHoveringInformation hoveringBE) {
-            hoveringBE.addToTooltip(textList, player.isShiftKeyDown());
-        }
-        if (tooltipMode.isWidget() && focusedBlockEntity instanceof IHaveGoggleInformation goggleBE) {
+        if (focusedBlockEntity instanceof IHaveGoggleInformation goggleBE) {
             goggleBE.addToGoggleTooltip(textList, player.isShiftKeyDown());
         }
-//        if (textList.isEmpty()) {
-//            textList.add(new TranslatableComponent("Empty"));
-//        }
-
-        textList.forEach(c -> {});
-
+        if (focusedBlockEntity instanceof IHaveHoveringInformation hoveringBE) {
+            hoveringBE.addToTooltip(textList, player.isShiftKeyDown());
+        }
 
         visorInfo.setText(textList);
 
         checkBlockFocus();
-
     }
 
     private void checkBlockFocus() {

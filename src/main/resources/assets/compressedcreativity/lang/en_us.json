@@ -9,6 +9,8 @@
 
   "block.compressedcreativity.air_blower": "Air Blower",
 
+  "item.compressedcreativity.brass_coated_upgrade_matrix": "Brass Coated Upgrade Matrix",
+  "item.compressedcreativity.brass_gilded_lapis_lazuli": "Brass Gilded Lapis Lazuli",
   "item.compressedcreativity.mechanical_visor_upgrade": "Mechanical Visor Upgrade",
 
   "compressedcreativity.tooltip.pressure_summary": "Pressure Stats:",
@@ -16,6 +18,8 @@
   "compressedcreativity.tooltip.air": "Air:",
   "compressedcreativity.tooltip.air_production": "Air generated:",
   "compressedcreativity.tooltip.air_usage": "Air used:",
+  "compressedcreativity.tooltip.not_enough_pressure": "Pressure Requirement:",
+  "compressedcreativity.tooltip.not_enough_pressure_2": "This machine requires more pressure to operate.",
 
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Rotation Direction Requirement:",
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction",
@@ -36,6 +40,24 @@
 
   "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Mechanical Visor",
 
-  "pneumaticcraft.gui.tab.info.item.armor.head.compressedcreativity.mechanical_visorUpgrade": "§0Mechanical Visor will allow you to see mechanical stats of some machines, as if you were wearing Engineer's Goggles."
+  "pneumaticcraft.armor.upgrade.compressedcreativity.block_tracker_module_kinetic": "Mechanical Blocks",
+
+  "pneumaticcraft.gui.tab.info.item.armor.head.compressedcreativity.mechanical_visorUpgrade": "§0Mechanical Visor will allow you to see mechanical stats of some machines, as if you were wearing Engineer's Goggles.",
+
+  "compressedcreativity.mechanical_visor.armor.gui.title": "Mechanical Visor",
+
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode": "Tooltip Mode",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.classic": "Classic",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.widget": "Widget",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.both": "Both",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.none": "None",
+
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode": "Block Tracker Mode",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.all": "All Info",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.goggles": "Only Goggles",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.tooltip": "Only Non-Goggles",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.min": "Placeholder",
+
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "Has Goggles information."
 
 }
