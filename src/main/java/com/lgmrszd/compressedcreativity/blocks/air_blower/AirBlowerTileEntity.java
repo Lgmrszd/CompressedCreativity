@@ -8,6 +8,7 @@ import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
 import com.simibubi.create.content.contraptions.components.fan.IAirCurrentSource;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.contraptions.goggles.IHaveHoveringInformation;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
@@ -35,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource {
+public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoveringInformation, IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource {
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
@@ -73,6 +74,20 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
 
     }
 
+    @Override
+    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        if (airHandler.getPressure() <= CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.not_enough_pressure")
+                            .withStyle(ChatFormatting.GOLD)));
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.not_enough_pressure_2")
+                            .withStyle(ChatFormatting.GRAY)));
+            return true;
+        }
+        return false;
+    }
+
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking){
         ObservePacket.send(worldPosition, 0);
         // "Pressure Stats:"
@@ -96,6 +111,9 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveGoggleI
                 .append(new TextComponent(" " + airHandler.getAir())
                         .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
                         .withStyle(ChatFormatting.AQUA)));
+        if (airHandler.getPressure() <= CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
+            return true;
+        }
         // "Air usage:"
         tooltip.add(componentSpacing.plainCopy()
                 .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_usage")
