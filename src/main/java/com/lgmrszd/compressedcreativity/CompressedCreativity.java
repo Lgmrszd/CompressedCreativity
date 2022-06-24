@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -42,24 +43,23 @@ public class CompressedCreativity
             .simpleChannel();
 
     public CompressedCreativity() {
-        // Register the setup method for modloading
 
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         CCConfigHelper.init();
-
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        eventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        eventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
+        eventBus.addListener(this::doClientStuff);
+        eventBus.addListener(this::postInit);
+//        eventBus.register(CCMisc.class);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(this::serverStart);
 
-
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         CCItems.register(eventBus);
         CCBlocks.register();
@@ -73,10 +73,15 @@ public class CompressedCreativity
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         CCCommonSetup.init(event);
+//        CCHeatBehaviour.init(event);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         CCClientSetup.init(event);
+    }
+
+    private void serverStart(final ServerAboutToStartEvent event) {
+        CCHeatBehaviour.registerHeatBehaviour();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
