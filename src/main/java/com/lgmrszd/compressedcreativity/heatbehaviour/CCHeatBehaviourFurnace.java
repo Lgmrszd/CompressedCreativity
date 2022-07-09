@@ -5,7 +5,9 @@ import com.simibubi.create.content.contraptions.components.flywheel.engine.Furna
 import me.desht.pneumaticcraft.api.heat.HeatBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
@@ -38,6 +40,7 @@ public class CCHeatBehaviourFurnace extends HeatBehaviour {
     static final ResourceLocation ID = RL("furnace");
     
     private boolean wasFurnaceEngineConnected = false;
+    private int furnaceEngineConnectedTicks = 0;
 
     private boolean isFurnaceEngineConnected() {
         if (!(getCachedTileEntity() instanceof AbstractFurnaceBlockEntity furnace) || furnace.isRemoved()) {
@@ -71,10 +74,25 @@ public class CCHeatBehaviourFurnace extends HeatBehaviour {
         }
         if (getHeatExchanger().getTemperature() > 373) {
             if (isFurnaceEngineConnected()) {
-                if (!wasFurnaceEngineConnected) {
+                furnaceEngineConnectedTicks = furnaceEngineConnectedTicks + 1;
+                BlockPos furnacePos = getCachedTileEntity().getBlockPos();
+                if (getWorld() instanceof ServerLevel serverLevel) {
+//                        serverLevel.getEntities()
+//                    serverLevel.sendParticles(ParticleTypes.POOF, furnacePos.getX() + 0.5F, furnacePos.getY()  + 1F, furnacePos.getZ() + 0.5F, 2, 0.0D, 0.5D, 0.0D, 0.1D);
+                    if (furnaceEngineConnectedTicks % 2 == 0) {
+                        serverLevel.sendParticles(ParticleTypes.POOF, furnacePos.getX() + 0.5F, furnacePos.getY()  + 1F, furnacePos.getZ() + 0.5F, 2, 0.0D, 0.5D, 0.0D, 0.1D);
+                    }
+                    if (furnaceEngineConnectedTicks > 60) {
+                        serverLevel.sendParticles(ParticleTypes.SMALL_FLAME, furnacePos.getX() + 0.5F, furnacePos.getY()  + 1F, furnacePos.getZ() + 0.5F, 15, 0.3D, 0.1D, 0.3D, 0.0D);
+                    }
+                    if (furnaceEngineConnectedTicks > 100) {
+                        serverLevel.sendParticles(ParticleTypes.FLAME, furnacePos.getX() + 0.5F, furnacePos.getY()  + 1F, furnacePos.getZ() + 0.5F, 20, 0.2D, 0.5D, 0.2D, 0.3D);
+                    }
+                }
+//                    getWorld().addParticle(ParticleTypes.POOF, furnacePos.getX() + 0.5F, furnacePos.getY()  + 1F, furnacePos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
+                if (furnaceEngineConnectedTicks > 800) {
                     Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
                     logger.debug("Furnace engine detected!");
-                    BlockPos furnacePos = getCachedTileEntity().getBlockPos();
                     getWorld().destroyBlock(furnacePos, true);
 //                    getWorld().explode(null, furnacePos.getX() + 0.5F, furnacePos.getY() + 0.5, furnacePos.getZ() + 0.5F, 2F, false, Explosion.BlockInteraction.BREAK);
 //                    getWorld().explode(null, furnacePos.getX() + 0.5F, furnacePos.getY() + 0.5, furnacePos.getZ() + 0.5F, 2F, false, Explosion.BlockInteraction.NONE);
@@ -83,6 +101,7 @@ public class CCHeatBehaviourFurnace extends HeatBehaviour {
                 }
                 return;
             }
+            furnaceEngineConnectedTicks = 0;
             wasFurnaceEngineConnected = false;
             if (furnace.litTime < 190 && !furnace.getItem(0).isEmpty()) {
                 if (furnace.litTime == 0) {
