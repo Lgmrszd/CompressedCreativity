@@ -95,7 +95,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
                             .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
                             .append(" ")
                             .withStyle(ChatFormatting.AQUA))
-                    .append(Lang.translate("gui.goggles.at_current_speed")
+                    .append(Lang.translateDirect("gui.goggles.at_current_speed")
                             .withStyle(ChatFormatting.DARK_GRAY)));
         }
         return added;
