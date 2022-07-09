@@ -4,6 +4,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
+import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.AllTags;
@@ -24,6 +25,14 @@ public class CCBlocks {
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<CompressedAirEngineBlock> COMPRESSED_AIR_ENGINE = REGISTRATE.block("compressed_air_engine", CompressedAirEngineBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .transform(BlockStressDefaults.setImpact(8.0))
             .item()
             .transform(customItemModel())
             .register();
