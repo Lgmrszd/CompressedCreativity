@@ -6,10 +6,8 @@ import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -95,7 +93,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
                             .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
                             .append(" ")
                             .withStyle(ChatFormatting.AQUA))
-                    .append(Lang.translate("gui.goggles.at_current_speed")
+                    .append(new TranslatableComponent("create.gui.goggles.at_current_speed")
                             .withStyle(ChatFormatting.DARK_GRAY)));
         }
         return added;
