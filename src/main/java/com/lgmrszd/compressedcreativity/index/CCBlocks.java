@@ -32,6 +32,7 @@ public class CCBlocks {
     public static final BlockEntry<CompressedAirEngineBlock> COMPRESSED_AIR_ENGINE = REGISTRATE.block("compressed_air_engine", CompressedAirEngineBlock::new)
             .initialProperties(SharedProperties::stone)
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .addLayer(() -> RenderType::translucent)
             .transform(BlockStressDefaults.setImpact(8.0))
             .item()
             .transform(customItemModel())

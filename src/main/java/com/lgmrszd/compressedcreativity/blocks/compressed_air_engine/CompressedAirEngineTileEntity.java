@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
+import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -14,6 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
 
@@ -27,9 +29,32 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
     }
 
     @Override
+    public void initialize() {
+        super.initialize();
+        updateAirHandler();
+    }
+
+    public void updateAirHandler() {
+        ArrayList<Direction> sides = new ArrayList<>();
+//        for (Direction side: new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP, Direction.DOWN}) {
+//            if (canConnectPneumatic(side)) {
+//                sides.add(side);
+//            }
+//        }
+        sides.add(Direction.UP);
+        airHandler.setConnectedFaces(sides);
+    }
+
+    @Override
     public void tick() {
         super.tick();
         airHandler.tick(this);
+
+
+        boolean server = !level.isClientSide || isVirtual();
+        if (server) {
+            airHandler.setSideLeaking(airHandler.getConnectedAirHandlers(this).isEmpty() ? Direction.UP : null);
+        }
     }
 
     @Nonnull

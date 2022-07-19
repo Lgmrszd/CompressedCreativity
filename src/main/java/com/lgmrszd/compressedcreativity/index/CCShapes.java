@@ -36,6 +36,12 @@ public class CCShapes {
         return shape;
     }
 
+    public static VoxelShape compressedAirEngineShape(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(0.125, 0.125, 0.125, 0.875, 0.875, 0.875), BooleanOp.OR);
+        return shape;
+    }
+
     public static final VoxelShaper
         ROTATIONAL_COMPRESSOR = new AllShapes.Builder(rotationalCompressorShape()).forHorizontal(Direction.NORTH),
         AIR_BLOWER = new AllShapes.Builder(airBlowerShape()).forDirectional(Direction.SOUTH);

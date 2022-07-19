@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "compressedcreativity:block/compressed_air_engine"
+    },
+    "facing=south": {
+      "model": "compressedcreativity:block/compressed_air_engine",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "compressedcreativity:block/compressed_air_engine",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "compressedcreativity:block/compressed_air_engine",
+      "y": 90
+    }
+  }
+}

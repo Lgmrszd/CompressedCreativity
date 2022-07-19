@@ -5,15 +5,18 @@ import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
+import com.simibubi.create.CreateClient;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -53,6 +56,9 @@ public class CompressedCreativity
         eventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         eventBus.addListener(this::doClientStuff);
+        // TODO: put it in clientstuff if possible
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> BlockPartials::init);
         eventBus.addListener(this::postInit);
 //        eventBus.register(CCMisc.class);
 
@@ -67,6 +73,7 @@ public class CompressedCreativity
 
         CCUpgrades.UPGRADES_DEFERRED.register(eventBus);
     }
+
 
     private void setup(final FMLCommonSetupEvent event)
     {
