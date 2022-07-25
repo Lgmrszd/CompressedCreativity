@@ -60,6 +60,7 @@
 
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "Has Goggles information.",
 
-  "death.attack.oc_engine": "%1$s tried to overclock the Engine"
+  "death.attack.oc_engine": "%1$s tried to overclock the Engine",
+  "block.compressedcreativity.compressed_air_engine": "Compressed Air Engine"
 
 }

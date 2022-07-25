@@ -1,6 +1,0 @@
-{
-  "textures" : {
-    "layer0" : "compressedcreativity:item/brass_gilded_lapis_lazuli"
-  },
-  "parent" : "item/generated"
-}

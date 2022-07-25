@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BlockPartials {
     public static final PartialModel
-        AIR_ENGINE_ROTOR = new PartialModel(new ResourceLocation(CompressedCreativity.MOD_ID, "block/air_engine_rotor"));
+        AIR_ENGINE_ROTOR = new PartialModel(new ResourceLocation(CompressedCreativity.MOD_ID, "block/compressed_air_engine/rotor"));
 
     public static void init() {
 

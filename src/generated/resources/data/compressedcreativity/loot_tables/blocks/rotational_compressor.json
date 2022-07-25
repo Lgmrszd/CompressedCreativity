@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "compressedcreativity:air_blower",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "compressedcreativity:air_blower"
+          "name": "minecraft:air"
         }
       ],
       "conditions": [

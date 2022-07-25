@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "compressedcreativity:item/brass_gilded_lapis_lazuli"
+  }
+}
