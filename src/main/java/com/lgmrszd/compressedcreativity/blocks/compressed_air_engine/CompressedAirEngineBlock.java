@@ -23,8 +23,8 @@ public class CompressedAirEngineBlock extends HorizontalKineticBlock implements 
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-        return CCShapes.compressedAirEngineShape();
+    public VoxelShape getShape(BlockState state, BlockGetter blockReader, BlockPos pos, CollisionContext context) {
+        return CCShapes.COMPRESSED_AIR_ENGINE.get(state.getValue(HORIZONTAL_FACING));
     }
 
     @Override
@@ -35,9 +35,9 @@ public class CompressedAirEngineBlock extends HorizontalKineticBlock implements 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) return this.defaultBlockState()
-                .setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
-        return this.defaultBlockState()
                 .setValue(HORIZONTAL_FACING, context.getHorizontalDirection());
+        return this.defaultBlockState()
+                .setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
