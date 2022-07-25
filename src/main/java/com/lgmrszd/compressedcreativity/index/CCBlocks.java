@@ -67,7 +67,8 @@ public class CCBlocks {
             .blockstate(AirBlowerBlockStateGenerator::blockState)
 //            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .addLayer(() -> RenderType::cutoutMipped)
-            .simpleItem()
+            .item()
+            .transform(customItemModel())
             .register();
 
     public static void register() {

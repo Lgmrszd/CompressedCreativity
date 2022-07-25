@@ -14,11 +14,11 @@ import java.util.Map;
 
 public class AirBlowerBlockStateGenerator {
 
-    private static ModelFile standartPartialModel(DataGenContext<?, ?> ctx, RegistrateBlockstateProvider prov, String name) {
-        final String location = "block/partials/" + name;
-		return prov.models()
-			.getExistingFile(prov.modLoc(location));
-    }
+//    private static ModelFile standartPartialModel(DataGenContext<?, ?> ctx, RegistrateBlockstateProvider prov, String name) {
+//        final String location = "block/partials/" + name;
+//		return prov.models()
+//			.getExistingFile(prov.modLoc(location));
+//    }
 
     public static void blockState(DataGenContext<Block, AirBlowerBlock> c, RegistrateBlockstateProvider p) {
 
@@ -36,59 +36,21 @@ public class AirBlowerBlockStateGenerator {
         MultiPartBlockStateBuilder builder = p.getMultipartBuilder(c.get());
 
         for (Direction dir : Iterate.directions) {
-            ConfiguredModel.Builder<MultiPartBlockStateBuilder.PartBuilder> part = builder.part()
-                    .modelFile(AssetLookup.standardModel(c, p));
-            if (xRot.containsKey(dir))
-                part = part.rotationX(xRot.get(dir));
-            if (yRot.containsKey(dir))
-                part = part.rotationY(yRot.get(dir));
-            part.addModel()
+            builder.part()
+                    .modelFile(AssetLookup.partialBaseModel(c, p))
+                    .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .addModel()
                     .condition(AirBlowerBlock.FACING, dir)
                     .end();
+
+            builder.part()
+                    .modelFile(AssetLookup.partialBaseModel(c, p, "connector"))
+                    .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .addModel()
+                    .condition(AirBlowerBlock.CONNECTION_PROPERTIES[dir.get3DDataValue()], true)
+                    .end();
         }
-
-        builder.part()
-            .modelFile(standartPartialModel(c, p, "air_blower_tube"))
-            .addModel()
-            .condition(AirBlowerBlock.UP, true)
-            .end();
-
-        builder.part()
-                .modelFile(standartPartialModel(c, p, "air_blower_tube"))
-                .rotationX(180)
-                .addModel()
-                .condition(AirBlowerBlock.DOWN, true)
-                .end();
-
-        builder.part()
-                .modelFile(standartPartialModel(c, p, "air_blower_tube"))
-                .rotationX(90)
-                .addModel()
-                .condition(AirBlowerBlock.NORTH, true)
-                .end();
-
-        builder.part()
-                .modelFile(standartPartialModel(c, p, "air_blower_tube"))
-                .rotationX(90)
-                .rotationY(90)
-                .addModel()
-                .condition(AirBlowerBlock.EAST, true)
-                .end();
-
-        builder.part()
-                .modelFile(standartPartialModel(c, p, "air_blower_tube"))
-                .rotationX(90)
-                .rotationY(180)
-                .addModel()
-                .condition(AirBlowerBlock.SOUTH, true)
-                .end();
-
-        builder.part()
-                .modelFile(standartPartialModel(c, p, "air_blower_tube"))
-                .rotationX(90)
-                .rotationY(270)
-                .addModel()
-                .condition(AirBlowerBlock.WEST, true)
-                .end();
     }
 }
