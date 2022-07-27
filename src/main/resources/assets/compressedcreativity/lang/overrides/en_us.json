@@ -5,13 +5,6 @@
   "compressedcreativity.unit.air": "mL",
   "compressedcreativity.unit.air_per_tick": "mL/t",
 
-  "block.compressedcreativity.rotational_compressor": "Rotational Compressor",
-
-  "block.compressedcreativity.air_blower": "Air Blower",
-
-  "item.compressedcreativity.brass_coated_upgrade_matrix": "Brass Coated Upgrade Matrix",
-  "item.compressedcreativity.brass_gilded_lapis_lazuli": "Brass Gilded Lapis Lazuli",
-  "item.compressedcreativity.mechanical_visor_upgrade": "Mechanical Visor Upgrade",
 
   "compressedcreativity.tooltip.pressure_summary": "Pressure Stats:",
   "compressedcreativity.tooltip.pressure": "Pressure:",
@@ -23,20 +16,6 @@
 
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Rotation Direction Requirement:",
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction",
-
-
-  "compressedcreativity.ponder.rotational_compressor.header": "Generating Pressure using a Rotational Compressor",
-  "compressedcreativity.ponder.rotational_compressor.text_1": "The Rotational Compressor is used to generate pressure",
-  "compressedcreativity.ponder.rotational_compressor.text_2": "Specific Rotational Direction needed in order for Compressor to work.",
-  "compressedcreativity.ponder.rotational_compressor.text_3": "Air will leak from unconnected sides of tubes or some machines!",
-  "compressedcreativity.ponder.rotational_compressor.text_4": "Don't let pressure built up in the machines.",
-  "compressedcreativity.ponder.rotational_compressor.text_5": "If the pressure builds up...",
-  "compressedcreativity.ponder.rotational_compressor.text_6": "Machine could explode!",
-
-
-  "compressedcreativity.ponder.air_blower.header": "Air Flow from Air Pressure",
-  "compressedcreativity.ponder.air_blower.text_1": "Air Blower uses pressurized air to create Air Current",
-  "compressedcreativity.ponder.air_blower.text_2": "Air Current speed, as well as air consumption rate, depends on current Air Pressure",
 
   "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Mechanical Visor",
 
@@ -60,7 +39,6 @@
 
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "Has Goggles information.",
 
-  "death.attack.oc_engine": "%1$s tried to overclock the Engine",
-  "block.compressedcreativity.compressed_air_engine": "Compressed Air Engine"
+  "death.attack.oc_engine": "%1$s tried to overclock the Engine"
 
 }
