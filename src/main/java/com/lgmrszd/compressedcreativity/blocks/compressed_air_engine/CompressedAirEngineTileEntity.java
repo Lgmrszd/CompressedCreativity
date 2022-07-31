@@ -52,11 +52,11 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
 
     public void updateAirHandler() {
         ArrayList<Direction> sides = new ArrayList<>();
-//        for (Direction side: new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP, Direction.DOWN}) {
-//            if (canConnectPneumatic(side)) {
-//                sides.add(side);
-//            }
-//        }
+        for (Direction side: new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST}) {
+            if (canConnectPneumatic(side)) {
+                sides.add(side);
+            }
+        }
         sides.add(Direction.UP);
         airHandler.setConnectedFaces(sides);
     }
@@ -89,7 +89,7 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
                     updateGeneratedRotation();
                 }
             }
-            airHandler.setSideLeaking(airHandler.getConnectedAirHandlers(this).isEmpty() ? Direction.UP : null);
+//            airHandler.setSideLeaking(airHandler.getConnectedAirHandlers(this).isEmpty() ? Direction.UP : null);
         }
 
 //        if (updateRotation) {
@@ -140,6 +140,10 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
     }
 
     public boolean canConnectPneumatic(Direction dir) {
-        return dir == Direction.UP || dir == null;
+        return dir == Direction.UP || dir == null ||
+                (dir == getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING) &&
+                        !getBlockState().getValue(CompressedAirEngineBlock.FRONT)) ||
+                (dir == getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING).getOpposite() &&
+                        !getBlockState().getValue(CompressedAirEngineBlock.BACK));
     }
 }

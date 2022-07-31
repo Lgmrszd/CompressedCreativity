@@ -1,19 +1,211 @@
 {
-  "variants": {
-    "facing=north": {
-      "model": "compressedcreativity:block/compressed_air_engine/block"
+  "multipart": [
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block",
+        "y": 180
+      }
     },
-    "facing=south": {
-      "model": "compressedcreativity:block/compressed_air_engine/block",
-      "y": 180
+    {
+      "when": {
+        "facing": "south",
+        "back": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_end",
+        "y": 180
+      }
     },
-    "facing=west": {
-      "model": "compressedcreativity:block/compressed_air_engine/block",
-      "y": 270
+    {
+      "when": {
+        "facing": "south",
+        "back": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_open",
+        "y": 180
+      }
     },
-    "facing=east": {
-      "model": "compressedcreativity:block/compressed_air_engine/block",
-      "y": 90
+    {
+      "when": {
+        "facing": "south",
+        "front": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_end",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "front": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_open",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "back": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_end",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "back": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_open",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "front": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_end",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "front": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_open",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "back": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_end"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "back": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_open"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "front": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_end"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "front": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_open"
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "back": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_end",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "back": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_back_open",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "front": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_end",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "front": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_front_open",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "up": "false"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_up_closed"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/compressed_air_engine/block_up_connected"
+      }
     }
-  }
+  ]
 }

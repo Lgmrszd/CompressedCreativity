@@ -6,6 +6,7 @@ import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockStateGenerator;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
+import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 //import com.simibubi.create.AllTags;
@@ -52,7 +53,7 @@ public class CCBlocks {
     public static final BlockEntry<CompressedAirEngineBlock> COMPRESSED_AIR_ENGINE = REGISTRATE.block("compressed_air_engine", CompressedAirEngineBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .transform(pickaxeOnly())
-            .blockstate(BlockStateGen.horizontalBlockProvider(true))
+            .blockstate(CompressedAirEngineBlockStateGenerator::blockState)
 //            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .addLayer(() -> RenderType::translucent)
             .transform(BlockStressDefaults.setCapacity(8.0))
