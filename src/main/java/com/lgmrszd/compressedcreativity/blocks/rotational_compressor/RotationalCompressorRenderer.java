@@ -23,11 +23,6 @@ public class RotationalCompressorRenderer extends KineticTileEntityRenderer {
         super(context);
     }
 
-    // TODO: damn I forgor what this does :DDDDDD
-
-//    protected SuperByteBuffer getRotatedModel(KineticTileEntity te) {
-//        return super.getRotatedModel(te);
-//    }
 
     @Override
     protected void renderSafe(KineticTileEntity ote, float partialTicks, PoseStack ms, MultiBufferSource buffer,

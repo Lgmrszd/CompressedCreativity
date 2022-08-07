@@ -22,17 +22,6 @@ public class AirBlowerBlockStateGenerator {
 
     public static void blockState(DataGenContext<Block, AirBlowerBlock> c, RegistrateBlockstateProvider p) {
 
-        Map<Direction, Integer> xRot = Map.of(
-                Direction.UP, 270,
-                Direction.DOWN, 90
-        );
-
-        Map<Direction, Integer> yRot = Map.of(
-                Direction.EAST, 90,
-                Direction.SOUTH, 180,
-                Direction.WEST, 270
-        );
-
         MultiPartBlockStateBuilder builder = p.getMultipartBuilder(c.get());
 
         for (Direction dir : Iterate.directions) {

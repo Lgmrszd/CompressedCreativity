@@ -100,7 +100,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
 //        if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing).isPresent()) {
         if (facing != stateIn.getValue(FACING)) {
             BlockEntity other_te = worldIn.getBlockEntity(currentPos.relative(facing));
-            boolean has_connection = other_te != null && other_te.getCapability (PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
+            boolean has_connection = other_te != null && other_te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
             stateIn = stateIn.setValue(CONNECTION_PROPERTIES[facing.get3DDataValue()], has_connection);
         } else {
             stateIn = stateIn.setValue(CONNECTION_PROPERTIES[facing.get3DDataValue()], false);
