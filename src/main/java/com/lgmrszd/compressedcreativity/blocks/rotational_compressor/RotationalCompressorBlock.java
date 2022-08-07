@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
+import com.lgmrszd.compressedcreativity.blocks.common.PneumaticHorizontalKineticBlock;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
@@ -28,10 +29,9 @@ import net.minecraft.world.level.Level;
 
 
 //public class RotationalCompressorBlock extends HorizontalKineticBlock implements ITE<RotationalCompressorTileEntity>, IRotate {
-import com.simibubi.create.content.contraptions.base.IRotate.SpeedLevel;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class RotationalCompressorBlock extends HorizontalKineticBlock implements IPneumaticWrenchable, IRotate, ITE<RotationalCompressorTileEntity> {
+
+public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<RotationalCompressorTileEntity> implements IRotate {
 
 //    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 10, 16);
 
@@ -74,22 +74,6 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
         }
     }
 
-//    @Override
-//    public void neighborChanged(BlockState p_60509_, Level p_60510_, BlockPos p_60511_, Block p_60512_, BlockPos p_60513_, boolean p_60514_) {
-//        super.neighborChanged(p_60509_, p_60510_, p_60511_, p_60512_, p_60513_, p_60514_);
-//    }
-
-    @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity te = world.getBlockEntity(pos);
-            if (te instanceof RotationalCompressorTileEntity rcte) {
-                IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
-                miscHelpers.playMachineBreakEffect(rcte);
-            }
-        }
-        super.onRemove(state, world, pos, newState, isMoving);
-    }
 
     public SpeedLevel getMinimumRequiredSpeedLevel() {
         return SpeedLevel.FAST;
@@ -120,34 +104,4 @@ public class RotationalCompressorBlock extends HorizontalKineticBlock implements
         return result;
     }
 
-//    @Override
-//    public BlockState updateAfterWrenched(BlockState newState, UseOnContext context) {
-//        return super.updateAfterWrenched(newState, context);
-//    }
-
-    //    @Override
-//    public BlockState updateAfterWrenched(BlockState newState, ItemUseContext context) {
-//        BlockState updatedState = super.updateAfterWrenched(newState, context);
-//        TileEntity te = context.getLevel().getBlockEntity(context.getClickedPos());
-//        if (te instanceof RotationalCompressorTileEntity) {
-//            RotationalCompressorTileEntity rcte = (RotationalCompressorTileEntity) te;
-//            rcte.updateAirHandler();
-//        }
-//        return updatedState;
-//    }
-
-    //    @Override
-//    public Class<RotationalCompressorTileEntity> getTileEntityClass() {
-//        return RotationalCompressorTileEntity.class;
-//    }
-
-    @Override
-    public boolean onWrenched(Level world, Player player, BlockPos pos, Direction side, InteractionHand hand) {
-        UseOnContext ctx = new UseOnContext(player, hand, new BlockHitResult(new Vec3(pos.getX(), pos.getY(), pos.getX()), side, pos, false));
-        return ctx.getPlayer() != null && (
-                ctx.getPlayer().isCrouching() ?
-                        onSneakWrenched(world.getBlockState(pos), ctx) :
-                        onWrenched(world.getBlockState(pos), ctx)
-        )  == InteractionResult.SUCCESS;
-    }
 }

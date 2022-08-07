@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
@@ -9,7 +10,6 @@ import com.simibubi.create.content.contraptions.base.KineticTileEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,7 +34,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RotationalCompressorTileEntity extends KineticTileEntity implements IObserveTileEntity {
+public class RotationalCompressorTileEntity extends KineticTileEntity implements IObserveTileEntity, IPneumaticTileEntity {
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
@@ -269,5 +269,10 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
     @Override
     public void onObserved(ServerPlayer var1, ObservePacket var2) {
 //        logger.debug("I am being observed!");
+    }
+
+    @Override
+    public float getDangerPressure() {
+        return airHandler.getDangerPressure();
     }
 }

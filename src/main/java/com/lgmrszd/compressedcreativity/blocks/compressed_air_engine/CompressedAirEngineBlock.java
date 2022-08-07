@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
+import com.lgmrszd.compressedcreativity.blocks.common.PneumaticHorizontalKineticBlock;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
@@ -28,7 +29,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class CompressedAirEngineBlock extends HorizontalKineticBlock implements ITE<CompressedAirEngineTileEntity> {
+
+public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<CompressedAirEngineTileEntity> {
 
     public static final BooleanProperty BACK = BooleanProperty.create("back");
     public static final BooleanProperty FRONT = BooleanProperty.create("front");
@@ -184,15 +186,5 @@ public class CompressedAirEngineBlock extends HorizontalKineticBlock implements 
         if (te instanceof CompressedAirEngineTileEntity caete) {
             caete.updateAirHandler();
         }
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity te = world.getBlockEntity(pos);
-            IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
-            miscHelpers.playMachineBreakEffect(te);
-        }
-        super.onRemove(state, world, pos, newState, isMoving);
     }
 }

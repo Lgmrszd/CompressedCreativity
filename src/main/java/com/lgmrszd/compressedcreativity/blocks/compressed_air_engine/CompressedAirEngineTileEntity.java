@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
+import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
@@ -20,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
+public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity implements IPneumaticTileEntity {
 
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
@@ -151,5 +152,10 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
                         !getBlockState().getValue(CompressedAirEngineBlock.FRONT)) ||
                 (dir == getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING).getOpposite() &&
                         !getBlockState().getValue(CompressedAirEngineBlock.BACK));
+    }
+
+    @Override
+    public float getDangerPressure() {
+        return airHandler.getDangerPressure();
     }
 }
