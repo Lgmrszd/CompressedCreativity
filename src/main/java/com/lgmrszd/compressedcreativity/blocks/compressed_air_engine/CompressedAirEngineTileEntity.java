@@ -1,10 +1,10 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
-import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,12 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
     public CompressedAirEngineTileEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
-                .createAirHandler(PressureTier.TIER_ONE, 1000);
+                .createAirHandler(
+                        CommonConfig.COMPRESSED_AIR_ENGINE_PRESSURE_TIER.get()
+                                .getPressureTierDefinedOrCustom(
+                                        PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_CUSTOM_TIER
+                                ),
+                        CommonConfig.COMPRESSED_AIR_ENGINE_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 
@@ -46,7 +51,7 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
         super.initialize();
         updateAirHandler();
         updateGeneratedRotation();
-        airUsage = 5;
+        airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue();
         airBuffer = 0;
     }
 
@@ -66,7 +71,6 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
         super.tick();
         airHandler.tick(this);
 
-        float treshold = 2.5F;
         boolean server = !level.isClientSide || isVirtual();
 
         if (server) {
@@ -79,13 +83,15 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
                 }
             }
             if(working) {
-                if (airHandler.getPressure() < treshold) {
+                if (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get()) {
                     working = false;
+                    airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue();
                     updateGeneratedRotation();
                 }
             } else {
-                if (airHandler.getPressure() > treshold) {
+                if (airHandler.getPressure() >= CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get()) {
                     working = true;
+                    airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue();
                     updateGeneratedRotation();
                 }
             }
@@ -105,7 +111,7 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity {
 
     @Override
     public float getGeneratedSpeed() {
-        return convertToDirection(working ? 64 : 0, getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING));
+        return convertToDirection(working ? 256 : 0, getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING));
 //        return convertToDirection(currentSpeed, getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING));
     }
 

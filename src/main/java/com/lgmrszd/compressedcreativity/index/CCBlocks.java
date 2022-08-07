@@ -56,7 +56,7 @@ public class CCBlocks {
             .blockstate(CompressedAirEngineBlockStateGenerator::blockState)
 //            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .addLayer(() -> RenderType::translucent)
-            .transform(BlockStressDefaults.setCapacity(8.0))
+            .transform(BlockStressDefaults.setCapacity(CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())
             .register();

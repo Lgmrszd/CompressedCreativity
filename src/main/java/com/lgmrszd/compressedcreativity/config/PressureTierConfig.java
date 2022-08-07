@@ -11,7 +11,11 @@ public class PressureTierConfig {
                 CommonConfig.ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE),
         AIR_BLOWER_CUSTOM_TIER(
                 CommonConfig.AIR_BLOWER_DANGER_PRESSURE,
-                CommonConfig.AIR_BLOWER_CRITICAL_PRESSURE);
+                CommonConfig.AIR_BLOWER_CRITICAL_PRESSURE),
+
+        COMPRESSED_AIR_ENGINE_CUSTOM_TIER(
+                CommonConfig.COMPRESSED_AIR_ENGINE_DANGER_PRESSURE,
+                CommonConfig.COMPRESSED_AIR_ENGINE_CRITICAL_PRESSURE);
 
         private final ForgeConfigSpec.DoubleValue dangerPressure;
         private final ForgeConfigSpec.DoubleValue criticalPressure;
