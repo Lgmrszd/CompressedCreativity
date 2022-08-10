@@ -136,11 +136,11 @@ public class CommonConfig {
         COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK = COMMON_BUILDER
                 .comment("Air usage when working\n" +
                         "Default value: 20.0")
-                .defineInRange("air_usage_work", 20d, 0d, 999999d);
+                .defineInRange("air_usage_work", 40d, 0d, 999999d);
         COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE = COMMON_BUILDER
                 .comment("Air usage when idle\n" +
                         "Default value: 40.0")
-                .defineInRange("air_usage_idle", 40d, 0d, 999999d);
+                .defineInRange("air_usage_idle", 80d, 0d, 999999d);
 
         COMPRESSED_AIR_ENGINE_WORK_PRESSURE = COMMON_BUILDER
                 .comment("Pressure required to operate\n" +

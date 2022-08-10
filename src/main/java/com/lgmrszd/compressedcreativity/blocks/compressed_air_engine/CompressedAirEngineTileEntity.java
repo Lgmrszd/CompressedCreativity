@@ -1,16 +1,24 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
+import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
+import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
+import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -21,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity implements IPneumaticTileEntity {
+public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity implements IPneumaticTileEntity, IObserveTileEntity {
 
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
@@ -44,7 +52,66 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        return super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        ObservePacket.send(worldPosition, 0);
+        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        // "Pressure Stats:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
+        // "Pressure:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
+                        .withStyle(ChatFormatting.GRAY)));
+        // "0.0bar"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TextComponent(" " + airHandler.getPressure())
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
+                        .withStyle(ChatFormatting.AQUA)));
+        // "Air:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
+                        .withStyle(ChatFormatting.GRAY)));
+        // "0.0mL"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TextComponent(" " + airHandler.getAir())
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
+                        .withStyle(ChatFormatting.AQUA)));
+        // "Air used:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_usage")
+                        .withStyle(ChatFormatting.GRAY)));
+        // "0.0mL/t"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TextComponent(" " + (
+                        (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get() || overStressed) ?
+                                Math.min(
+                                        CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue(),
+                                        airHandler.getAir()
+                                ) :
+                                CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue()
+                        ))
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
+                        .append(" ")
+                        .withStyle(ChatFormatting.AQUA))
+                .append(Lang.translate("gui.goggles.at_current_speed")
+                        .withStyle(ChatFormatting.DARK_GRAY)));
+        return true;
+    }
+
+    @Override
+    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
+        if (airHandler.getAir() > 0 && (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get() || overStressed)) {
+            added = true;
+            // "This machine is currently idle:"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.compressed_air_engine.idle_1")
+                            .withStyle(ChatFormatting.GOLD)));
+            // "This machine uses air even though it's not currently working"
+            tooltip.add(componentSpacing.plainCopy()
+                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.compressed_air_engine.idle_2")
+                            .withStyle(ChatFormatting.GRAY)));
+        }
+        return added;
     }
 
     @Override
@@ -75,8 +142,8 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
         boolean server = !level.isClientSide || isVirtual();
 
         if (server) {
-            if (airHandler.getAir() > airUsage) {
-                airBuffer += airUsage;
+            if (airHandler.getAir() > 0) {
+                airBuffer += Math.min(airUsage, airHandler.getAir());
                 if (airBuffer >= 1) {
                     int toRemove = (int) airBuffer;
                     airHandler.addAir(-toRemove);
@@ -84,6 +151,10 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
                 }
             }
             if(working) {
+                if (isOverStressed())
+                    airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue();
+                else
+                    airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue();
                 if (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get()) {
                     working = false;
                     airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue();
@@ -92,7 +163,9 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
             } else {
                 if (airHandler.getPressure() >= CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get()) {
                     working = true;
-                    airUsage = CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue();
+                    airUsage = overStressed ?
+                            CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue() :
+                            CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue();
                     updateGeneratedRotation();
                 }
             }
@@ -157,5 +230,10 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
     @Override
     public float getDangerPressure() {
         return airHandler.getDangerPressure();
+    }
+
+    @Override
+    public void onObserved(ServerPlayer var1, ObservePacket var2) {
+
     }
 }
