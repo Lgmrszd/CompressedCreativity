@@ -166,4 +166,47 @@ public class PonderScenes {
         scene.markAsFinished();
     }
 
+    public static void CompressedAirEngine(SceneBuilder scene, SceneBuildingUtil util) {
+        scene.title("compressed_air_engine", "Rotation from Pressure");
+
+        BlockPos cae1 = util.grid.at(3, 1, 2);
+        BlockPos cae2 = util.grid.at(1, 1, 1);
+
+        scene.configureBasePlate(0, 0, 5);
+        scene.world.showSection(
+                util.select.layer(0)
+                        .substract(util.select.position(1,0,5))
+                        .substract(util.select.position(3,0,5)),
+                Direction.UP);
+        scene.idle(5);
+        scene.world.showSection(util.select.position(cae1), Direction.DOWN);
+        scene.idle(5);
+        scene.world.showSection(
+                util.select.fromTo(3,2,2, 3, 2, 5)
+                        .add(util.select.fromTo(3, 0, 5, 3, 2, 5)),
+                Direction.DOWN);
+        scene.idle(20);
+        scene.overlay.showText(80).text("Compressed Air Engine uses pressurized air to create rotational force")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(util.vector.topOf(cae1));
+        scene.idle(90);
+//        scene.addKeyframe();
+        scene.world.showSection(
+                util.select.fromTo(1, 1, 1, 1, 1, 3),
+                Direction.DOWN);
+        scene.idle(5);
+        scene.world.showSection(
+                util.select.fromTo(1, 2, 3, 1, 2, 5)
+                        .add(util.select.fromTo(1, 0, 5, 1, 2, 5)),
+                Direction.DOWN);
+        scene.idle(10);
+        scene.overlay.showText(80).text("Multiple Engines can be combined together by placing one on another or attaching with wrench")
+                .attachKeyFrame()
+                .placeNearTarget()
+                .pointAt(util.vector.topOf(cae2));
+        scene.idle(90);
+//        scene.idle(160);
+        scene.markAsFinished();
+    }
 }
