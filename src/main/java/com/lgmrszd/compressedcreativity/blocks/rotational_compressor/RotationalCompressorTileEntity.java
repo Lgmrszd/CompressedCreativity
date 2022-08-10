@@ -62,43 +62,41 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        if (added) {
-            // "Pressure Stats:"
-            tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
-            // "Pressure:"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
-                            .withStyle(ChatFormatting.GRAY)));
-            // "0.0bar"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TextComponent(" " + airHandler.getPressure())
-                            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
-                            .withStyle(ChatFormatting.AQUA)));
-            // "Air:"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
-                            .withStyle(ChatFormatting.GRAY)));
-            // "0.0mL"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TextComponent(" " + airHandler.getAir())
-                            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
-                            .withStyle(ChatFormatting.AQUA)));
-            // "Air generated:"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_production")
-                            .withStyle(ChatFormatting.GRAY)));
-            // "0.0mL/t"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f))
-                            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
-                            .append(" ")
-                            .withStyle(ChatFormatting.AQUA))
-                    .append(Lang.translate("gui.goggles.at_current_speed")
-                            .withStyle(ChatFormatting.DARK_GRAY)));
-        }
-        return added;
+        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        // "Pressure Stats:"
+        tooltip.add(componentSpacing.plainCopy()
+            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
+        // "Pressure:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
+                        .withStyle(ChatFormatting.GRAY)));
+        // "0.0bar"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TextComponent(" " + airHandler.getPressure())
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
+                        .withStyle(ChatFormatting.AQUA)));
+        // "Air:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
+                        .withStyle(ChatFormatting.GRAY)));
+        // "0.0mL"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TextComponent(" " + airHandler.getAir())
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
+                        .withStyle(ChatFormatting.AQUA)));
+        // "Air generated:"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_production")
+                        .withStyle(ChatFormatting.GRAY)));
+        // "0.0mL/t"
+        tooltip.add(componentSpacing.plainCopy()
+                .append(new TextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f))
+                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
+                        .append(" ")
+                        .withStyle(ChatFormatting.AQUA))
+                .append(Lang.translate("gui.goggles.at_current_speed")
+                        .withStyle(ChatFormatting.DARK_GRAY)));
+        return true;
     }
 
     // TODO: Need to make data consistent between server and client
