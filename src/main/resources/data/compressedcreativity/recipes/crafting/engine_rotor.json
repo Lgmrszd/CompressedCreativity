@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BSB",
+    "BBB"
+  ],
+  "key": {
+    "S": {
+      "item": "create:shaft"
+    },
+    "B": {
+      "item": "pneumaticcraft:turbine_blade"
+    }
+  },
+  "result": {
+    "item": "compressedcreativity:engine_rotor"
+  }
+}

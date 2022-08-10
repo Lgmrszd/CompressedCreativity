@@ -28,6 +28,10 @@ public class CCItems {
             "brass_coated_upgrade_matrix", Item::new
     ).register();
 
+    public static final ItemEntry<Item> ENGINE_ROTOR = REGISTRATE.item(
+            "engine_rotor", Item::new
+    ).register();
+
     public static void register(IEventBus eventBus) {
     }
 }
