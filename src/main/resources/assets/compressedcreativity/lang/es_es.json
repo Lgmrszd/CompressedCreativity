@@ -1,0 +1,63 @@
+{
+  "itemGroup.compressedcreativity.main": "Compressed Creativity",
+
+  "compressedcreativity.unit.bar": "bar",
+  "compressedcreativity.unit.air": "mL",
+  "compressedcreativity.unit.air_per_tick": "mL/t",
+
+  "block.compressedcreativity.rotational_compressor": "Compresor rotacional",
+
+  "block.compressedcreativity.air_blower": "Soplador de aire",
+
+  "item.compressedcreativity.brass_coated_upgrade_matrix": "Matriz de actualización recubierta de latón",
+  "item.compressedcreativity.brass_gilded_lapis_lazuli": "Lapislázuli dorado de latón",
+  "item.compressedcreativity.mechanical_visor_upgrade": "Actualización de visor mecánico",
+
+  "compressedcreativity.tooltip.pressure_summary": "Estadísticas de presión:",
+  "compressedcreativity.tooltip.pressure": "Presión:",
+  "compressedcreativity.tooltip.air": "Aire:",
+  "compressedcreativity.tooltip.air_production": "Aire generado:",
+  "compressedcreativity.tooltip.air_usage": "Aire usado:",
+  "compressedcreativity.tooltip.not_enough_pressure": "Requisito de presión:",
+  "compressedcreativity.tooltip.not_enough_pressure_2": "Esta máquina requiere más presión para funcionar.",
+
+  "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Requisito de dirección de rotación:",
+  "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "Esta máquina no funcionaría con rotación en esta dirección",
+
+
+  "compressedcreativity.ponder.rotational_compressor.header": "Generación de presión usando un compresor rotacional",
+  "compressedcreativity.ponder.rotational_compressor.text_1": "El compresor rotacional se utiliza para generar presión.",
+  "compressedcreativity.ponder.rotational_compressor.text_2": "Dirección de rotación específica necesaria para que el compresor funcione.",
+  "compressedcreativity.ponder.rotational_compressor.text_3": "¡Se escapará aire de los lados no conectados de los tubos o de algunas máquinas!",
+  "compressedcreativity.ponder.rotational_compressor.text_4": "No permita que se acumule presión en las máquinas.",
+  "compressedcreativity.ponder.rotational_compressor.text_5": "Si aumenta la presión...",
+  "compressedcreativity.ponder.rotational_compressor.text_6": "¡La máquina podría explotar!",
+
+
+  "compressedcreativity.ponder.air_blower.header": "Flujo de aire de la presión del aire",
+  "compressedcreativity.ponder.air_blower.text_1": "El soplador de aire utiliza aire presurizado para crear una corriente de aire",
+  "compressedcreativity.ponder.air_blower.text_2": "La velocidad de la corriente de aire, así como la tasa de consumo de aire, depende de la presión de aire actual",
+
+  "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Visor mecánico",
+
+  "pneumaticcraft.armor.upgrade.compressedcreativity.block_tracker_module_kinetic": "Bloques mecánicos",
+
+  "pneumaticcraft.gui.tab.info.item.armor.head.compressedcreativity.mechanical_visorUpgrade": "§0El visor mecánio le permitirá ver las estadísticas mecánicas de algunas máquinas, como si estuviera usando las gafas de ingeniero.",
+
+  "compressedcreativity.mechanical_visor.armor.gui.title": "Visor mecánico",
+
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode": "Modo de información sobre herramientas",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.classic": "Clásico",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.widget": "Widget",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.both": "Ambos",
+  "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.none": "Ninguno",
+
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode": "Modo de seguimiento de bloques",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.all": "Toda la información",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.goggles": "Solo gafas",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.tooltip": "Solo sin gafas",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.min": "Marcador de posición",
+
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "Tiene información de gafas."
+
+}
