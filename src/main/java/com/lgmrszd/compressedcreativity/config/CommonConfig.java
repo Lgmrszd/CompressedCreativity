@@ -40,8 +40,6 @@ public class CommonConfig {
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE;
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK;
 
-    public static final ForgeConfigSpec.BooleanValue FURNACE_ENGINE_EXPLODE;
-
     private static ForgeConfigSpec.IntValue makeVolumeField(int def) {
         return COMMON_BUILDER
                 .comment("Air Volume of the machine\n" +
@@ -77,11 +75,6 @@ public class CommonConfig {
 
     static {
         COMMON_BUILDER.comment("General Configuration").push(CATEGORY_GENERAL);
-
-        FURNACE_ENGINE_EXPLODE = COMMON_BUILDER.
-                comment("If heated up Furnace Engine (with Heat from PNC) should explode (instead of just stalling)")
-                        .define("furnace_engine_explode", true);
-
 
         COMMON_BUILDER.pop();
 
