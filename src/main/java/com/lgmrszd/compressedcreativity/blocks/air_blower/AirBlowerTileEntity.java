@@ -3,6 +3,7 @@ package com.lgmrszd.compressedcreativity.blocks.air_blower;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
+import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
@@ -77,12 +78,12 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     @Override
     public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (airHandler.getPressure() <= CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.not_enough_pressure")
-                            .withStyle(ChatFormatting.GOLD)));
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.not_enough_pressure_2")
-                            .withStyle(ChatFormatting.GRAY)));
+            CCLang.translate("tooltip.not_enough_pressure")
+                    .style(ChatFormatting.GOLD)
+                    .forGoggles(tooltip);
+            CCLang.translate("tooltip.not_enough_pressure_2")
+                    .style(ChatFormatting.GRAY)
+                    .forGoggles(tooltip);
             return true;
         }
         return false;
@@ -91,38 +92,38 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking){
         ObservePacket.send(worldPosition, 0);
         // "Pressure Stats:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
+        CCLang.translate("tooltip.pressure_summary")
+                .forGoggles(tooltip);
         // "Pressure:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.pressure")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0bar"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airHandler.getPressure())
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airHandler.getPressure())
+                .translate("unit.bar")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         // "Air:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.air")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0mL"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airHandler.getAir())
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airHandler.getAir())
+                .translate("unit.air")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         if (airHandler.getPressure() <= CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
             return true;
         }
         // "Air usage:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_usage")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.air_usage")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0mL/t"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airUsage)
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airUsage)
+                .translate("unit.air_per_tick")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         return true;
     }
 

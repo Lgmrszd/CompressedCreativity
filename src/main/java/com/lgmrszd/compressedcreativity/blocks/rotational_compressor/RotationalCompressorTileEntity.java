@@ -4,6 +4,7 @@ import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
+import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
@@ -64,38 +65,38 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         // "Pressure Stats:"
-        tooltip.add(componentSpacing.plainCopy()
-            .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
+        CCLang.translate("tooltip.pressure_summary")
+                .forGoggles(tooltip);
         // "Pressure:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.pressure")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0bar"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airHandler.getPressure())
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airHandler.getPressure())
+                .translate("unit.bar")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         // "Air:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.air")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0mL"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airHandler.getAir())
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airHandler.getAir())
+                .translate("unit.air")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         // "Air generated:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_production")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.air_production")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0mL/t"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + ((airGeneratedPerTick > 0) ? airGeneratedPerTick : 0.0f))
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
-                        .append(" ")
-                        .withStyle(ChatFormatting.AQUA))
-                .append(Lang.translate("gui.goggles.at_current_speed")
-                        .withStyle(ChatFormatting.DARK_GRAY)));
+        CCLang.number(airGeneratedPerTick)
+                .translate("unit.air_per_tick")
+                .style(ChatFormatting.AQUA)
+                .space()
+                .add(Lang.translate("gui.goggles.at_current_speed")
+                        .style(ChatFormatting.DARK_GRAY))
+                .forGoggles(tooltip, 1);
         return true;
     }
 
@@ -106,13 +107,13 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
         if (isWrongDirection) {
             // "Rotation Direction Requirement:"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction")
-                            .withStyle(ChatFormatting.GOLD)));
+            CCLang.translate("tooltip.rotational_compressor.wrong_direction")
+                    .style(ChatFormatting.GOLD)
+                    .forGoggles(tooltip);
             // "This machine would not work with rotation in this direction"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.rotational_compressor.wrong_direction_desc")
-                            .withStyle(ChatFormatting.GRAY)));
+            CCLang.translate("tooltip.rotational_compressor.wrong_direction_desc")
+                    .style(ChatFormatting.GRAY)
+                    .forGoggles(tooltip);
             added = true;
         }
         return added;
@@ -186,6 +187,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
 
     private void spawnAirParticle() {
+        if(this.getLevel() == null) return;
         Direction orientation = getBlockState().getValue(RotationalCompressorBlock.HORIZONTAL_FACING);
         if (this.getLevel().random.nextInt(5) == 0) {
             float px = (float)this.getBlockPos().getX() + 0.5F;
@@ -193,18 +195,15 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
             float pz = (float)this.getBlockPos().getZ() + 0.5F;
             float f3 = 0.9F;
             float f4 = this.getLevel().random.nextFloat() * 0.4F;
-            switch(orientation) {
-                case EAST:
-                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px + f3), (double)py, (double)(pz + f4), -0.1D, 0.0D, 0.0D);
-                    break;
-                case WEST:
-                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px - f3), (double)py, (double)(pz + f4), 0.1D, 0.0D, 0.0D);
-                    break;
-                case SOUTH:
-                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px + f4), (double)py, (double)(pz + f3), 0.0D, 0.0D, -0.1D);
-                    break;
-                case NORTH:
-                    this.getLevel().addParticle(ParticleTypes.POOF, (double)(px + f4), (double)py, (double)(pz - f3), 0.0D, 0.0D, 0.1D);
+            switch (orientation) {
+                case EAST ->
+                        this.getLevel().addParticle(ParticleTypes.POOF, (px + f3), py, (pz + f4), -0.1D, 0.0D, 0.0D);
+                case WEST ->
+                        this.getLevel().addParticle(ParticleTypes.POOF, (px - f3), py, (pz + f4), 0.1D, 0.0D, 0.0D);
+                case SOUTH ->
+                        this.getLevel().addParticle(ParticleTypes.POOF, (px + f4), py, (pz + f3), 0.0D, 0.0D, -0.1D);
+                case NORTH ->
+                        this.getLevel().addParticle(ParticleTypes.POOF, (px + f4), py, (pz - f3), 0.0D, 0.0D, 0.1D);
             }
 
         }

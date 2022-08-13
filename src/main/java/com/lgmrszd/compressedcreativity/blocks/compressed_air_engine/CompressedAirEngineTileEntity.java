@@ -4,6 +4,7 @@ import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
+import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
@@ -55,45 +56,45 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
         ObservePacket.send(worldPosition, 0);
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         // "Pressure Stats:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure_summary")));
+        CCLang.translate("tooltip.pressure_summary")
+                .forGoggles(tooltip);
         // "Pressure:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.pressure")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.pressure")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0bar"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airHandler.getPressure())
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.bar"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airHandler.getPressure())
+                .translate("unit.bar")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         // "Air:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.air")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0mL"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + airHandler.getAir())
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air"))
-                        .withStyle(ChatFormatting.AQUA)));
+        CCLang.number(airHandler.getAir())
+                .translate("unit.air")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
         // "Air used:"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.air_usage")
-                        .withStyle(ChatFormatting.GRAY)));
+        CCLang.translate("tooltip.air_usage")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
         // "0.0mL/t"
-        tooltip.add(componentSpacing.plainCopy()
-                .append(new TextComponent(" " + (
-                        (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get() || overStressed) ?
-                                Math.min(
-                                        CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue(),
-                                        airHandler.getAir()
-                                ) :
-                                CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue()
-                        ))
-                        .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".unit.air_per_tick"))
-                        .append(" ")
-                        .withStyle(ChatFormatting.AQUA))
-                .append(Lang.translate("gui.goggles.at_current_speed")
-                        .withStyle(ChatFormatting.DARK_GRAY)));
+        CCLang.number(
+                (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get() || overStressed) ?
+                        Math.min(
+                                CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE.get().floatValue(),
+                                airHandler.getAir()
+                        ) :
+                        CommonConfig.COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK.get().floatValue()
+                )
+                .translate("unit.air_per_tick")
+                .style(ChatFormatting.AQUA)
+                .space()
+                .add(Lang.translate("gui.goggles.at_current_speed")
+                        .style(ChatFormatting.DARK_GRAY))
+                .forGoggles(tooltip, 1);
         return true;
     }
 
@@ -103,13 +104,13 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
         if (airHandler.getAir() > 0 && (airHandler.getPressure() < CommonConfig.COMPRESSED_AIR_ENGINE_WORK_PRESSURE.get() || overStressed)) {
             added = true;
             // "This machine is currently idle:"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.compressed_air_engine.idle_1")
-                            .withStyle(ChatFormatting.GOLD)));
+            CCLang.translate("tooltip.compressed_air_engine.idle_1")
+                    .style(ChatFormatting.GOLD)
+                    .forGoggles(tooltip);
             // "This machine uses air even though it's not currently working"
-            tooltip.add(componentSpacing.plainCopy()
-                    .append(new TranslatableComponent(CompressedCreativity.MOD_ID + ".tooltip.compressed_air_engine.idle_2")
-                            .withStyle(ChatFormatting.GRAY)));
+            CCLang.translate("tooltip.compressed_air_engine.idle_2")
+                    .style(ChatFormatting.GRAY)
+                    .forGoggles(tooltip);
         }
         return added;
     }
