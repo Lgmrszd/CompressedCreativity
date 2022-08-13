@@ -62,7 +62,6 @@ public class CompressedCreativity
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
                 () -> BlockPartials::init);
         eventBus.addListener(this::postInit);
-//        eventBus.register(CCMisc.class);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -93,7 +92,7 @@ public class CompressedCreativity
     }
 
     private void serverStart(final ServerAboutToStartEvent event) {
-        CCHeatBehaviour.registerHeatBehaviour();
+//        CCHeatBehaviour.registerHeatBehaviour();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
