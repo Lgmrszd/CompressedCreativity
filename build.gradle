@@ -19,7 +19,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
-version = '1.18.2-0.1.0'
+version = '1.18.2-0.1.1'
 group = 'com.lgmrszd.compressedcreativity' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'compressedcreativity'
 
@@ -165,7 +165,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.20'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.68'
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
@@ -173,12 +173,10 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-    implementation fg.deobf("curse.maven:create-328085:3737418")
-    implementation fg.deobf("curse.maven:flywheel-486392:3737402")
-    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3837268")
+    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3913972")
 //    implementation fg.deobf("libs:pneumaticcraft-repressurized-1.18.2:3.2.4-90")
-//    implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
-//    implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
+    implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
+    implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
     implementation fg.deobf("curse.maven:patchouli-306770:3729975")
 
 
