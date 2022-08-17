@@ -42,12 +42,5 @@
 
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "Has Goggles information.",
 
-  "death.attack.oc_engine": "%1$s tried to overclock the Engine",
-
-  "compressedcreativity.gui.tooltip.expand": "Hold Shift for info",
-
-  "block.create.rotational_compressor.tooltip": "ROTATIONAL COMPRESSOR",
-  "block.create.rotational_compressor.tooltip.summary": "Summary",
-  "block.compressed_creativity.rotational_compressor.tooltip": "ROTATIONAL COMPRESSOR",
-  "block.compressed_creativity.rotational_compressor.tooltip.summary": "Summary2"
+  "compressedcreativity.gui.tooltip.expand": "Hold Shift for info"
 }

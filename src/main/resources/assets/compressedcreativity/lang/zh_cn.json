@@ -1,11 +1,7 @@
 {
-  "block.compressed_creativity.rotational_compressor.tooltip": "旋转压缩机",
-  "block.compressed_creativity.rotational_compressor.tooltip.summary": "摘要 2",
   "block.compressedcreativity.air_blower": "吹风机",
   "block.compressedcreativity.compressed_air_engine": "压缩空气引擎",
   "block.compressedcreativity.rotational_compressor": "旋转压缩机",
-  "block.create.rotational_compressor.tooltip": "旋转压缩机",
-  "block.create.rotational_compressor.tooltip.summary": "摘要",
   "compressedcreativity.gui.tooltip.expand": "按下 Shift 以获取信息",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "包含护目镜信息",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode": "方块跟踪模式",
