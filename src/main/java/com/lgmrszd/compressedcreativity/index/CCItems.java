@@ -5,7 +5,7 @@ import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.items.CCUpgradeItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 

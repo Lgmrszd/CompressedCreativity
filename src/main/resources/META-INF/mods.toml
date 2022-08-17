@@ -43,7 +43,7 @@ Bridging Create and PneumaticCraft: Repressurized together
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[40.1.20,)" #mandatory
+    versionRange="[40.1.60,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -58,13 +58,13 @@ Bridging Create and PneumaticCraft: Repressurized together
 [[dependencies.compressedcreativity]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.0,)"
+    versionRange="[0.5.0d,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.compressedcreativity]]
     modId="flywheel"
     mandatory=true
-    versionRange="[1.18-0.6.4,)"
+    versionRange="[0.6.5,)"
     ordering="AFTER"
     side="CLIENT"
 [[dependencies.compressedcreativity]]

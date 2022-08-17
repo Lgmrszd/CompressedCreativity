@@ -6,7 +6,7 @@ import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;

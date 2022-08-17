@@ -12,7 +12,7 @@ import com.simibubi.create.content.contraptions.base.HorizontalHalfShaftInstance
 import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.ShaftRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 public class CCTileEntities {
 
