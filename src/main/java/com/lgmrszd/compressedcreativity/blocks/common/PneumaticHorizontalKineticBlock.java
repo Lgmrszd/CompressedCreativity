@@ -30,6 +30,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.lgmrszd.compressedcreativity.index.CCMisc.appendPneumaticHoverText;
+
 public abstract class PneumaticHorizontalKineticBlock<T extends BlockEntity> extends HorizontalKineticBlock implements IPneumaticWrenchable, ITE<T> {
     public PneumaticHorizontalKineticBlock(Properties properties) {
         super(properties);
@@ -48,16 +50,9 @@ public abstract class PneumaticHorizontalKineticBlock<T extends BlockEntity> ext
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> infoList, TooltipFlag par4) {
-        if (Screen.hasShiftDown()) {
-//            infoList.add(new TranslatableComponent("compressedcreativity.gui.").withStyle(ChatFormatting.GOLD));
-            BlockEntity te = newBlockEntity(BlockPos.ZERO, defaultBlockState());
-            if (te instanceof IPneumaticTileEntity pte) {
-                infoList.add(new TranslatableComponent("pneumaticcraft.gui.tooltip.maxPressure", pte.getDangerPressure()).withStyle(ChatFormatting.GOLD));
-            }
-//            PneumaticRegistry.getInstance().getUpgradeRegistry().addUpgradeTooltip(upgrade.get(), infoList);
-        } else {
-            infoList.add(new TranslatableComponent("compressedcreativity.gui.tooltip.expand").withStyle(ChatFormatting.GOLD));
-        }
+        appendPneumaticHoverText(
+                () -> newBlockEntity(BlockPos.ZERO, defaultBlockState()),
+                infoList);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.index.CCLang;
@@ -37,7 +38,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoveringInformation, IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource {
+public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoveringInformation, IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource, IPneumaticTileEntity {
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
@@ -293,5 +294,10 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     @Override
     public boolean isSourceRemoved() {
         return remove;
+    }
+
+    @Override
+    public float getDangerPressure() {
+        return airHandler.getDangerPressure();
     }
 }
