@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "compressedcreativity:block/axis_pressure_tube",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "compressedcreativity:block/axis_pressure_tube"
+    },
+    "axis=z": {
+      "model": "compressedcreativity:block/axis_pressure_tube",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

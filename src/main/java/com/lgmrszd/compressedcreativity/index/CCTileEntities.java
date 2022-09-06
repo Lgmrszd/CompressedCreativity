@@ -2,6 +2,7 @@ package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisPressureTubeTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineInstance;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineRenderer;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineTileEntity;
@@ -35,6 +36,11 @@ public class CCTileEntities {
     public static final BlockEntityEntry<AirBlowerTileEntity> AIR_BLOWER = REGISTRATE
             .tileEntity("air_blower", AirBlowerTileEntity::new)
             .validBlock(CCBlocks.AIR_BLOWER)
+            .register();
+
+    public static final BlockEntityEntry<AxisPressureTubeTileEntity> AXIS_PRESSURE_TUBE = REGISTRATE
+            .tileEntity("axis_pressure_tube", AxisPressureTubeTileEntity::new)
+            .validBlock(CCBlocks.AXIS_PRESSURE_TUBE)
             .register();
 
     public static void register() {

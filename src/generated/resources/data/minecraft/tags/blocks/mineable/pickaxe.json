@@ -3,6 +3,7 @@
   "values": [
     "compressedcreativity:rotational_compressor",
     "compressedcreativity:compressed_air_engine",
-    "compressedcreativity:air_blower"
+    "compressedcreativity:air_blower",
+    "compressedcreativity:axis_pressure_tube"
   ]
 }
