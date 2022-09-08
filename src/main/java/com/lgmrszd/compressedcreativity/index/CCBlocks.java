@@ -5,7 +5,10 @@ import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockStateGenerator;
+import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisAdvancedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisPressureTubeBlock;
+import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisPressureTubeBlockStateGenerator;
+import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisReinforcedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
@@ -73,11 +76,30 @@ public class CCBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<AxisPressureTubeBlock> AXIS_PRESSURE_TUBE = REGISTRATE.block("axis_pressure_tube", AxisPressureTubeBlock::new)
+    public static final BlockEntry<AxisPressureTubeBlock> AXIS_PRESSURE_TUBE =
+            REGISTRATE.block("axis_pressure_tube", AxisPressureTubeBlock::new)
             .initialProperties(SharedProperties::stone)
             .transform(pickaxeOnly())
-            .blockstate(BlockStateGen.axisBlockProvider(false))
+            .blockstate(AxisPressureTubeBlockStateGenerator::blockState)
             .loot((p, b) -> p.dropOther(b, ModBlocks.PRESSURE_TUBE.get()))
+            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
+            .register();
+
+    public static final BlockEntry<AxisReinforcedPressureTubeBlock> AXIS_REINFORCED_PRESSURE_TUBE =
+            REGISTRATE.block("axis_reinforced_pressure_tube", AxisReinforcedPressureTubeBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .transform(pickaxeOnly())
+            .blockstate(AxisPressureTubeBlockStateGenerator::blockState)
+            .loot((p, b) -> p.dropOther(b, ModBlocks.REINFORCED_PRESSURE_TUBE.get()))
+            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
+            .register();
+
+    public static final BlockEntry<AxisAdvancedPressureTubeBlock> AXIS_ADVANCED_PRESSURE_TUBE =
+            REGISTRATE.block("axis_advanced_pressure_tube", AxisAdvancedPressureTubeBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .transform(pickaxeOnly())
+            .blockstate(AxisPressureTubeBlockStateGenerator::blockState)
+            .loot((p, b) -> p.dropOther(b, ModBlocks.ADVANCED_PRESSURE_TUBE.get()))
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 

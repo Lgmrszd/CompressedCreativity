@@ -4,6 +4,8 @@
     "compressedcreativity:rotational_compressor",
     "compressedcreativity:compressed_air_engine",
     "compressedcreativity:air_blower",
-    "compressedcreativity:axis_pressure_tube"
+    "compressedcreativity:axis_pressure_tube",
+    "compressedcreativity:axis_reinforced_pressure_tube",
+    "compressedcreativity:axis_advanced_pressure_tube"
   ]
 }

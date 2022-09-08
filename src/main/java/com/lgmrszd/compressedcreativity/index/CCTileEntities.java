@@ -2,7 +2,9 @@ package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisAdvancedPressureTubeTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisPressureTubeTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisReinforcedPressureTubeTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineInstance;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineRenderer;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineTileEntity;
@@ -14,6 +16,9 @@ import com.simibubi.create.content.contraptions.relays.encased.ShaftInstance;
 import com.simibubi.create.content.contraptions.relays.encased.ShaftRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class CCTileEntities {
 
@@ -41,6 +46,16 @@ public class CCTileEntities {
     public static final BlockEntityEntry<AxisPressureTubeTileEntity> AXIS_PRESSURE_TUBE = REGISTRATE
             .tileEntity("axis_pressure_tube", AxisPressureTubeTileEntity::new)
             .validBlock(CCBlocks.AXIS_PRESSURE_TUBE)
+            .register();
+
+    public static final BlockEntityEntry<AxisReinforcedPressureTubeTileEntity> AXIS_REINFORCED_PRESSURE_TUBE = REGISTRATE
+            .tileEntity("axis_reinforced_pressure_tube", AxisReinforcedPressureTubeTileEntity::new)
+            .validBlock(CCBlocks.AXIS_REINFORCED_PRESSURE_TUBE)
+            .register();
+
+    public static final BlockEntityEntry<AxisAdvancedPressureTubeTileEntity> AXIS_ADVANCED_PRESSURE_TUBE = REGISTRATE
+            .tileEntity("axis_advanced_pressure_tube", AxisAdvancedPressureTubeTileEntity::new)
+            .validBlock(CCBlocks.AXIS_ADVANCED_PRESSURE_TUBE)
             .register();
 
     public static void register() {

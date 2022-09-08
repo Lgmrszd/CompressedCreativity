@@ -6,9 +6,14 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
 import com.simibubi.create.content.contraptions.relays.elementary.BracketedTileEntityBehaviour;
 import com.simibubi.create.content.contraptions.wrench.IWrenchableWithBracket;
+import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
+import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.block.PNCBlockStateProperties;
+import me.desht.pneumaticcraft.api.block.PressureTubeConnection;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
 import me.desht.pneumaticcraft.common.block.PressureTubeBlock;
 import me.desht.pneumaticcraft.common.core.ModBlocks;
@@ -21,11 +26,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -34,13 +39,17 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.lgmrszd.compressedcreativity.CompressedCreativity.LOGGER;
 
 @Mod.EventBusSubscriber
-public class AxisPressureTubeBlock extends RotatedPillarBlock implements ITE<AxisPressureTubeTileEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock {
+public class AxisPressureTubeBlock extends RotatedPillarBlock implements
+        ITE<AxisPressureTubeTileEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock, ISpecialBlockItemRequirement {
+
     public AxisPressureTubeBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
@@ -50,19 +59,6 @@ public class AxisPressureTubeBlock extends RotatedPillarBlock implements ITE<Axi
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> definition) {
         super.createBlockStateDefinition(definition.add(BlockStateProperties.WATERLOGGED));
     }
-
-//    private static final EnumProperty<PressureTubeBlock.ConnectionType>[] connectionProperties;
-//
-//    static {
-//        try {
-//            Field connProperties = ModBlocks.PRESSURE_TUBE.get().getClass().getDeclaredField("CONNECTION_PROPERTIES_3");
-//            connProperties.setAccessible(true);
-//            connectionProperties =
-//                    (EnumProperty<PressureTubeBlock.ConnectionType>[]) connProperties.get(ModBlocks.PRESSURE_TUBE.get());
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -87,19 +83,28 @@ public class AxisPressureTubeBlock extends RotatedPillarBlock implements ITE<Axi
             Level world = context.getLevel();
             BlockPos pos = context.getClickedPos();
             BlockState oldBlockState = world.getBlockState(pos);
-            BlockState newBlockState = ModBlocks.PRESSURE_TUBE.get().defaultBlockState()
+            BlockState newBlockState;
+            if (oldBlockState.getBlock() == CCBlocks.AXIS_PRESSURE_TUBE.get())
+                newBlockState = ModBlocks.PRESSURE_TUBE.get().defaultBlockState();
+            else if (oldBlockState.getBlock() == CCBlocks.AXIS_REINFORCED_PRESSURE_TUBE.get())
+                newBlockState = ModBlocks.REINFORCED_PRESSURE_TUBE.get().defaultBlockState();
+            else if (oldBlockState.getBlock() == CCBlocks.AXIS_ADVANCED_PRESSURE_TUBE.get())
+                newBlockState = ModBlocks.ADVANCED_PRESSURE_TUBE.get().defaultBlockState();
+            else return true;
+            newBlockState = newBlockState
                     .setValue(BlockStateProperties.WATERLOGGED,
                             oldBlockState.getValue(BlockStateProperties.WATERLOGGED));
+            Direction.Axis axis = oldBlockState.getValue(AXIS);
             switch (oldBlockState.getValue(AXIS)) {
                 case X -> newBlockState = newBlockState
-                        .setValue(PressureTubeBlock.WEST_3, PressureTubeBlock.ConnectionType.CONNECTED)
-                        .setValue(PressureTubeBlock.EAST_3, PressureTubeBlock.ConnectionType.CONNECTED);
+                        .setValue(PNCBlockStateProperties.PressureTubes.WEST, PressureTubeConnection.CONNECTED)
+                        .setValue(PNCBlockStateProperties.PressureTubes.EAST, PressureTubeConnection.CONNECTED);
                 case Y -> newBlockState = newBlockState
-                        .setValue(PressureTubeBlock.UP_3, PressureTubeBlock.ConnectionType.CONNECTED)
-                        .setValue(PressureTubeBlock.DOWN_3, PressureTubeBlock.ConnectionType.CONNECTED);
+                        .setValue(PNCBlockStateProperties.PressureTubes.UP, PressureTubeConnection.CONNECTED)
+                        .setValue(PNCBlockStateProperties.PressureTubes.DOWN, PressureTubeConnection.CONNECTED);
                 case Z -> newBlockState = newBlockState
-                        .setValue(PressureTubeBlock.NORTH_3, PressureTubeBlock.ConnectionType.CONNECTED)
-                        .setValue(PressureTubeBlock.SOUTH_3, PressureTubeBlock.ConnectionType.CONNECTED);
+                        .setValue(PNCBlockStateProperties.PressureTubes.NORTH, PressureTubeConnection.CONNECTED)
+                        .setValue(PNCBlockStateProperties.PressureTubes.SOUTH, PressureTubeConnection.CONNECTED);
             }
 
             world.setBlockAndUpdate(context.getClickedPos(), newBlockState);
@@ -146,41 +151,39 @@ public class AxisPressureTubeBlock extends RotatedPillarBlock implements ITE<Axi
         BlockState blockState = world.getBlockState(blockPos);
         if (!(item.getItem() instanceof BracketBlockItem)) return;
         if (!(blockState.getBlock() instanceof PressureTubeBlock)) return;
-//        if (!(world.getBlockEntity(blockPos) instanceof PressureTubeBlockEntity ptbe)) return;
+        BlockEntry<? extends AxisPressureTubeBlock> axisTube =
+                (blockState.getBlock() == ModBlocks.PRESSURE_TUBE.get()) ? CCBlocks.AXIS_PRESSURE_TUBE :
+                        (blockState.getBlock() == ModBlocks.REINFORCED_PRESSURE_TUBE.get()) ? CCBlocks.AXIS_REINFORCED_PRESSURE_TUBE : CCBlocks.AXIS_ADVANCED_PRESSURE_TUBE;
+        boolean c_down = blockState.getValue(PNCBlockStateProperties.PressureTubes.DOWN) == PressureTubeConnection.CONNECTED;
+        boolean c_up = blockState.getValue(PNCBlockStateProperties.PressureTubes.UP) == PressureTubeConnection.CONNECTED;
+        boolean c_north = blockState.getValue(PNCBlockStateProperties.PressureTubes.NORTH) == PressureTubeConnection.CONNECTED;
+        boolean c_south = blockState.getValue(PNCBlockStateProperties.PressureTubes.SOUTH) == PressureTubeConnection.CONNECTED;
+        boolean c_west = blockState.getValue(PNCBlockStateProperties.PressureTubes.WEST) == PressureTubeConnection.CONNECTED;
+        boolean c_east = blockState.getValue(PNCBlockStateProperties.PressureTubes.EAST) == PressureTubeConnection.CONNECTED;
         Direction.Axis axis = null;
-        int state = 0;
-        for(Direction dir : Direction.values()) {
-//            if (blockState.getValue(connectionProperties[dir.get3DDataValue()]) == PressureTubeBlock.ConnectionType.CONNECTED) {
-//                state += 1 << dir.get3DDataValue();
-//            }
-            if (blockState.getValue(PressureTubeBlock.CONNECTION_PROPERTIES_3[dir.get3DDataValue()]) == PressureTubeBlock.ConnectionType.CONNECTED) {
-                state += 1 << dir.get3DDataValue();
-            }
-
-//            if (ptbe.canConnectPneumatic(dir)) {
-//                state += 1 << dir.get3DDataValue();
-//            }
-        }
-        LOGGER.debug(state);
-        switch (state) {
-            case 48 -> {
-                axis = Direction.Axis.X;
-            }
-            case 3 -> {
-                axis = Direction.Axis.Y;
-            }
-            case 12 -> {
-                axis = Direction.Axis.Z;
-            }
-            default -> {
-            }
-        }
+        if(!c_down && !c_up && !c_north && !c_south && c_east && c_west) axis = Direction.Axis.X;
+        if(c_down && c_up && !c_north && !c_south && !c_east && !c_west) axis = Direction.Axis.Y;
+        if(!c_down && !c_up && c_north && c_south && !c_east && !c_west) axis = Direction.Axis.Z;
         if (axis != null) {
-            BlockState newState = CCBlocks.AXIS_PRESSURE_TUBE.getDefaultState()
+            BlockState newState = axisTube.getDefaultState()
                     .setValue(AXIS, axis)
                     .setValue(BlockStateProperties.WATERLOGGED,
                             blockState.getValue(BlockStateProperties.WATERLOGGED));
             world.setBlockAndUpdate(blockPos, newState);
         }
+    }
+
+    @Override
+    public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) {
+        if (state.getBlock() == CCBlocks.AXIS_PRESSURE_TUBE.get())
+            return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
+                    List.of(new ItemStack(ModBlocks.PRESSURE_TUBE.get())));
+        else if (state.getBlock() == CCBlocks.AXIS_REINFORCED_PRESSURE_TUBE.get())
+            return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
+                    List.of(new ItemStack(ModBlocks.REINFORCED_PRESSURE_TUBE.get())));
+        else if (state.getBlock() == CCBlocks.AXIS_ADVANCED_PRESSURE_TUBE.get())
+            return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
+                    List.of(new ItemStack(ModBlocks.ADVANCED_PRESSURE_TUBE.get())));
+        else return ItemRequirement.INVALID;
     }
 }
