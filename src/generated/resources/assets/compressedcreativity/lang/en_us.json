@@ -1,5 +1,8 @@
 {
   "block.compressedcreativity.air_blower": "Air Blower",
+  "block.compressedcreativity.bracketed_advanced_pressure_tube": "Bracketed Advanced Pressure Tube",
+  "block.compressedcreativity.bracketed_pressure_tube": "Bracketed Pressure Tube",
+  "block.compressedcreativity.bracketed_reinforced_pressure_tube": "Bracketed Reinforced Pressure Tube",
   "block.compressedcreativity.compressed_air_engine": "Compressed Air Engine",
   "block.compressedcreativity.rotational_compressor": "Rotational Compressor",
   "compressedcreativity.gui.tooltip.expand": "Hold Shift for info",

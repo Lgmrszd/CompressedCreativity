@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity.mixin.create;
 
-import com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube.AxisPressureTubeBlock;
+import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlock;
 import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,8 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
-import static com.lgmrszd.compressedcreativity.CompressedCreativity.LOGGER;
-
 @Mixin(BracketBlock.class)
 public abstract class BracketBlockMixin {
 
@@ -21,8 +19,8 @@ public abstract class BracketBlockMixin {
 
     @Inject(method = "getSuitableBracket(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Ljava/util/Optional;", at = @At("HEAD"), cancellable = true, remap = false)
     public void inGetSuitableBracket(BlockState blockState, Direction direction, CallbackInfoReturnable<Optional<BlockState>> cir) {
-        if(blockState.getBlock() instanceof AxisPressureTubeBlock) {
-            cir.setReturnValue(getSuitableBracket(blockState.getValue(AxisPressureTubeBlock.AXIS), direction, BracketBlock.BracketType.SHAFT));
+        if(blockState.getBlock() instanceof BracketedPressureTubeBlock) {
+            cir.setReturnValue(getSuitableBracket(blockState.getValue(BracketedPressureTubeBlock.AXIS), direction, BracketBlock.BracketType.SHAFT));
         }
     }
 }

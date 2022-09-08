@@ -1,4 +1,4 @@
-package com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube;
+package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 
 import com.simibubi.create.content.contraptions.relays.elementary.BracketedTileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
@@ -21,21 +21,21 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AxisPressureTubeTileEntity extends SmartTileEntity {
+public class BracketedPressureTubeTileEntity extends SmartTileEntity {
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
-    public AxisPressureTubeTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BracketedPressureTubeTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         this(type, pos, state, PressureTier.TIER_ONE, 1000);
     }
-    protected AxisPressureTubeTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier tier, int volume) {
+    protected BracketedPressureTubeTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier tier, int volume) {
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(tier, volume);
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 //
-//    public AxisPressureTubeTileEntity basic(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-//        return new AxisPressureTubeTileEntity(type, pos, state, PressureTier.TIER_ONE, 1000);
+//    public BracketedPressureTubeTileEntity basic(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+//        return new BracketedPressureTubeTileEntity(type, pos, state, PressureTier.TIER_ONE, 1000);
 //    }
 
     @Override
@@ -92,7 +92,7 @@ public class AxisPressureTubeTileEntity extends SmartTileEntity {
     }
 
     public boolean canConnectPneumatic(Direction dir) {
-        Direction.Axis axis = getBlockState().getValue(AxisPressureTubeBlock.AXIS);
+        Direction.Axis axis = getBlockState().getValue(BracketedPressureTubeBlock.AXIS);
         return dir == null || dir.getAxis() == axis;
     }
 

@@ -1,0 +1,65 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "compressedcreativity:block/pressure_tube_core"
+      }
+    },
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "pneumaticcraft:block/reinforced_pressure_tube_connected",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "pneumaticcraft:block/reinforced_pressure_tube_connected",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "y"
+      },
+      "apply": {
+        "model": "pneumaticcraft:block/reinforced_pressure_tube_connected",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "axis": "y"
+      },
+      "apply": {
+        "model": "pneumaticcraft:block/reinforced_pressure_tube_connected"
+      }
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "pneumaticcraft:block/reinforced_pressure_tube_connected",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "pneumaticcraft:block/reinforced_pressure_tube_connected",
+        "x": 90,
+        "y": 180
+      }
+    }
+  ]
+}

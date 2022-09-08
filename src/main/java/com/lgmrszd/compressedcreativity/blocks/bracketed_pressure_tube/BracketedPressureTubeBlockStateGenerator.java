@@ -1,31 +1,27 @@
-package com.lgmrszd.compressedcreativity.blocks.axis_pressure_tube;
+package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 
-import java.util.function.Function;
+public class BracketedPressureTubeBlockStateGenerator {
 
-public class AxisPressureTubeBlockStateGenerator {
-
-    public static ModelFile tubeCore(DataGenContext<?, ?> ctx, RegistrateBlockstateProvider prov) {
+    public static ModelFile tubeCore(RegistrateBlockstateProvider prov) {
         return prov.models()
-                .getExistingFile(prov.modLoc("block/" + ctx.getName() + "_core"));
+                .getExistingFile(prov.modLoc("block/pressure_tube_core"));
     }
 
 
-    public static <T extends AxisPressureTubeBlock> void blockState(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
+    public static <T extends BracketedPressureTubeBlock> void blockState(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
         MultiPartBlockStateBuilder builder = p.getMultipartBuilder(c.get());
 
-        String pnc_path = "pneumaticcraft:block/" + c.getName().substring(5) + "_connected";
+        String pnc_path = "pneumaticcraft:block/" + c.getName().substring(10) + "_connected"; // cut off "bracketed_"
 
         builder.part()
-                .modelFile(tubeCore(c, p))
+                .modelFile(tubeCore(p))
                 .addModel()
                 .end();
 
@@ -39,7 +35,7 @@ public class AxisPressureTubeBlockStateGenerator {
                             axis == Direction.Axis.X ? 270 : 0
                     )
                     .addModel()
-                    .condition(AxisPressureTubeBlock.AXIS, axis)
+                    .condition(BracketedPressureTubeBlock.AXIS, axis)
                     .end();
 
             builder.part()
@@ -52,7 +48,7 @@ public class AxisPressureTubeBlockStateGenerator {
                                     axis == Direction.Axis.Y ? 0 : 180
                     )
                     .addModel()
-                    .condition(AxisPressureTubeBlock.AXIS, axis)
+                    .condition(BracketedPressureTubeBlock.AXIS, axis)
                     .end();
         }
     }

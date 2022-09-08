@@ -1,5 +1,8 @@
 {
   "block.compressedcreativity.air_blower": "\u0279\u01DD\u028Do\u05DF\u15FA \u0279\u0131\u2C6F",
+  "block.compressedcreativity.bracketed_advanced_pressure_tube": "\u01DDqn\u27D8 \u01DD\u0279nss\u01DD\u0279\u0500 p\u01DD\u0254u\u0250\u028Cp\u2C6F p\u01DD\u0287\u01DD\u029E\u0254\u0250\u0279\u15FA",
+  "block.compressedcreativity.bracketed_pressure_tube": "\u01DDqn\u27D8 \u01DD\u0279nss\u01DD\u0279\u0500 p\u01DD\u0287\u01DD\u029E\u0254\u0250\u0279\u15FA",
+  "block.compressedcreativity.bracketed_reinforced_pressure_tube": "\u01DDqn\u27D8 \u01DD\u0279nss\u01DD\u0279\u0500 p\u01DD\u0254\u0279o\u025Fu\u0131\u01DD\u1D1A p\u01DD\u0287\u01DD\u029E\u0254\u0250\u0279\u15FA",
   "block.compressedcreativity.compressed_air_engine": "\u01DDu\u0131bu\u018E \u0279\u0131\u2C6F p\u01DDss\u01DD\u0279d\u026Fo\u0186",
   "block.compressedcreativity.rotational_compressor": "\u0279oss\u01DD\u0279d\u026Fo\u0186 \u05DF\u0250uo\u0131\u0287\u0250\u0287o\u1D1A",
   "compressedcreativity.gui.tooltip.expand": "o\u025Fu\u0131 \u0279o\u025F \u0287\u025F\u0131\u0265S p\u05DFoH",
