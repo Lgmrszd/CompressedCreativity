@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 
 import com.lgmrszd.compressedcreativity.index.CCBlocks;
+import com.lgmrszd.compressedcreativity.index.CCMisc;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
@@ -11,11 +12,13 @@ import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.PNCBlockStateProperties;
 import me.desht.pneumaticcraft.api.block.PressureTubeConnection;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
 import me.desht.pneumaticcraft.common.block.PressureTubeBlock;
+import me.desht.pneumaticcraft.common.block.entity.PressureTubeBlockEntity;
 import me.desht.pneumaticcraft.common.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -103,7 +107,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
                         .setValue(PNCBlockStateProperties.PressureTubes.SOUTH, PressureTubeConnection.CONNECTED);
             }
 
-            world.setBlockAndUpdate(context.getClickedPos(), newBlockState);
+            CCMisc.setBlockAndUpdateKeepAir(world, context.getClickedPos(), newBlockState);
 //            world.getBlockState(context.getClickedPos()).updateNeighbourShapes(world, context.getClickedPos(), 3);
             IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
             miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
@@ -165,7 +169,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
                     .setValue(AXIS, axis)
                     .setValue(BlockStateProperties.WATERLOGGED,
                             blockState.getValue(BlockStateProperties.WATERLOGGED));
-            world.setBlockAndUpdate(blockPos, newState);
+            CCMisc.setBlockAndUpdateKeepAir(world, blockPos, newState);
         }
     }
 
@@ -181,5 +185,13 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
             return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
                     List.of(new ItemStack(ModBlocks.ADVANCED_PRESSURE_TUBE.get())));
         else return ItemRequirement.INVALID;
+    }
+
+    @Override
+    public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
+        super.onNeighborChange(state, level, pos, neighbor);
+        if ((state.hasBlockEntity() ? level.getBlockEntity(pos) : null) instanceof BracketedPressureTubeTileEntity tte) {
+            tte.updateAirHandler();
+        }
     }
 }
