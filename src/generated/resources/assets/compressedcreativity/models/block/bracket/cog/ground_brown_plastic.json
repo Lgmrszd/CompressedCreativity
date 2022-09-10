@@ -1,0 +1,7 @@
+{
+  "parent": "compressedcreativity:block/bracket/cog/ground",
+  "textures": {
+    "bracket": "compressedcreativity:block/plastic_bracket/bracket_brown_plastic",
+    "plate": "compressedcreativity:block/plastic_bracket/bracket_plate_brown_plastic"
+  }
+}

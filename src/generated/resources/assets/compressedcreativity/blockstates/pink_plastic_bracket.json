@@ -1,0 +1,154 @@
+{
+  "variants": {
+    "axis_along_first=false,facing=down,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/ground_pink_plastic",
+      "x": 180
+    },
+    "axis_along_first=true,facing=down,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/ground_pink_plastic",
+      "x": 180,
+      "y": 90
+    },
+    "axis_along_first=false,facing=up,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/ground_pink_plastic"
+    },
+    "axis_along_first=true,facing=up,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/ground_pink_plastic",
+      "y": 90
+    },
+    "axis_along_first=false,facing=north,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "x": 90,
+      "y": 270
+    },
+    "axis_along_first=true,facing=north,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "y": 270
+    },
+    "axis_along_first=false,facing=south,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "x": 90,
+      "y": 90
+    },
+    "axis_along_first=true,facing=south,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "y": 90
+    },
+    "axis_along_first=false,facing=west,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "y": 180
+    },
+    "axis_along_first=true,facing=west,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "x": 90,
+      "y": 180
+    },
+    "axis_along_first=false,facing=east,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic"
+    },
+    "axis_along_first=true,facing=east,type=pipe": {
+      "model": "compressedcreativity:block/bracket/pipe/wall_pink_plastic",
+      "x": 90
+    },
+    "axis_along_first=false,facing=down,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/ground_pink_plastic",
+      "x": 180
+    },
+    "axis_along_first=true,facing=down,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/ground_pink_plastic",
+      "x": 180,
+      "y": 90
+    },
+    "axis_along_first=false,facing=up,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/ground_pink_plastic"
+    },
+    "axis_along_first=true,facing=up,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/ground_pink_plastic",
+      "y": 90
+    },
+    "axis_along_first=false,facing=north,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "x": 90,
+      "y": 270
+    },
+    "axis_along_first=true,facing=north,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "y": 270
+    },
+    "axis_along_first=false,facing=south,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "x": 90,
+      "y": 90
+    },
+    "axis_along_first=true,facing=south,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "y": 90
+    },
+    "axis_along_first=false,facing=west,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "y": 180
+    },
+    "axis_along_first=true,facing=west,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "x": 90,
+      "y": 180
+    },
+    "axis_along_first=false,facing=east,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic"
+    },
+    "axis_along_first=true,facing=east,type=cog": {
+      "model": "compressedcreativity:block/bracket/cog/wall_pink_plastic",
+      "x": 90
+    },
+    "axis_along_first=false,facing=down,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/ground_pink_plastic",
+      "x": 180
+    },
+    "axis_along_first=true,facing=down,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/ground_pink_plastic",
+      "x": 180,
+      "y": 90
+    },
+    "axis_along_first=false,facing=up,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/ground_pink_plastic"
+    },
+    "axis_along_first=true,facing=up,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/ground_pink_plastic",
+      "y": 90
+    },
+    "axis_along_first=false,facing=north,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "x": 90,
+      "y": 270
+    },
+    "axis_along_first=true,facing=north,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "y": 270
+    },
+    "axis_along_first=false,facing=south,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "x": 90,
+      "y": 90
+    },
+    "axis_along_first=true,facing=south,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "y": 90
+    },
+    "axis_along_first=false,facing=west,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "y": 180
+    },
+    "axis_along_first=true,facing=west,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "x": 90,
+      "y": 180
+    },
+    "axis_along_first=false,facing=east,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic"
+    },
+    "axis_along_first=true,facing=east,type=shaft": {
+      "model": "compressedcreativity:block/bracket/shaft/wall_pink_plastic",
+      "x": 90
+    }
+  }
+}

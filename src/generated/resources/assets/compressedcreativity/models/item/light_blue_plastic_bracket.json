@@ -1,0 +1,7 @@
+{
+  "parent": "compressedcreativity:block/bracket/item",
+  "textures": {
+    "bracket": "compressedcreativity:block/plastic_bracket/bracket_light_blue_plastic",
+    "plate": "compressedcreativity:block/plastic_bracket/bracket_plate_light_blue_plastic"
+  }
+}

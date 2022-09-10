@@ -1,5 +1,6 @@
 package com.lgmrszd.compressedcreativity.index;
 
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.block.entity.PressureTubeBlockEntity;
@@ -8,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,5 +49,9 @@ public class CCMisc {
                 cap.addAir(oldAir.get() - cap.getAir());
             });
         }
+    }
+
+    public static ResourceLocation CCRL(String path) {
+        return new ResourceLocation(CompressedCreativity.MOD_ID, path);
     }
 }

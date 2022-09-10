@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "compressedcreativity:crafting/red_plastic_bracket"
+    ]
+  },
+  "criteria": {
+    "has_red_plastic_bracket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "compressedcreativity:red_plastic_bracket"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "compressedcreativity:crafting/red_plastic_bracket"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_red_plastic_bracket",
+      "has_the_recipe"
+    ]
+  ]
+}

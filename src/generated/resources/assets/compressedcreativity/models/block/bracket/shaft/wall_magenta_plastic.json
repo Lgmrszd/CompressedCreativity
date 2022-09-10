@@ -1,0 +1,7 @@
+{
+  "parent": "compressedcreativity:block/bracket/shaft/wall",
+  "textures": {
+    "bracket": "compressedcreativity:block/plastic_bracket/bracket_magenta_plastic",
+    "plate": "compressedcreativity:block/plastic_bracket/bracket_plate_magenta_plastic"
+  }
+}

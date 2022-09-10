@@ -6,6 +6,22 @@
     "compressedcreativity:air_blower",
     "compressedcreativity:bracketed_pressure_tube",
     "compressedcreativity:bracketed_reinforced_pressure_tube",
-    "compressedcreativity:bracketed_advanced_pressure_tube"
+    "compressedcreativity:bracketed_advanced_pressure_tube",
+    "compressedcreativity:white_plastic_bracket",
+    "compressedcreativity:orange_plastic_bracket",
+    "compressedcreativity:magenta_plastic_bracket",
+    "compressedcreativity:light_blue_plastic_bracket",
+    "compressedcreativity:yellow_plastic_bracket",
+    "compressedcreativity:lime_plastic_bracket",
+    "compressedcreativity:pink_plastic_bracket",
+    "compressedcreativity:gray_plastic_bracket",
+    "compressedcreativity:light_gray_plastic_bracket",
+    "compressedcreativity:cyan_plastic_bracket",
+    "compressedcreativity:purple_plastic_bracket",
+    "compressedcreativity:blue_plastic_bracket",
+    "compressedcreativity:brown_plastic_bracket",
+    "compressedcreativity:green_plastic_bracket",
+    "compressedcreativity:red_plastic_bracket",
+    "compressedcreativity:black_plastic_bracket"
   ]
 }

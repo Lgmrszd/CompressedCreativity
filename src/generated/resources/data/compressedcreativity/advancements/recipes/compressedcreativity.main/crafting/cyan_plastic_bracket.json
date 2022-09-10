@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "compressedcreativity:crafting/cyan_plastic_bracket"
+    ]
+  },
+  "criteria": {
+    "has_cyan_plastic_bracket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "compressedcreativity:cyan_plastic_bracket"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "compressedcreativity:crafting/cyan_plastic_bracket"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cyan_plastic_bracket",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -11,21 +11,29 @@ import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.Bracketed
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedReinforcedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
+import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 //import com.simibubi.create.AllTags;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.fluids.PipeAttachmentModel;
+import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlock;
+import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
+import com.simibubi.create.foundation.block.DyedBlockList;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import me.desht.pneumaticcraft.common.core.ModBlocks;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 
 
 public class CCBlocks {
@@ -102,6 +110,27 @@ public class CCBlocks {
             .loot((p, b) -> p.dropOther(b, ModBlocks.ADVANCED_PRESSURE_TUBE.get()))
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
+
+    public static final DyedBlockList<BracketBlock> DYED_PLASTIC_BRACKETS = new DyedBlockList<>(colour -> {
+        String colourName = colour.getSerializedName();
+        return REGISTRATE.block(colourName + "_plastic_bracket", BracketBlock::new)
+                .properties(p -> p.color(colour.getMaterialColor()))
+                .blockstate(new PlasticBracketGenerator(colourName + "_plastic")::generate)
+                .properties(p -> p.sound(SoundType.WOOD))
+                .transform(pickaxeOnly())
+                .recipe((c, p) -> {
+                    ShapedRecipeBuilder.shaped(c.get(), 6)
+                            .define('P', ModBlocks.plasticBrick(colour).get())
+                            .define('A', AllItems.ANDESITE_ALLOY.get())
+                            .pattern(" P ")
+                            .pattern("PAP")
+                            .unlockedBy("has_" + c.getName(), RegistrateRecipeProvider.has(c.get()))
+                            .save(p, CCMisc.CCRL("crafting/" + c.getName()));
+                })
+                .item(BracketBlockItem::new)
+                .transform(PlasticBracketGenerator.itemModel(colourName + "_plastic"))
+                .register();
+    });
 
     public static void register() {
     }
