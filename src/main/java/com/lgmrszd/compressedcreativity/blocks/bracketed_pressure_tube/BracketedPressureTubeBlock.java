@@ -22,6 +22,7 @@ import me.desht.pneumaticcraft.common.block.entity.PressureTubeBlockEntity;
 import me.desht.pneumaticcraft.common.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
@@ -37,6 +38,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -142,6 +144,16 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
                 : Fluids.EMPTY.defaultFluidState();
     }
 
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        if (state.getBlock() == CCBlocks.BRACKETED_PRESSURE_TUBE.get())
+            return new ItemStack(ModBlocks.PRESSURE_TUBE.get());
+        else if (state.getBlock() == CCBlocks.BRACKETED_REINFORCED_PRESSURE_TUBE.get())
+            return new ItemStack(ModBlocks.REINFORCED_PRESSURE_TUBE.get());
+        else if (state.getBlock() == CCBlocks.BRACKETED_ADVANCED_PRESSURE_TUBE.get())
+            return new ItemStack(ModBlocks.ADVANCED_PRESSURE_TUBE.get());
+        return super.getCloneItemStack(state, target, level, pos, player);
+    }
 
     @SubscribeEvent
     public static void usingBracketOnPressureTube(PlayerInteractEvent.RightClickBlock event) {
