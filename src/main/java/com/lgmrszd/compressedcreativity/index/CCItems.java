@@ -3,6 +3,7 @@ package com.lgmrszd.compressedcreativity.index;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.items.CCUpgradeItem;
+import com.simibubi.create.content.curiosities.weapons.PotatoCannonItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -31,6 +32,11 @@ public class CCItems {
     public static final ItemEntry<Item> ENGINE_ROTOR = REGISTRATE.item(
             "engine_rotor", Item::new
     ).register();
+
+    public static final ItemEntry<PotatoCannonItem> ADVANCED_POTATO_CANNON =
+            REGISTRATE.item("advanced_potato_cannon", PotatoCannonItem::new)
+            .model(AssetLookup.itemModelWithPartials())
+            .register();
 
     public static void register(IEventBus eventBus) {
     }
