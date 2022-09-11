@@ -7,9 +7,11 @@ import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
+import me.desht.pneumaticcraft.common.particle.AirParticleData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -55,10 +57,57 @@ public class BracketedPressureTubeTileEntity extends SmartTileEntity {
         airHandlerCap.invalidate();
     }
 
+    private Direction getLeakDirection() {
+        if (airHandler.getConnectedAirHandlers(this).size() == 2) {
+            return null;
+        }
+        if (airHandler.getConnectedAirHandlers(this).size() == 1) {
+            Direction dir = airHandler.getConnectedAirHandlers(this).get(0).getDirection();
+            if (dir != null) return dir.getOpposite();
+        }
+        Direction.Axis axis = getBlockState().getValue(BracketedPressureTubeBlock.AXIS);
+        for (Direction dir : Direction.values()) {
+            if (dir.getAxis() == axis) return dir;
+        }
+        return null;
+    }
+
+
+    private void spawnLeakParticles(Direction dir) {
+        Level world = this.getLevel();
+        if (world == null) return;
+        BlockPos pos = getBlockPos();
+        float pressure = airHandler.getPressure();
+        double mx = dir.getStepX();
+        double my = dir.getStepY();
+        double mz = dir.getStepZ();
+        double speed = (this.airHandler.getPressure() * 0.1F);
+        if (this.airHandler.getAir() <= 0) {
+            if (this.airHandler.getAir() < 0 && world.random.nextBoolean()) {
+                world.addParticle(AirParticleData.DENSE, (double)pos.getX() + 0.5 + mx, (double)pos.getY() + 0.5 + my, (double)pos.getZ() + 0.5 + mz, mx * speed, my * speed, mz * speed);
+            }
+        } else if (pressure > 1.0F || pressure > 0.5F && world.random.nextBoolean() || world.random.nextInt(3) == 0) {
+            world.addParticle(AirParticleData.DENSE, (double)pos.getX() + 0.5 + mx * 0.6, (double)pos.getY() + 0.5 + my * 0.6, (double)pos.getZ() + 0.5 + mz * 0.6, mx * speed, my * speed, mz * speed);
+        }
+
+    }
     @Override
     public void tick() {
         super.tick();
         airHandler.tick(this);
+
+        boolean server = !level.isClientSide || isVirtual();
+        if (server) {
+            airHandler.setSideLeaking(airHandler.getConnectedAirHandlers(this).size() < 2 ?
+                    getLeakDirection() :
+                    null);
+        } else {
+            if (airHandler.getPressure() != 0 &&
+                    airHandler.getConnectedAirHandlers(this).isEmpty()) {
+                Direction dir = getLeakDirection();
+                if (dir != null) spawnLeakParticles(dir.getOpposite());
+            }
+        }
     }
 
     public void write(CompoundTag compound, boolean clientPacket) {
