@@ -217,7 +217,6 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
             }
         }
         airHandler.setConnectedFaces(sides);
-        logger.debug("Updated Air Handler! Side: " + getBlockState().getValue(RotationalCompressorBlock.HORIZONTAL_FACING));
     }
 
     public void onSpeedChanged(float previousSpeed) {

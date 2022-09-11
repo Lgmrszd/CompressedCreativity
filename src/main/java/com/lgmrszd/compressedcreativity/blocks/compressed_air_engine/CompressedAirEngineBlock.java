@@ -3,11 +3,7 @@ package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 import com.lgmrszd.compressedcreativity.blocks.common.PneumaticHorizontalKineticBlock;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.foundation.block.ITE;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
-import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -28,7 +24,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 
 public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<CompressedAirEngineTileEntity> {
 
@@ -96,13 +91,14 @@ public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<Co
         return result;
     }
 
-    @Override
-    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
-        if (originalState.getValue(HORIZONTAL_FACING) == targetedFace) {
-            return originalState.setValue(FRONT, false);
-        }
-        return super.getRotatedBlockState(originalState, targetedFace);
-    }
+    // For some reason, it works without overriding this, will comment out for now
+//    @Override
+//    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
+//        if (originalState.getValue(HORIZONTAL_FACING) == targetedFace) {
+//            return originalState.setValue(FRONT, false);
+//        }
+//            return super.getRotatedBlockState(originalState, targetedFace);
+//    }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

@@ -3,7 +3,6 @@ package com.lgmrszd.compressedcreativity.index;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
-import me.desht.pneumaticcraft.common.block.entity.PressureTubeBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
