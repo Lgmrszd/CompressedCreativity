@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 
-import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCMisc;
+import com.lgmrszd.compressedcreativity.index.CCModsReference;
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
@@ -11,15 +11,10 @@ import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.PNCBlockStateProperties;
 import me.desht.pneumaticcraft.api.block.PressureTubeConnection;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
-import me.desht.pneumaticcraft.common.block.PressureTubeBlock;
-import me.desht.pneumaticcraft.common.block.entity.PressureTubeBlockEntity;
-import me.desht.pneumaticcraft.common.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -86,17 +81,16 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
             BlockPos pos = context.getClickedPos();
             BlockState oldBlockState = world.getBlockState(pos);
             BlockState newBlockState;
-            if (oldBlockState.getBlock() == CCBlocks.BRACKETED_PRESSURE_TUBE.get())
-                newBlockState = ModBlocks.PRESSURE_TUBE.get().defaultBlockState();
-            else if (oldBlockState.getBlock() == CCBlocks.BRACKETED_REINFORCED_PRESSURE_TUBE.get())
-                newBlockState = ModBlocks.REINFORCED_PRESSURE_TUBE.get().defaultBlockState();
-            else if (oldBlockState.getBlock() == CCBlocks.BRACKETED_ADVANCED_PRESSURE_TUBE.get())
-                newBlockState = ModBlocks.ADVANCED_PRESSURE_TUBE.get().defaultBlockState();
-            else return true;
+            CCModsReference.BracketedPressureTube bracketedPressureTube =
+                    CCModsReference.BracketedPressureTube.getByBlock(oldBlockState.getBlock());
+            if (bracketedPressureTube == null) return true;
+            newBlockState = CCModsReference.PNCPressureTube
+                    .getByTier(bracketedPressureTube.getTier())
+                    .getBlock()
+                    .defaultBlockState();
             newBlockState = newBlockState
                     .setValue(BlockStateProperties.WATERLOGGED,
                             oldBlockState.getValue(BlockStateProperties.WATERLOGGED));
-            Direction.Axis axis = oldBlockState.getValue(AXIS);
             switch (oldBlockState.getValue(AXIS)) {
                 case X -> newBlockState = newBlockState
                         .setValue(PNCBlockStateProperties.PressureTubes.WEST, PressureTubeConnection.CONNECTED)
@@ -146,13 +140,36 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        if (state.getBlock() == CCBlocks.BRACKETED_PRESSURE_TUBE.get())
-            return new ItemStack(ModBlocks.PRESSURE_TUBE.get());
-        else if (state.getBlock() == CCBlocks.BRACKETED_REINFORCED_PRESSURE_TUBE.get())
-            return new ItemStack(ModBlocks.REINFORCED_PRESSURE_TUBE.get());
-        else if (state.getBlock() == CCBlocks.BRACKETED_ADVANCED_PRESSURE_TUBE.get())
-            return new ItemStack(ModBlocks.ADVANCED_PRESSURE_TUBE.get());
-        return super.getCloneItemStack(state, target, level, pos, player);
+        CCModsReference.BracketedPressureTube bracketedPressureTube =
+                CCModsReference.BracketedPressureTube.getByBlock(state.getBlock());
+        if (bracketedPressureTube == null) return super.getCloneItemStack(state, target, level, pos, player);
+        return new ItemStack(
+                CCModsReference.PNCPressureTube
+                        .getByTier(bracketedPressureTube.getTier())
+                        .getBlock()
+        );
+    }
+
+    @Override
+    public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) {
+        CCModsReference.BracketedPressureTube bracketedPressureTube =
+                CCModsReference.BracketedPressureTube.getByBlock(state.getBlock());
+        if (bracketedPressureTube == null) return ItemRequirement.INVALID;
+        return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
+                List.of(
+                        new ItemStack(
+                                CCModsReference.PNCPressureTube.getByTier(bracketedPressureTube.getTier()).getBlock()
+                        )
+                )
+        );
+    }
+
+    @Override
+    public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
+        super.onNeighborChange(state, level, pos, neighbor);
+        if ((state.hasBlockEntity() ? level.getBlockEntity(pos) : null) instanceof BracketedPressureTubeTileEntity tte) {
+            tte.updateAirHandler();
+        }
     }
 
     @SubscribeEvent
@@ -162,10 +179,11 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
         BlockPos blockPos = event.getPos();
         BlockState blockState = world.getBlockState(blockPos);
         if (!(item.getItem() instanceof BracketBlockItem)) return;
-        if (!(blockState.getBlock() instanceof PressureTubeBlock)) return;
-        BlockEntry<? extends BracketedPressureTubeBlock> axisTube =
-                (blockState.getBlock() == ModBlocks.PRESSURE_TUBE.get()) ? CCBlocks.BRACKETED_PRESSURE_TUBE :
-                        (blockState.getBlock() == ModBlocks.REINFORCED_PRESSURE_TUBE.get()) ? CCBlocks.BRACKETED_REINFORCED_PRESSURE_TUBE : CCBlocks.BRACKETED_ADVANCED_PRESSURE_TUBE;
+
+        CCModsReference.PNCPressureTube pressureTube = CCModsReference.PNCPressureTube.getByBlock(blockState.getBlock());
+        if (pressureTube == null) return;
+        BlockState axisTubeState =
+                CCModsReference.BracketedPressureTube.getByTier(pressureTube.getTier()).getBlock().defaultBlockState();
         boolean c_down = blockState.getValue(PNCBlockStateProperties.PressureTubes.DOWN) == PressureTubeConnection.CONNECTED;
         boolean c_up = blockState.getValue(PNCBlockStateProperties.PressureTubes.UP) == PressureTubeConnection.CONNECTED;
         boolean c_north = blockState.getValue(PNCBlockStateProperties.PressureTubes.NORTH) == PressureTubeConnection.CONNECTED;
@@ -177,33 +195,11 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
         if(c_down && c_up && !c_north && !c_south && !c_east && !c_west) axis = Direction.Axis.Y;
         if(!c_down && !c_up && c_north && c_south && !c_east && !c_west) axis = Direction.Axis.Z;
         if (axis != null) {
-            BlockState newState = axisTube.getDefaultState()
+            BlockState newState = axisTubeState
                     .setValue(AXIS, axis)
                     .setValue(BlockStateProperties.WATERLOGGED,
                             blockState.getValue(BlockStateProperties.WATERLOGGED));
             CCMisc.setBlockAndUpdateKeepAir(world, blockPos, newState);
-        }
-    }
-
-    @Override
-    public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) {
-        if (state.getBlock() == CCBlocks.BRACKETED_PRESSURE_TUBE.get())
-            return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
-                    List.of(new ItemStack(ModBlocks.PRESSURE_TUBE.get())));
-        else if (state.getBlock() == CCBlocks.BRACKETED_REINFORCED_PRESSURE_TUBE.get())
-            return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
-                    List.of(new ItemStack(ModBlocks.REINFORCED_PRESSURE_TUBE.get())));
-        else if (state.getBlock() == CCBlocks.BRACKETED_ADVANCED_PRESSURE_TUBE.get())
-            return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME,
-                    List.of(new ItemStack(ModBlocks.ADVANCED_PRESSURE_TUBE.get())));
-        else return ItemRequirement.INVALID;
-    }
-
-    @Override
-    public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
-        super.onNeighborChange(state, level, pos, neighbor);
-        if ((state.hasBlockEntity() ? level.getBlockEntity(pos) : null) instanceof BracketedPressureTubeTileEntity tte) {
-            tte.updateAirHandler();
         }
     }
 }

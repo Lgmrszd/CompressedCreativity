@@ -28,13 +28,11 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
-import me.desht.pneumaticcraft.common.core.ModBlocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-
 
 public class CCBlocks {
 
@@ -89,7 +87,7 @@ public class CCBlocks {
             .initialProperties(SharedProperties::stone)
             .transform(pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
-            .loot((p, b) -> p.dropOther(b, ModBlocks.PRESSURE_TUBE.get()))
+            .loot((p, b) -> p.dropOther(b, CCModsReference.PNCPressureTube.getBlockByTier(0).asItem()))
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
@@ -98,7 +96,7 @@ public class CCBlocks {
             .initialProperties(SharedProperties::stone)
             .transform(pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
-            .loot((p, b) -> p.dropOther(b, ModBlocks.REINFORCED_PRESSURE_TUBE.get()))
+            .loot((p, b) -> p.dropOther(b, CCModsReference.PNCPressureTube.getBlockByTier(1).asItem()))
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
@@ -107,7 +105,7 @@ public class CCBlocks {
             .initialProperties(SharedProperties::stone)
             .transform(pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
-            .loot((p, b) -> p.dropOther(b, ModBlocks.ADVANCED_PRESSURE_TUBE.get()))
+            .loot((p, b) -> p.dropOther(b, CCModsReference.PNCPressureTube.getBlockByTier(2).asItem()))
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
@@ -120,7 +118,7 @@ public class CCBlocks {
                 .transform(pickaxeOnly())
                 .recipe((c, p) -> {
                     ShapedRecipeBuilder.shaped(c.get(), 6)
-                            .define('P', ModBlocks.plasticBrick(colour).get())
+                            .define('P', CCModsReference.getPlasticBrickBlockByColor(colour).asItem())
                             .define('A', AllItems.ANDESITE_ALLOY.get())
                             .pattern(" P ")
                             .pattern("PAP")
