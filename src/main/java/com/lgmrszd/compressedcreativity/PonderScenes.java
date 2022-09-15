@@ -7,13 +7,14 @@ import com.simibubi.create.foundation.ponder.Selection;
 import com.simibubi.create.foundation.ponder.PonderPalette;
 import com.simibubi.create.foundation.ponder.instruction.EmitParticlesInstruction;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
-import me.desht.pneumaticcraft.common.particle.AirParticleData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static com.lgmrszd.compressedcreativity.index.CCModsReference.getAirParticle;
 
 public class PonderScenes {
 
@@ -87,7 +88,7 @@ public class PonderScenes {
                 .pointAt(util.vector.topOf(compressor));
         scene.idle(5);
         Vec3 itemVec = util.vector.blockSurface(util.grid.at(1, 2, 3), Direction.UP);
-        scene.effects.emitParticles(itemVec, EmitParticlesInstruction.Emitter.simple(AirParticleData.DENSE, new Vec3(0.0D, 0.1D, 0.0D)), 1.0F, 120);
+        scene.effects.emitParticles(itemVec, EmitParticlesInstruction.Emitter.simple(getAirParticle(), new Vec3(0.0D, 0.1D, 0.0D)), 1.0F, 120);
         scene.idle(60);
 
         scene.overlay.showText(50)
@@ -119,7 +120,7 @@ public class PonderScenes {
 
         scene.world.destroyBlock(compressor);
         scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.simple(ParticleTypes.EXPLOSION, Vec3.ZERO), 2.0F, 1);
-        scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.withinBlockSpace(AirParticleData.DENSE, Vec3.ZERO), 40.0F, 10);
+        scene.effects.emitParticles(util.vector.centerOf(compressor), EmitParticlesInstruction.Emitter.withinBlockSpace(getAirParticle(), Vec3.ZERO), 40.0F, 10);
         scene.idle(10);
         scene.overlay.showText(50)
                 .text("Machine could explode!").colored(PonderPalette.RED)

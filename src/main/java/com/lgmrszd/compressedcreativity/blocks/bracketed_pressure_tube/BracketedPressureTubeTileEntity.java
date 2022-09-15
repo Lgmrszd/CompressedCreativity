@@ -7,7 +7,6 @@ import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
-import me.desht.pneumaticcraft.common.particle.AirParticleData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +21,8 @@ import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.lgmrszd.compressedcreativity.index.CCModsReference.getAirParticle;
 
 public class BracketedPressureTubeTileEntity extends SmartTileEntity {
     protected final IAirHandlerMachine airHandler;
@@ -84,10 +85,10 @@ public class BracketedPressureTubeTileEntity extends SmartTileEntity {
         double speed = (this.airHandler.getPressure() * 0.1F);
         if (this.airHandler.getAir() <= 0) {
             if (this.airHandler.getAir() < 0 && world.random.nextBoolean()) {
-                world.addParticle(AirParticleData.DENSE, (double)pos.getX() + 0.5 + mx, (double)pos.getY() + 0.5 + my, (double)pos.getZ() + 0.5 + mz, mx * speed, my * speed, mz * speed);
+                world.addParticle(getAirParticle(), (double)pos.getX() + 0.5 + mx, (double)pos.getY() + 0.5 + my, (double)pos.getZ() + 0.5 + mz, mx * speed, my * speed, mz * speed);
             }
         } else if (pressure > 1.0F || pressure > 0.5F && world.random.nextBoolean() || world.random.nextInt(3) == 0) {
-            world.addParticle(AirParticleData.DENSE, (double)pos.getX() + 0.5 + mx * 0.6, (double)pos.getY() + 0.5 + my * 0.6, (double)pos.getZ() + 0.5 + mz * 0.6, mx * speed, my * speed, mz * speed);
+            world.addParticle(getAirParticle(), (double)pos.getX() + 0.5 + mx * 0.6, (double)pos.getY() + 0.5 + my * 0.6, (double)pos.getZ() + 0.5 + mz * 0.6, mx * speed, my * speed, mz * speed);
         }
 
     }

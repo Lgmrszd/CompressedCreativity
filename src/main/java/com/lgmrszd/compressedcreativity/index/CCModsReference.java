@@ -2,12 +2,19 @@ package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlock;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class CCModsReference {
+
+    public static ParticleOptions getAirParticle () {
+        IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
+        return miscHelpers.airParticle();
+    }
     public static Block getPlasticBrickBlockByColor(DyeColor color) {
         return ForgeRegistries.BLOCKS.getValue(
                 new ResourceLocation(PneumaticRegistry.MOD_ID, "plastic_brick_" + color.getName()));
