@@ -12,6 +12,7 @@ import com.simibubi.create.content.schematics.ItemRequirement;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.block.ITubeNetworkConnector;
 import me.desht.pneumaticcraft.api.block.PNCBlockStateProperties;
 import me.desht.pneumaticcraft.api.block.PressureTubeConnection;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
@@ -45,7 +46,8 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber
 public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
-        ITE<BracketedPressureTubeTileEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock, ISpecialBlockItemRequirement {
+        ITE<BracketedPressureTubeTileEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock,
+        ISpecialBlockItemRequirement, ITubeNetworkConnector {
 
     public BracketedPressureTubeBlock(Properties properties) {
         super(properties);
@@ -170,6 +172,11 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
         if ((state.hasBlockEntity() ? level.getBlockEntity(pos) : null) instanceof BracketedPressureTubeTileEntity tte) {
             tte.updateAirHandler();
         }
+    }
+
+    @Override
+    public boolean canConnectToNetwork(Level level, BlockPos pos, Direction dir, BlockState state) {
+        return state.hasProperty(AXIS) && dir.getAxis() == state.getValue(AXIS);
     }
 
     @SubscribeEvent
