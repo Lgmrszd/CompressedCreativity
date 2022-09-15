@@ -2,7 +2,7 @@
   "name": "Adding Creativity",
   "icon": "create:cogwheel",
   "category": "pneumaticcraft:compressed_creativity",
-  "advancement": "create:its_alive",
+  "advancement": "create:andesite_alloy",
   "priority": "true",
   "pages": [
     {
@@ -28,6 +28,12 @@
       "type": "patchouli:spotlight",
       "item": "compressedcreativity:mechanical_visor_upgrade",
       "text": "When installed in $(l:armor/pneumatic_helmet)Pneumatic Helmet$(), $(l:pneumaticcraft:mechanical_visor_upgrade)Mechanical Visor Upgrade$() will provide Engineer's Goggles functionality."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "title": "Plastic Brackets",
+      "item": "compressedcreativity:orange_plastic_bracket",
+      "text": "$(l:pneumaticcraft:brackets)Plastic Bracket$() is a new colorful bracket type, supporting Shafts, Pipes, Cogs and also Pressure Tubes!"
     }
   ]
 }

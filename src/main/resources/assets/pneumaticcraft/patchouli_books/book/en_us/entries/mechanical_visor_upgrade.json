@@ -2,6 +2,7 @@
   "name": "Mechanical Visor Upgrade",
   "icon": "compressedcreativity:mechanical_visor_upgrade",
   "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
   "pages": [
     {
       "type": "text",
