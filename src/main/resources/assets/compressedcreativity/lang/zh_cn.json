@@ -23,12 +23,12 @@
   "block.compressedcreativity.yellow_plastic_bracket": "黄色塑料支架",
   "compressedcreativity.gui.tooltip.expand": "按下 Shift 以获取信息",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker.min": "包含护目镜信息",
-  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode": "方块跟踪模式",
+  "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode": "方块追踪模式",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.all": "全部信息",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.goggles": "仅护目镜",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.min": "占位",
   "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode.tooltip": "仅非护目镜",
-  "compressedcreativity.mechanical_visor.armor.gui.title": "机械遮阳板",
+  "compressedcreativity.mechanical_visor.armor.gui.title": "机械护面",
   "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode": "提示框模式",
   "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.both": "全部",
   "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode.classic": "经典",
@@ -66,9 +66,9 @@
   "item.compressedcreativity.brass_coated_upgrade_matrix": "黄铜涂层升级矩阵",
   "item.compressedcreativity.brass_gilded_lapis_lazuli": "黄铜镀层青金石",
   "item.compressedcreativity.engine_rotor": "引擎转子",
-  "item.compressedcreativity.mechanical_visor_upgrade": "机械遮阳板升级",
+  "item.compressedcreativity.mechanical_visor_upgrade": "机械护面升级",
   "itemGroup.compressedcreativity.main": "压缩动力",
   "pneumaticcraft.armor.upgrade.compressedcreativity.block_tracker_module_kinetic": "机械方块",
-  "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "机械遮阳板",
-  "pneumaticcraft.gui.tab.info.item.armor.head.compressedcreativity.mechanical_visorUpgrade": "\u00A70机械遮阳板将允许您查看某些机器的动力学信息，就好像您戴着工程师护目镜一样。"
+  "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "机械护面",
+  "pneumaticcraft.gui.tab.info.item.armor.head.compressedcreativity.mechanical_visorUpgrade": "\u00A70机械护面将允许你查看某些机器的动力学信息，就好像你戴着工程师护目镜一样。"
 }
