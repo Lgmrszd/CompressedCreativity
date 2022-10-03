@@ -15,6 +15,9 @@ public class CommonConfig {
     public static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec COMMON_SPEC;
 
+    public static final ForgeConfigSpec.DoubleValue CHESTPLATE_MIN_PRESSURE;
+    public static final ForgeConfigSpec.IntValue BACKTANK_VOLUME;
+
     public static final ForgeConfigSpec.IntValue ROTATIONAL_COMPRESSOR_STRESS;
     public static final ForgeConfigSpec.IntValue ROTATIONAL_COMPRESSOR_VOLUME;
     public static final ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> ROTATIONAL_COMPRESSOR_PRESSURE_TIER;
@@ -75,6 +78,15 @@ public class CommonConfig {
 
     static {
         COMMON_BUILDER.comment("General Configuration").push(CATEGORY_GENERAL);
+
+        CHESTPLATE_MIN_PRESSURE = COMMON_BUILDER
+                .comment("Minimal Pneumatic Chestplate pressure required to act as Copper Backtank")
+                .defineInRange("chestplate_min_pressure", 2.0, 0.0, 9.0);
+
+        BACKTANK_VOLUME = COMMON_BUILDER
+                .comment("Air volume of Copper Backtank that is used in calculations of air usage of Create tools",
+                        "(air used = this / uses per tank)")
+                .defineInRange("backtank_volume", 56000, 1000, 280000);
 
         COMMON_BUILDER.pop();
 
