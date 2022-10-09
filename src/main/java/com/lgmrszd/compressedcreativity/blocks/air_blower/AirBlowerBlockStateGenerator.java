@@ -20,7 +20,7 @@ public class AirBlowerBlockStateGenerator {
 //			.getExistingFile(prov.modLoc(location));
 //    }
 
-    public static void blockState(DataGenContext<Block, AirBlowerBlock> c, RegistrateBlockstateProvider p) {
+    public static void blockState(DataGenContext<Block, ? extends AirBlowerBlock> c, RegistrateBlockstateProvider p) {
 
         MultiPartBlockStateBuilder builder = p.getMultipartBuilder(c.get());
 

@@ -1,6 +1,9 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerInstance;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerRenderer;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedAdvancedPressureTubeTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeTileEntity;
@@ -35,6 +38,15 @@ public class CCTileEntities {
     public static final BlockEntityEntry<AirBlowerTileEntity> AIR_BLOWER = REGISTRATE
             .tileEntity("air_blower", AirBlowerTileEntity::new)
             .validBlock(CCBlocks.AIR_BLOWER)
+            .register();
+
+
+    // TODO: fix Flywheel Instance
+    public static final BlockEntityEntry<AdvancedAirBlowerTileEntity> ADVANCED_AIR_BLOWER = REGISTRATE
+            .tileEntity("advanced_air_blower", AdvancedAirBlowerTileEntity::new)
+//            .instance(() -> AdvancedAirBlowerInstance::new, false)
+            .validBlock(CCBlocks.ADVANCED_AIR_BLOWER)
+            .renderer(() -> AdvancedAirBlowerRenderer::new)
             .register();
 
     public static final BlockEntityEntry<BracketedPressureTubeTileEntity> BRACKETED_PRESSURE_TUBE = REGISTRATE

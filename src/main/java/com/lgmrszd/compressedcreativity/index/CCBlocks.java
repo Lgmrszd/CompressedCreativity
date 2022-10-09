@@ -3,6 +3,7 @@ package com.lgmrszd.compressedcreativity.index;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockStateGenerator;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedAdvancedPressureTubeBlock;
@@ -72,6 +73,17 @@ public class CCBlocks {
             .register();
 
     public static final BlockEntry<AirBlowerBlock> AIR_BLOWER = REGISTRATE.block("air_blower", AirBlowerBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .transform(axeOrPickaxe())
+//            .blockstate(BlockStateGen.directionalBlockProvider(true))
+            .blockstate(AirBlowerBlockStateGenerator::blockState)
+//            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .item()
+            .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<AdvancedAirBlowerBlock> ADVANCED_AIR_BLOWER = REGISTRATE.block("advanced_air_blower", AdvancedAirBlowerBlock::new)
             .initialProperties(SharedProperties::stone)
             .transform(axeOrPickaxe())
 //            .blockstate(BlockStateGen.directionalBlockProvider(true))

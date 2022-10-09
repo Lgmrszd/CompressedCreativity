@@ -3,7 +3,6 @@ package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 import com.lgmrszd.compressedcreativity.index.CCTileEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
-import com.mojang.math.Vector3f;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
@@ -20,7 +19,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -109,12 +107,16 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
 //        if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing).isPresent()) {
         if (facing != stateIn.getValue(FACING)) {
             BlockEntity other_te = worldIn.getBlockEntity(currentPos.relative(facing));
-            boolean has_connection = other_te != null && other_te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
+            boolean has_connection = canConnect(facing, other_te);
             stateIn = stateIn.setValue(CONNECTION_PROPERTIES[facing.get3DDataValue()], has_connection);
         } else {
             stateIn = stateIn.setValue(CONNECTION_PROPERTIES[facing.get3DDataValue()], false);
         }
         return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    }
+
+    public boolean canConnect(Direction facing, BlockEntity other_te) {
+        return other_te != null && other_te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
     }
 
     @Override
