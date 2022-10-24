@@ -17,6 +17,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
+
 public class AdvancedAirBlowerRenderer extends SafeTileEntityRenderer<AdvancedAirBlowerTileEntity> {
     public AdvancedAirBlowerRenderer(BlockEntityRendererProvider.Context context) {
     }
@@ -32,18 +34,20 @@ public class AdvancedAirBlowerRenderer extends SafeTileEntityRenderer<AdvancedAi
         Direction facing = blockState.getValue(AdvancedAirBlowerBlock.FACING);
 
         Mesh.MeshType meshType = te.getMeshType();
-        PartialModel meshPartial;
-        if (meshType == Mesh.MeshType.WATER)
-            meshPartial = BlockPartials.MESH_WATER;
-        else
-            meshPartial = BlockPartials.MESH;
-        SuperByteBuffer mesh = CachedBufferer.partialFacing(meshPartial, blockState);
-        rotateToFacing(mesh, facing);
-        te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY).ifPresent((cap) -> {
-            mesh.color(HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB());
+        if (meshType == null) return;
+        Optional<PartialModel> meshPartial = meshType.getModel();
+        meshPartial.ifPresent((meshModel) -> {
+            SuperByteBuffer mesh = CachedBufferer.partialFacing(meshModel, blockState);
+            rotateToFacing(mesh, facing);
+            if (meshType.shouldTint()) {
+                te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY).ifPresent((cap) -> {
+//                    mesh.color(HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB());
+                    mesh.color(meshType.getTintColor(cap.getTemperatureAsInt()));
+                });
+            }
+            mesh.light(light);
+            mesh.renderInto(ms, vb);
         });
-//        mesh.color(Color.RED);
-        mesh.light(light).renderInto(ms, vb);
     }
 
     private static void rotateToFacing(SuperByteBuffer buffer, Direction facing) {

@@ -12,7 +12,9 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CCItems {
 
@@ -41,11 +43,12 @@ public class CCItems {
 //            "mesh_water", ((p) -> new MeshItem(p, Mesh.MeshType.WATER))
 //    ).register();
 
-    public static final List<ItemEntry<MeshItem>> MESHES = new ArrayList<>();
+    public static final Map<String, ItemEntry<MeshItem>> MESHES = new HashMap<>();
 
     static {
         for (Mesh.MeshType meshType : Mesh.MeshType.values()) {
-            MESHES.add(
+            MESHES.put(
+                    meshType.getName(),
                     REGISTRATE.item(
                             "mesh_" + meshType.getName(),
                             ((p) -> new MeshItem(p, meshType))
