@@ -5,7 +5,10 @@ import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.content.Mesh;
+import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
+import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
+import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -29,10 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity {
+public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements IUpdateBlockEntity {
     private ItemStack mesh;
     protected final IHeatExchangerLogic heatExchanger;
     private final LazyOptional<IHeatExchangerLogic> heatCap;
+
+//    private LazyOptional<Mesh.MeshType>
 
 
     public AdvancedAirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -45,7 +50,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity {
         );
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         heatCap = LazyOptional.of(() -> heatExchanger);
-        heatExchanger.setThermalCapacity(1);
+        heatExchanger.setThermalCapacity(5);
         mesh = ItemStack.EMPTY;
     }
 
@@ -132,9 +137,54 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity {
     @Override
     public void tick() {
         super.tick();
+        boolean server = level != null && !level.isClientSide();
+        int oldTemp = heatExchanger.getTemperatureAsInt();
         heatExchanger.tick();
+        if (server) {
+            int diff = Math.abs(heatExchanger.getTemperatureAsInt() - oldTemp);
+            if (diff > 2) {
+                logger.debug("Temp diff: {}", diff);
+                updateTintServer();
+                setChanged();
+                sendData();
+            }
+        }   
+    }
+
+    @Override
+    public void lazyTick() {
+        super.lazyTick();
+        if (level != null && level.isClientSide) updateTintClient();
+        if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.WATER) {
+            if (heatExchanger.getTemperatureAsInt() < 273 - 5)
+                setMesh(
+                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WATER_FROZEN.getName()).get())
+                );
+            if (heatExchanger.getTemperatureAsInt() > 373 + 5)
+                setMesh(
+                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WATER_EMPTY.getName()).get())
+                );
+        } else if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.WATER_FROZEN) {
+            if (heatExchanger.getTemperatureAsInt() > 273 + 5)
+                setMesh(
+                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WATER.getName()).get())
+                );
+        }
+//        logger.debug("Updating!");
         setChanged();
         sendData();
+//        setLazyTickRate(10);
+//        setLazyTickRate(Math.min(10, lazyTickRate + 1));
+    }
+
+    public void updateTintClient() {
+        if (level == null) return;
+        if (level.isClientSide) level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+    }
+
+    public void updateTintServer() {
+        if (level == null) return;
+        if (!level.isClientSide) ForceUpdatePacket.send(level, getBlockPos());
     }
 
     @Override
@@ -155,5 +205,10 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity {
         mesh = ItemStack.of(compound.getCompound("mesh"));
         heatExchanger.deserializeNBT(compound.getCompound("HeatExchanger"));
         super.read(compound, clientPacket);
+    }
+
+    @Override
+    public void forceUpdate() {
+        updateTintClient();
     }
 }
