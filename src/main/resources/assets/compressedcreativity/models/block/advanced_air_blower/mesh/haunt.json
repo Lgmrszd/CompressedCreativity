@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "compressedcreativity:block/mesh_default",
-		"particle": "compressedcreativity:block/mesh_default"
+		"2": "compressedcreativity:block/mesh/haunt",
+		"particle": "compressedcreativity:block/mesh/haunt"
 	},
 	"elements": [
 		{

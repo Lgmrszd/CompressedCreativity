@@ -1,14 +1,14 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "compressedcreativity:block/mesh_water",
-		"particle": "compressedcreativity:block/mesh_water"
+		"2": "compressedcreativity:block/mesh/dense",
+		"particle": "compressedcreativity:block/mesh/dense"
 	},
 	"elements": [
 		{
 			"name": "grate",
-			"from": [2, 15.5, 2],
-			"to": [14, 15.5, 14],
+			"from": [2, 14.5, 2],
+			"to": [14, 14.5, 14],
 			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
 			"faces": {
 				"up": {"uv": [0, 0, 12, 12], "texture": "#2"},
