@@ -16,6 +16,7 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
+import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,15 +54,19 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     private float airUsage = 0.0f;
 
     public AirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        this(
+                type,
+                pos,
+                state,
+                PressureTierConfig.CustomTier.AIR_BLOWER_TIER,
+                CommonConfig.AIR_BLOWER_VOLUME.get()
+        );
+    }
+
+    protected AirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier pressureTier, int volume) {
         super(type, pos, state);
         airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
-                .createAirHandler(
-                        CommonConfig.AIR_BLOWER_PRESSURE_TIER.get()
-                                .getPressureTierDefinedOrCustom(
-                                        PressureTierConfig.CustomTier.AIR_BLOWER_CUSTOM_TIER
-                                ),
-                        CommonConfig.AIR_BLOWER_VOLUME.get()
-                );
+                .createAirHandler(pressureTier, volume);
         airHandlerCap = LazyOptional.of(() -> airHandler);
 
         airCurrent = new AirCurrent(this);

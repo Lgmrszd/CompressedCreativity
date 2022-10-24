@@ -2,15 +2,28 @@ package com.lgmrszd.compressedcreativity.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CommonConfig {
 
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_MACHINES = "machines";
     public static final String CATEGORY_ROTATIONAL_COMPRESSOR = "rotational_compressor";
     public static final String CATEGORY_AIR_BLOWER = "air_blower";
+    public static final String CATEGORY_INDUSTRIAL_AIR_BLOWER = "industrial_air_blower";
 
     public static final String CATEGORY_ENGINE = "compressed_air_engine";
     public static final String CATEGORY_CUSTOM_PRESSURE = "custom_pressure";
+
+    public static final Map<String, ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum>>
+            MACHINE_PRESSURE_TIERS = new HashMap<>();
+
+    public static final Map<String, ForgeConfigSpec.DoubleValue>
+            CUSTOM_DANGER_PRESSURE = new HashMap<>();
+
+    public static final Map<String, ForgeConfigSpec.DoubleValue>
+            CUSTOM_CRITICAL_PRESSURE = new HashMap<>();
 
     public static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec COMMON_SPEC;
@@ -20,26 +33,19 @@ public class CommonConfig {
 
     public static final ForgeConfigSpec.IntValue ROTATIONAL_COMPRESSOR_STRESS;
     public static final ForgeConfigSpec.IntValue ROTATIONAL_COMPRESSOR_VOLUME;
-    public static final ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> ROTATIONAL_COMPRESSOR_PRESSURE_TIER;
-    public static final ForgeConfigSpec.DoubleValue ROTATIONAL_COMPRESSOR_DANGER_PRESSURE;
-    public static final ForgeConfigSpec.DoubleValue ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE;
     public static final ForgeConfigSpec.DoubleValue ROTATIONAL_COMPRESSOR_BASE_PRODUCTION;
 
     public static final ForgeConfigSpec.IntValue AIR_BLOWER_VOLUME;
     public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_WORK_PRESSURE;
     public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_OVERWORK_PRESSURE;
-    public static final ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> AIR_BLOWER_PRESSURE_TIER;
-    public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_DANGER_PRESSURE;
-    public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_CRITICAL_PRESSURE;
     public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_AIR_USAGE_PER_BAR;
+
+    public static final ForgeConfigSpec.IntValue INDUSTRIAL_AIR_BLOWER_VOLUME;
 
 
     public static final ForgeConfigSpec.IntValue COMPRESSED_AIR_ENGINE_VOLUME;
     public static final ForgeConfigSpec.IntValue COMPRESSED_AIR_ENGINE_STRESS;
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_WORK_PRESSURE;
-    public static final ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> COMPRESSED_AIR_ENGINE_PRESSURE_TIER;
-    public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_DANGER_PRESSURE;
-    public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_CRITICAL_PRESSURE;
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE;
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK;
 
@@ -50,30 +56,32 @@ public class CommonConfig {
                 .defineInRange("volume", def, 0, Integer.MAX_VALUE);
     }
 
-    private static ForgeConfigSpec.DoubleValue makeDangerPressureField(double def) {
-        return COMMON_BUILDER
-                .comment("Danger Pressure of the machine\n" +
-                        "Default value: " + def)
-                .defineInRange("danger_pressure", def, 0d, 20d);
-    }
-
-    private static ForgeConfigSpec.DoubleValue makeCriticalPressureField(double def) {
-        return COMMON_BUILDER
-                .comment("""
-                        Additional Critical Pressure of the machine.
-                        Actual Critical Pressure is the sum of this value and Danger Pressure
-                        Default value:\040""" + def)
-                .defineInRange("critical_pressure", def, 0d, 20d);
-    }
-
-    private static ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> makePressureTierFieldAndPushCategory() {
+    private static void makePressureFields(String name, PressureTierConfig.PressureTierEnum pressureTier) {
         ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> pressure_tier = COMMON_BUILDER
                 .comment("Pressure Tier of the machine\n" +
                         "All but CUSTOM one match Pressure Tiers from PNC:R")
-                .defineEnum("pressure_tier", PressureTierConfig.PressureTierEnum.TIER_ONE);
+                .defineEnum("pressure_tier", pressureTier);
         COMMON_BUILDER
                 .comment("Values from Custom Air Pressure for this machine").push(CATEGORY_CUSTOM_PRESSURE);
-        return pressure_tier;
+        ForgeConfigSpec.DoubleValue dangerPressure = COMMON_BUILDER
+                .comment("Danger Pressure of the machine\n" +
+                        "Default value: " + 5d)
+                .defineInRange("danger_pressure", 5d, 0d, 20d);
+        ForgeConfigSpec.DoubleValue criticalPressure = COMMON_BUILDER
+                .comment("""
+                        Additional Critical Pressure of the machine.
+                        Actual Critical Pressure is the sum of this value and Danger Pressure
+                        Default value:\040""" + 2d)
+                .defineInRange("critical_pressure", 2d, 0d, 20d);
+        COMMON_BUILDER.pop();
+
+        MACHINE_PRESSURE_TIERS.put(name, pressure_tier);
+        CUSTOM_DANGER_PRESSURE.put(name, dangerPressure);
+        CUSTOM_CRITICAL_PRESSURE.put(name, criticalPressure);
+    }
+
+    private static void makePressureFields(String name) {
+        makePressureFields(name, PressureTierConfig.PressureTierEnum.TIER_ONE);
     }
 
     static {
@@ -102,10 +110,7 @@ public class CommonConfig {
                 .comment("How much air this machine produces per tick if it is running at 128 rpm\nDefault value: 10.0")
                 .defineInRange("base_production", 10d, 0d, 999999d);
 
-        ROTATIONAL_COMPRESSOR_PRESSURE_TIER = makePressureTierFieldAndPushCategory();
-        ROTATIONAL_COMPRESSOR_DANGER_PRESSURE = makeDangerPressureField(5d);
-        ROTATIONAL_COMPRESSOR_CRITICAL_PRESSURE = makeCriticalPressureField(2d);
-        COMMON_BUILDER.pop();
+        makePressureFields(PressureTierConfig.CustomTier.ROTATIONAL_COMPRESSOR_TIER.getKey());
 
         COMMON_BUILDER.pop();
 
@@ -124,10 +129,14 @@ public class CommonConfig {
                 .comment("Air Usage per Bar (total air usage = this value * current pressure)")
                 .defineInRange("air_usage_per_bar", 4d, 0d, 999999d);
 
-        AIR_BLOWER_PRESSURE_TIER = makePressureTierFieldAndPushCategory();
-        AIR_BLOWER_DANGER_PRESSURE = makeDangerPressureField(5d);
-        AIR_BLOWER_CRITICAL_PRESSURE = makeCriticalPressureField(2d);
+        makePressureFields(PressureTierConfig.CustomTier.AIR_BLOWER_TIER.getKey());
+
         COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.comment("Industrial Air Blower").push(CATEGORY_INDUSTRIAL_AIR_BLOWER);
+
+        INDUSTRIAL_AIR_BLOWER_VOLUME = makeVolumeField(1000);
+        makePressureFields(PressureTierConfig.CustomTier.INDUSTRIAL_AIR_BLOWER_TIER.getKey(), PressureTierConfig.PressureTierEnum.TIER_ONE_HALF);
 
         COMMON_BUILDER.pop();
 
@@ -152,10 +161,7 @@ public class CommonConfig {
                         "Default value: 3.0")
                 .defineInRange("work_pressure", 3d, 0d, 20d);
 
-        COMPRESSED_AIR_ENGINE_PRESSURE_TIER = makePressureTierFieldAndPushCategory();
-        COMPRESSED_AIR_ENGINE_DANGER_PRESSURE = makeDangerPressureField(5d);
-        COMPRESSED_AIR_ENGINE_CRITICAL_PRESSURE = makeCriticalPressureField(2d);
-        COMMON_BUILDER.pop();
+        makePressureFields(PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_TIER.getKey());
 
         COMMON_BUILDER.pop();
 

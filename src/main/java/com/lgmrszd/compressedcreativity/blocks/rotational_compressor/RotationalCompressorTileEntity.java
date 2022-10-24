@@ -21,9 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -53,10 +51,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        CommonConfig.ROTATIONAL_COMPRESSOR_PRESSURE_TIER.get()
-                                .getPressureTierDefinedOrCustom(
-                                        PressureTierConfig.CustomTier.ROTATIONAL_COMPRESSOR_CUSTOM_TIER
-                                ),
+                        PressureTierConfig.CustomTier.ROTATIONAL_COMPRESSOR_TIER,
                         CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }

@@ -43,10 +43,7 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
         super(typeIn, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        CommonConfig.COMPRESSED_AIR_ENGINE_PRESSURE_TIER.get()
-                                .getPressureTierDefinedOrCustom(
-                                        PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_CUSTOM_TIER
-                                ),
+                        PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_TIER,
                         CommonConfig.COMPRESSED_AIR_ENGINE_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }

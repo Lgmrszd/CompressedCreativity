@@ -2,6 +2,8 @@ package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
@@ -34,7 +36,13 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity {
 
 
     public AdvancedAirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
+        super(
+                type,
+                pos,
+                state,
+                PressureTierConfig.CustomTier.INDUSTRIAL_AIR_BLOWER_TIER,
+                CommonConfig.INDUSTRIAL_AIR_BLOWER_VOLUME.get()
+        );
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         heatCap = LazyOptional.of(() -> heatExchanger);
         heatExchanger.setThermalCapacity(1);
