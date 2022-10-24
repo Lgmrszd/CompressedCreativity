@@ -7,13 +7,10 @@ package com.lgmrszd.compressedcreativity.network;
 
 import java.util.function.Supplier;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
-
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -28,20 +25,19 @@ public class ObservePacket {
         this.node = node;
     }
 
-    public static void encode(ObservePacket packet, FriendlyByteBuf tag) {
-        tag.writeBlockPos(packet.pos);
-        tag.writeInt(packet.node);
+    public static void encode(ObservePacket packet, FriendlyByteBuf buf) {
+        buf.writeBlockPos(packet.pos);
+        buf.writeInt(packet.node);
     }
 
     public static ObservePacket decode(FriendlyByteBuf buf) {
-        ObservePacket scp = new ObservePacket(buf.readBlockPos(), buf.readInt());
-        return scp;
+        return new ObservePacket(buf.readBlockPos(), buf.readInt());
     }
 
     public static void handle(ObservePacket pkt, Supplier<Context> ctx) {
-        ((Context)ctx.get()).enqueueWork(() -> {
+        ctx.get().enqueueWork(() -> {
             try {
-                ServerPlayer player = ((Context)ctx.get()).getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if (player != null) {
                     sendUpdate(pkt, player);
                 }
@@ -76,7 +72,7 @@ public class ObservePacket {
     public static void send(BlockPos pos, int node) {
         if (cooldown <= 0) {
             cooldown = 10;
-            CompressedCreativity.Network.sendToServer(new ObservePacket(pos, node));
+            CCNetwork.NETWORK.sendToServer(new ObservePacket(pos, node));
         }
     }
 
