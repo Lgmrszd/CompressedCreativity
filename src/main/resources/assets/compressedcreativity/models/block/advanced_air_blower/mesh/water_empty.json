@@ -1,18 +1,29 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "compressedcreativity:block/mesh/water_empty",
-		"particle": "compressedcreativity:block/mesh/water_empty"
+		"1": "compressedcreativity:block/mesh/water_mesh",
+		"2": "compressedcreativity:block/mesh/water_mesh_2",
+		"particle": "compressedcreativity:block/mesh/water_mesh_2"
 	},
 	"elements": [
 		{
-			"name": "grate",
-			"from": [2, 15, 2],
-			"to": [14, 15, 14],
-			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
+			"name": "mesh",
+			"from": [2, 2, 1],
+			"to": [14, 14, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"up": {"uv": [0, 0, 12, 12], "texture": "#2"},
-				"down": {"uv": [0, 0, 12, 12], "texture": "#2"}
+				"north": {"uv": [0, 0, 12, 12], "rotation": 180, "texture": "#1"},
+				"south": {"uv": [0, 0, 12, 12], "texture": "#1"}
+			}
+		},
+		{
+			"name": "mesh_2",
+			"from": [2, 2, 1.5],
+			"to": [14, 14, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 12], "rotation": 180, "texture": "#2"},
+				"south": {"uv": [0, 0, 12, 12], "texture": "#2"}
 			}
 		}
 	],

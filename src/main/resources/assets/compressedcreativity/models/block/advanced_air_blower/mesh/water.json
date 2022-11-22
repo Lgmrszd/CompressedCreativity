@@ -1,18 +1,17 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"2": "compressedcreativity:block/mesh/mesh_water",
-		"particle": "compressedcreativity:block/mesh/mesh_water"
+		"3": "block/water_still",
+		"particle": "compressedcreativity:block/mesh/water_mesh_2"
 	},
 	"elements": [
 		{
-			"name": "grate",
-			"from": [2, 15, 2],
-			"to": [14, 15, 14],
-			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
+			"name": "water",
+			"from": [2, 2, 1.25],
+			"to": [14, 14, 1.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"up": {"uv": [0, 0, 12, 12], "texture": "#2"},
-				"down": {"uv": [0, 0, 12, 12], "texture": "#2"}
+				"north": {"uv": [2, 2, 14, 14], "rotation": 180, "texture": "#3", "tintindex": 0}
 			}
 		}
 	],
