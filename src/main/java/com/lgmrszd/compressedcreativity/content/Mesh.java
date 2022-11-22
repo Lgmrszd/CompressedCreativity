@@ -1,15 +1,38 @@
 package com.lgmrszd.compressedcreativity.content;
 
 import com.jozufozu.flywheel.core.PartialModel;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.index.BlockPartials;
+import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
+import net.minecraft.client.renderer.BiomeColors;
 
 import java.util.Optional;
 
 public class Mesh {
     public enum MeshType implements IMeshType {
-        WATER("water", "Wet Mesh"),
-        WATER_FROZEN("water_frozen", "Wet Frozen Mesh"),
+        WATER("water", "Wet Mesh") {
+            @Override
+            public boolean shouldTint() {
+                return true;
+            }
+
+            @Override
+            public int getTintColor(AdvancedAirBlowerTileEntity te) {
+                if (te.getLevel() == null) return 0xffffffff;
+                return BiomeColors.getAverageWaterColor(te.getLevel(), te.getBlockPos());
+            }
+            @Override
+            public Optional<PartialModel> getModelExtra() {
+                return Optional.ofNullable(BlockPartials.MESHES.get(WATER_EMPTY.name));
+            }
+        },
+        WATER_FROZEN("water_frozen", "Wet Frozen Mesh") {
+            @Override
+            public Optional<PartialModel> getModelExtra() {
+                return Optional.empty();
+            }
+        },
         WATER_EMPTY("water_empty", "Dried Mesh"),
         DENSE("dense", "Dense Mesh") {
             @Override
@@ -18,8 +41,10 @@ public class Mesh {
             }
 
             @Override
-            public int getTintColor(int temp) {
-                return HeatUtil.getColourForTemperature(temp).getRGB();
+            public int getTintColor(AdvancedAirBlowerTileEntity te) {
+                return  te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY)
+                        .map((cap) -> HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB())
+                        .orElse(0xffffffff);
             }
         },
         HAUNT("haunt", "Soul Mesh");
@@ -46,11 +71,15 @@ public class Mesh {
         default boolean shouldTint() {
             return false;
         }
-        default int getTintColor(int temp) {
+        default int getTintColor(AdvancedAirBlowerTileEntity te) {
             return 0xffffffff;
         }
         default Optional<PartialModel> getModel() {
             return Optional.empty();
         }
+        default Optional<PartialModel> getModelExtra() {
+            return Optional.empty();
+        }
+        String getName();
     }
 }

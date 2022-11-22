@@ -9,7 +9,7 @@ public class MeshItem extends Item {
         super(properties);
         this.meshType = meshType;
     }
-    public Mesh.MeshType getMeshType() {
+    public Mesh.IMeshType getMeshType() {
         return meshType;
     }
 }

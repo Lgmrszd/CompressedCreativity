@@ -84,7 +84,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         updateHeatExchanger();
     }
 
-    public Mesh.MeshType getMeshType() {
+    public Mesh.IMeshType getMeshType() {
         return getMesh().getItem() instanceof MeshItem meshItem ? meshItem.getMeshType() : null;
     }
 

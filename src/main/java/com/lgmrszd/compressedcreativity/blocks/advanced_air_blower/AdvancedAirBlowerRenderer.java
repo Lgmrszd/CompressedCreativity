@@ -2,15 +2,11 @@ package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.content.Mesh;
-import com.lgmrszd.compressedcreativity.index.BlockPartials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
-import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -28,32 +24,29 @@ public class AdvancedAirBlowerRenderer extends SafeTileEntityRenderer<AdvancedAi
         // TODO: fix Flywheel Instance
 //        if (Backend.canUseInstancing(te.getLevel())) return;
 
-        VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
+        VertexConsumer vb = buffer.getBuffer(RenderType.translucent());
 
         BlockState blockState = te.getBlockState();
         Direction facing = blockState.getValue(AdvancedAirBlowerBlock.FACING);
 
-        Mesh.MeshType meshType = te.getMeshType();
+        Mesh.IMeshType meshType = te.getMeshType();
         if (meshType == null) return;
         Optional<PartialModel> meshPartial = meshType.getModel();
         meshPartial.ifPresent((meshModel) -> {
-            SuperByteBuffer mesh = CachedBufferer.partialFacing(meshModel, blockState);
-            rotateToFacing(mesh, facing);
+            // Not sure why it needs to be opposite face
+            SuperByteBuffer mesh = CachedBufferer.partialFacing(meshModel, blockState, facing.getOpposite());
+//            rotateToFacing(mesh, facing);
             if (meshType.shouldTint()) {
-                te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY).ifPresent((cap) -> {
-//                    mesh.color(HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB());
-                    mesh.color(meshType.getTintColor(cap.getTemperatureAsInt()));
-                });
+                mesh.color(meshType.getTintColor(te));
             }
             mesh.light(light);
             mesh.renderInto(ms, vb);
         });
-    }
-
-    private static void rotateToFacing(SuperByteBuffer buffer, Direction facing) {
-        buffer.centre()
-                .rotateY(AngleHelper.horizontalAngle(facing))
-                .rotateX(90)
-                .unCentre();
+        Optional<PartialModel> meshPartialExtra = meshType.getModelExtra();
+        meshPartialExtra.ifPresent((meshModelExtra) -> {
+            SuperByteBuffer mesh = CachedBufferer.partialFacing(meshModelExtra, blockState, facing.getOpposite());
+            mesh.light(light);
+            mesh.renderInto(ms, vb);
+        });
     }
 }
