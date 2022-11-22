@@ -13,6 +13,7 @@ import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
+import me.desht.pneumaticcraft.common.heat.HeatExchangerLogicAmbient;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,8 +36,10 @@ import java.util.Optional;
 
 public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements IUpdateBlockEntity {
     private ItemStack mesh;
+    private final IHeatExchangerLogic airExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
     protected final IHeatExchangerLogic heatExchanger;
     private final LazyOptional<IHeatExchangerLogic> heatCap;
+    private double ambientTemp;
 
 //    private LazyOptional<Mesh.MeshType>
 
@@ -52,6 +55,8 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         heatCap = LazyOptional.of(() -> heatExchanger);
         heatExchanger.setThermalCapacity(5);
+        airExchanger.addConnectedExchanger(heatExchanger);
+        airExchanger.setThermalResistance(25.0);
         mesh = ItemStack.EMPTY;
     }
 
@@ -84,6 +89,16 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         updateHeatExchanger();
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level != null && !level.isClientSide()) {
+            // TODO: use API
+            ambientTemp = HeatExchangerLogicAmbient.getAmbientTemperature(this.getLevel(), this.getBlockPos());
+            airExchanger.setTemperature(this.ambientTemp);
+        }
+    }
+
     public Mesh.IMeshType getMeshType() {
         return getMesh().getItem() instanceof MeshItem meshItem ? meshItem.getMeshType() : null;
     }
@@ -97,18 +112,12 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
 
     public Optional<InWorldProcessing.Type> getProcessingType() {
         if (getMesh().getItem() instanceof MeshItem meshItem) {
-            if (meshItem.getMeshType() == Mesh.MeshType.WATER) {
-                return Optional.of(InWorldProcessing.Type.SPLASHING);
-            }
+            Mesh.IMeshType meshType = meshItem.getMeshType();
+            return meshType.getProcessingType(heatExchanger.getTemperatureAsInt());
         }
-        if (heatExchanger.getTemperatureAsInt() > 473)
+        if (heatExchanger.getTemperatureAsInt() > 573)
             return Optional.of(InWorldProcessing.Type.BLASTING);
         if (heatExchanger.getTemperatureAsInt() > 373) {
-            if (getMesh().getItem() instanceof MeshItem meshItem) {
-                if (meshItem.getMeshType() == Mesh.MeshType.HAUNT) {
-                    return Optional.of(InWorldProcessing.Type.HAUNTING);
-                }
-            }
             return Optional.of(InWorldProcessing.Type.SMOKING);
         }
         return Optional.empty();
@@ -153,6 +162,12 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     }
 
     @Override
+    public void extraAirCurrentTick() {
+        heatExchanger.tick();
+        airExchanger.setTemperature(ambientTemp);
+    }
+
+    @Override
     public void tick() {
         super.tick();
         boolean server = level != null && !level.isClientSide();
@@ -166,6 +181,8 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
                 setChanged();
                 sendData();
             }
+            airExchanger.tick();
+            airExchanger.setTemperature(ambientTemp);
         }   
     }
 
@@ -215,6 +232,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.put("mesh", getMesh().serializeNBT());
         compound.put("HeatExchanger", heatExchanger.serializeNBT());
+        compound.put("airExchanger", airExchanger.serializeNBT());
         super.write(compound, clientPacket);
     }
 
@@ -222,6 +240,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     protected void read(CompoundTag compound, boolean clientPacket) {
         mesh = ItemStack.of(compound.getCompound("mesh"));
         heatExchanger.deserializeNBT(compound.getCompound("HeatExchanger"));
+        airExchanger.deserializeNBT(compound.getCompound("airExchanger"));
         super.read(compound, clientPacket);
     }
 

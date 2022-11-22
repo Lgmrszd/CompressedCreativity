@@ -3,6 +3,7 @@ package com.lgmrszd.compressedcreativity.content;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.index.BlockPartials;
+import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.client.renderer.BiomeColors;
@@ -26,6 +27,10 @@ public class Mesh {
             public Optional<PartialModel> getModelExtra() {
                 return Optional.ofNullable(BlockPartials.MESHES.get(WATER_EMPTY.name));
             }
+            @Override
+            public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
+                return Optional.of(InWorldProcessing.Type.SPLASHING);
+            }
         },
         WATER_FROZEN("water_frozen", "Wet Frozen Mesh") {
             @Override
@@ -39,15 +44,24 @@ public class Mesh {
             public boolean shouldTint() {
                 return true;
             }
-
             @Override
             public int getTintColor(AdvancedAirBlowerTileEntity te) {
                 return  te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY)
                         .map((cap) -> HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB())
                         .orElse(0xffffffff);
             }
+            @Override
+            public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
+                return temp > 373 ? Optional.of(InWorldProcessing.Type.BLASTING) :
+                        temp > 323 ? Optional.of(InWorldProcessing.Type.SMOKING) : Optional.empty();
+            }
         },
-        HAUNT("haunt", "Soul Mesh");
+        HAUNT("haunt", "Soul Mesh") {
+            @Override
+            public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
+                return temp > 373 ? Optional.of(InWorldProcessing.Type.HAUNTING) : Optional.empty();
+            }
+        };
 
         private final String name;
         private final String displayName;
@@ -81,5 +95,6 @@ public class Mesh {
             return Optional.empty();
         }
         String getName();
+        default Optional<InWorldProcessing.Type> getProcessingType(int temp) {return Optional.empty();}
     }
 }

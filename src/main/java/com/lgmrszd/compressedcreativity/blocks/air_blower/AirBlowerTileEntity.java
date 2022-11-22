@@ -170,6 +170,9 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     }
 
 
+    public void extraAirCurrentTick() {
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -218,6 +221,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
                 int air_ticks = (int) Math.floor(processing_status);
                 for (int i = air_ticks; i > 0; i--) {
                     airCurrent.tick();
+                    if (server) extraAirCurrentTick();
                 }
                 processing_status -= air_ticks;
             }
