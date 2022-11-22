@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -113,6 +114,23 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         return Optional.empty();
     }
 
+    @Override
+    protected float calculateAirUsage() {
+        return Math.max(1f, (float) Math.floor(airHandler.getPressure() * CommonConfig.AIR_BLOWER_AIR_USAGE_PER_BAR.get().floatValue() * 150) / 100);
+    }
+
+    @Override
+    protected float calculateProcessingSpeed() {
+        float pressure = airHandler.getPressure();
+        if (pressure < 1) {
+            float x = pressure - 1;
+            return (1 - x*x*x*x);
+        } else if (pressure < 9) {
+            float x = (pressure - 1) / 8.5f;
+            return 1 + x*x*3;
+        } else return 4;
+    }
+
     public void updateHeatExchanger() {
         ArrayList<Direction> sides = new ArrayList<>();
         for (Direction side: new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP, Direction.DOWN}) {
@@ -171,7 +189,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
                 );
         }
 //        logger.debug("Updating!");
-        setChanged();
+//        setChanged();
         sendData();
 //        setLazyTickRate(10);
 //        setLazyTickRate(Math.min(10, lazyTickRate + 1));
@@ -210,5 +228,12 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     @Override
     public void forceUpdate() {
         updateTintClient();
+    }
+
+    @Override
+    public float getMaxDistance() {
+        float speed = Math.abs(this.getSpeed());
+        float distanceFactor = Math.min(speed / 256f, 1);
+        return Mth.lerp(distanceFactor, 3, 32);
     }
 }
