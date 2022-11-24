@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AirHandlerBacktank extends IAirHandlerItem.Provider {
+public class AirHandlerBacktankItem extends IAirHandlerItem.Provider {
     private final float MAX_PRESSURE = 3;
     private final int volume;
     private final int max_volume;
@@ -18,7 +18,7 @@ public class AirHandlerBacktank extends IAirHandlerItem.Provider {
     private final LazyOptional<IAirHandlerItem> holder = LazyOptional.of(() -> this);
     private final ItemStack backtank;
 
-    public AirHandlerBacktank(ItemStack backtank) {
+    public AirHandlerBacktankItem(ItemStack backtank) {
         this.backtank = backtank;
         this.max_volume = (2 * BackTankUtil.maxAir(backtank));
         this.volume = (int) (max_volume / MAX_PRESSURE);
