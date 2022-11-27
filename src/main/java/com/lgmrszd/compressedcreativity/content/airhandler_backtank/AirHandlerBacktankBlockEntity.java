@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.simibubi.create.content.curiosities.armor.BackTankUtil;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
@@ -26,17 +27,24 @@ import java.util.function.Predicate;
 public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     protected static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
     private final float MAX_PRESSURE = 3;
-    private final int volume;
-    private final int max_volume;
+    private final int RATIO = 2;
+    private int volume;
+    private int maxVolume;
     private final CopperBacktankTileEntity copperBacktankBE;
     private IAirHandlerMachine connectedAirHandler;
+    private int delta;
 
     public AirHandlerBacktankBlockEntity(CopperBacktankTileEntity copperBacktankBE) {
         this.copperBacktankBE = copperBacktankBE;
-        this.max_volume = 2 * 900;
-//        this.max_volume = 2 * BackTankUtil.maxAir(copperBacktankBE.setCapacityEnchantLevel());
-        this.volume = (int) (max_volume / MAX_PRESSURE);
-        this.connectedAirHandler = null;
+        maxVolume = RATIO * 900;
+        volume = (int) (maxVolume / MAX_PRESSURE);
+        delta = 0;
+        connectedAirHandler = null;
+    }
+
+    public void updateVolumeFromEnchant(int capacityEnchantLevel) {
+        maxVolume = RATIO * BackTankUtil.maxAir(capacityEnchantLevel);
+        volume = (int) (maxVolume / MAX_PRESSURE);
     }
 
     @Override
@@ -67,22 +75,23 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
         if (!world.isClientSide) {
             disperseAir();
         }
+        // Release overpressure
+        if (delta > 5) {
+            delta = 0;
+        }
     }
 
     private void disperseAir() {
-        // Basically copying code from MachineAirHandler
-        // 1. Since we only have one connection we don't need lists
+        // Basically copying code from MachineAirHandler default implementation
+        // 1. Since we only have one connection we don't need lists, we simply cache AirHandler itself
         if (connectedAirHandler == null) {
-            logger.debug("Are we there yet");
             BlockEntity blockEntityBelow = Objects.requireNonNull(copperBacktankBE.getLevel())
                     .getBlockEntity(copperBacktankBE.getBlockPos().relative(Direction.DOWN));
             if (blockEntityBelow == null) return;
             LazyOptional<IAirHandlerMachine> lazyCap = blockEntityBelow.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY);
-            lazyCap.ifPresent((cap) -> {
+            lazyCap.ifPresent(cap -> {
                 connectedAirHandler = cap;
-                lazyCap.addListener(self -> {
-                    connectedAirHandler = null;
-                });
+                lazyCap.addListener(self -> connectedAirHandler = null);
             });
         }
         if (connectedAirHandler == null) return;
@@ -136,22 +145,21 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
 
     @Override
     public float getPressure() {
-        return MAX_PRESSURE * getAir() / max_volume;
+        return ((float) getAir()) / volume;
     }
 
     @Override
     public int getAir() {
-        return 2 * copperBacktankBE.getAirLevel();
+        return RATIO * copperBacktankBE.getAirLevel() + delta;
     }
 
     @Override
     public void addAir(int amount) {
-        int diff = getAir() + amount;
-        setAir(diff);
-    }
-
-    private void setAir(int amount) {
-        copperBacktankBE.setAirLevel(amount / 2);
+        int total = getAir() + amount;
+        int transformed = Math.min(total, maxVolume) / RATIO;
+        delta = total - transformed * RATIO;
+        copperBacktankBE.setAirLevel(transformed);
+//        if (total == maxVolume) copperBacktankBE.sendData();
     }
 
     @Override
