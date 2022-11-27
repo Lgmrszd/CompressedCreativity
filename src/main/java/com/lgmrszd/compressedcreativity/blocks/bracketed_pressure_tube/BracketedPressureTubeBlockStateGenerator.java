@@ -15,7 +15,7 @@ public class BracketedPressureTubeBlockStateGenerator {
     }
 
 
-    public static <T extends BracketedPressureTubeBlock> void blockState(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
+    public static void blockState(DataGenContext<Block, ? extends BracketedPressureTubeBlock> c, RegistrateBlockstateProvider p) {
         MultiPartBlockStateBuilder builder = p.getMultipartBuilder(c.get());
 
         String pnc_path = "pneumaticcraft:block/" + c.getName().substring(10) + "_connected"; // cut off "bracketed_"

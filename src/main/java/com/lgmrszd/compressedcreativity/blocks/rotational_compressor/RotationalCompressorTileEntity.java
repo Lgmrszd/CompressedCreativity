@@ -14,7 +14,6 @@ import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -127,23 +126,6 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         this.updateAirHandler();
     }
 
-
-// TODO: check if overrides needed
-
-//    @Override
-//    public void handleUpdateTag(BlockState state, CompoundTag tag) {
-//        super.handleUpdateTag(state, tag);
-//        this.updateAirHandler();
-//    }
-
-
-//    @Override
-//    public void clearCache() {
-//        super.clearCache();
-//        updateAirHandler();
-//    }
-
-
     public void setRemoved() {
         super.setRemoved();
         airHandlerCap.invalidate();
@@ -153,13 +135,12 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         super.tick();
         airHandler.tick(this);
 
-        // TODO: Listen to config update
         if (updateGeneratedAir) {
             Direction facing = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             float speed = convertToDirection(getSpeed(), facing);
             isWrongDirection = speed < 0;
             airGeneratedPerTick = (speed > 0 && isSpeedRequirementFulfilled()) ? CommonConfig.ROTATIONAL_COMPRESSOR_BASE_PRODUCTION.get() * speed / 128f : 0f;
-            logger.debug("New air/t generated: " + airGeneratedPerTick);
+//            logger.debug("New air/t generated: " + airGeneratedPerTick);
             updateGeneratedAir = false;
             notifyUpdate();
         }
@@ -251,15 +232,6 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
             airGeneratedPerTick = compound.getDouble("airGeneratedPerTick");
             isWrongDirection = compound.getBoolean("isWrongDirection");
         }
-    }
-
-    public boolean shouldRenderNormally() {
-        return true;
-    }
-
-    @Override
-    public void onObserved(ServerPlayer var1, ObservePacket var2) {
-//        logger.debug("I am being observed!");
     }
 
     @Override

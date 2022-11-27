@@ -1,13 +1,11 @@
 package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
 import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.api.instance.DynamicInstance;
 import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.index.BlockPartials;
-import com.lgmrszd.compressedcreativity.items.MeshItem;
 import net.minecraft.core.Direction;
 
 public class AdvancedAirBlowerInstance extends BlockEntityInstance<AdvancedAirBlowerTileEntity> {
@@ -15,7 +13,7 @@ public class AdvancedAirBlowerInstance extends BlockEntityInstance<AdvancedAirBl
     protected final ModelData mesh;
     private final Direction facing;
 
-    private final Mesh.MeshType meshType;
+    private final Mesh.IMeshType meshType;
 
     public AdvancedAirBlowerInstance(MaterialManager materialManager, AdvancedAirBlowerTileEntity blockEntity) {
         super(materialManager, blockEntity);

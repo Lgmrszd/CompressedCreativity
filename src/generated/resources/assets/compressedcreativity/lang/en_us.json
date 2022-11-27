@@ -1,4 +1,5 @@
 {
+  "block.compressedcreativity.advanced_air_blower": "Advanced Air Blower",
   "block.compressedcreativity.air_blower": "Air Blower",
   "block.compressedcreativity.black_plastic_bracket": "Black Plastic Bracket",
   "block.compressedcreativity.blue_plastic_bracket": "Blue Plastic Bracket",
@@ -67,6 +68,11 @@
   "item.compressedcreativity.brass_gilded_lapis_lazuli": "Brass Gilded Lapis Lazuli",
   "item.compressedcreativity.engine_rotor": "Engine Rotor",
   "item.compressedcreativity.mechanical_visor_upgrade": "Mechanical Visor Upgrade",
+  "item.compressedcreativity.mesh_dense": "Dense Mesh",
+  "item.compressedcreativity.mesh_haunt": "Soul Mesh",
+  "item.compressedcreativity.mesh_water": "Wet Mesh",
+  "item.compressedcreativity.mesh_water_empty": "Dried Mesh",
+  "item.compressedcreativity.mesh_water_frozen": "Wet Frozen Mesh",
   "itemGroup.compressedcreativity.main": "Compressed Creativity",
   "pneumaticcraft.armor.upgrade.compressedcreativity.block_tracker_module_kinetic": "Mechanical Blocks",
   "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Mechanical Visor",

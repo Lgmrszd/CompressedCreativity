@@ -55,8 +55,6 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
 
     public static final BooleanProperty[] CONNECTION_PROPERTIES = new BooleanProperty[]{DOWN, UP, NORTH, SOUTH, WEST, EAST};
 
-//    public static final VoxelShape shape = Block.box(2, 2, 2, 12, 12, 12);
-
     public AirBlowerBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(
