@@ -1,5 +1,7 @@
 package com.lgmrszd.compressedcreativity.index;
 
+import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
+import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
@@ -17,11 +19,14 @@ import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalC
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 //import com.simibubi.create.AllTags;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.fluids.PipeAttachmentModel;
 import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlock;
 import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
+import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.DyedBlockList;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -29,15 +34,34 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MaterialColor;
+
+import java.util.function.Supplier;
 
 public class CCBlocks {
 
     // WORKAROUND: Currently, importing AllTags breaks datagen
+    // TODO: remove when https://github.com/Creators-of-Create/Create/issues/3498 fix goes live
+
+    public static <B extends CasingBlock> NonNullUnaryOperator<BlockBuilder<B, CreateRegistrate>> myCasing(
+            Supplier<CTSpriteShiftEntry> ct) {
+        return b -> b.initialProperties(SharedProperties::stone)
+                .properties(p -> p.sound(SoundType.WOOD))
+                .transform(axeOrPickaxe())
+                .blockstate((c, p) -> p.simpleBlock(c.get()))
+                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ct.get())))
+                .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ct.get())))
+//                .tag(AllTags.AllBlockTags.CASING.tag)
+                .item()
+//                .tag(AllTags.AllItemTags.CASING.tag)
+                .build();
+    }
     public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> axeOrPickaxe() {
         return (b) -> b.tag(BlockTags.MINEABLE_WITH_AXE).tag(BlockTags.MINEABLE_WITH_PICKAXE);
     }
@@ -141,6 +165,12 @@ public class CCBlocks {
                 .transform(PlasticBracketGenerator.itemModel(colourName + "_plastic"))
                 .register();
     });
+
+    public static final BlockEntry<CasingBlock> COMPRESSED_IRON_CASING =
+            REGISTRATE.block("compressed_iron_casing", CasingBlock::new)
+                    .properties(p -> p.color(MaterialColor.TERRACOTTA_GRAY))
+                    .transform(myCasing(() -> CCSpriteShifts.COMPRESSED_IRON_CASING))
+                    .register();
 
     public static void register() {
     }
