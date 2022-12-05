@@ -190,19 +190,19 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     public void lazyTick() {
         super.lazyTick();
         if (level != null && level.isClientSide) updateTintClient();
-        if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.WATER) {
+        if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.SPLASHING) {
             if (heatExchanger.getTemperatureAsInt() < 273 - 5)
                 setMesh(
-                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WATER_FROZEN.getName()).get())
+                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.SPLASHING_FROZEN.getName()).get())
                 );
             if (heatExchanger.getTemperatureAsInt() > 373 + 5)
                 setMesh(
-                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WATER_EMPTY.getName()).get())
+                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WOVEN.getName()).get())
                 );
-        } else if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.WATER_FROZEN) {
+        } else if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.SPLASHING_FROZEN) {
             if (heatExchanger.getTemperatureAsInt() > 273 + 5)
                 setMesh(
-                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.WATER.getName()).get())
+                        new ItemStack(CCItems.MESHES.get(Mesh.MeshType.SPLASHING.getName()).get())
                 );
         }
 //        logger.debug("Updating!");

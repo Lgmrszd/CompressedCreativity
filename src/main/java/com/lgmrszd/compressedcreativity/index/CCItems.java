@@ -5,15 +5,14 @@ import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.items.CCUpgradeItem;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CCItems {
@@ -42,6 +41,14 @@ public class CCItems {
 //    public static final ItemEntry<MeshItem> WATER_MESH = REGISTRATE.item(
 //            "mesh_water", ((p) -> new MeshItem(p, Mesh.MeshType.WATER))
 //    ).register();
+
+    public static final ItemEntry<Item> MESH_EMPTY = REGISTRATE.item(
+            "mesh_empty", Item::new
+    ).lang("Mesh Frame").register();
+
+    public static final ItemEntry<SequencedAssemblyItem> INCOMPLETE_SPLASHING_MESH = REGISTRATE.item(
+            "incomplete_mesh_splashing", SequencedAssemblyItem::new
+    ).lang("Incomplete Water Soaked Mesh").register();
 
     public static final Map<String, ItemEntry<MeshItem>> MESHES = new HashMap<>();
 

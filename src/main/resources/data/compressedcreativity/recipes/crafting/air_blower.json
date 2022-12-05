@@ -1,19 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " I ",
-    "ICI",
-    " G "
+    " T ",
+    " C ",
+    "IGI"
   ],
   "key": {
     "I": {
-      "tag": "forge:ingots/compressed_iron"
+      "tag": "forge:ingots/copper"
+    },
+    "T": {
+      "item": "pneumaticcraft:pressure_tube"
     },
     "C": {
-      "item": "create:andesite_casing"
+      "item": "create:copper_casing"
     },
     "G": {
-      "item": "pneumaticcraft:air_grate_module"
+      "item": "minecraft:iron_bars"
     }
   },
   "result": {

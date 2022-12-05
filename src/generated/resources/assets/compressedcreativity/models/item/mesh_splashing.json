@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "compressedcreativity:item/mesh_haunt"
+    "layer0": "compressedcreativity:item/mesh_splashing"
   }
 }

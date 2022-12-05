@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ITI",
+    "ICI",
+    "IGI"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/compressed_iron"
+    },
+    "T": {
+      "item": "pneumaticcraft:reinforced_pressure_tube"
+    },
+    "C": {
+      "item": "compressedcreativity:compressed_iron_casing"
+    },
+    "G": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "compressedcreativity:advanced_air_blower"
+  }
+}

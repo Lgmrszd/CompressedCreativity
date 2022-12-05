@@ -2,8 +2,10 @@ package com.lgmrszd.compressedcreativity;
 
 import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
+import com.lgmrszd.compressedcreativity.index.recipe.CCSequencedAssemblyRecipeGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -42,7 +44,7 @@ public class CompressedCreativity
         eventBus.addListener(this::doClientStuff);
         // TODO: put it in clientstuff if possible
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> BlockPartials::init);
+                () -> CCBlockPartials::init);
         eventBus.addListener(this::postInit);
 
         eventBus.addListener(CCColorHandlers::registerBlockColorHandlers);
@@ -99,10 +101,10 @@ public class CompressedCreativity
     }
 
     public static void gatherData(GatherDataEvent event) {
-//        DataGenerator gen = event.getGenerator();
+        DataGenerator gen = event.getGenerator();
         CCPonder.registerLang(registrate());
         CCLangExtender.ExtendLang(registrate());
-//        gen.addProvider();
+        gen.addProvider(new CCSequencedAssemblyRecipeGen((gen)));
     }
 
     public static CreateRegistrate registrate() {

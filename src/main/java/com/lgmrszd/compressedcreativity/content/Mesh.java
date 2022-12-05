@@ -2,7 +2,7 @@ package com.lgmrszd.compressedcreativity.content;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
-import com.lgmrszd.compressedcreativity.index.BlockPartials;
+import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class Mesh {
     public enum MeshType implements IMeshType {
-        WATER("water", "Wet Mesh") {
+        SPLASHING("splashing", "Water Soaked Mesh") {
             @Override
             public boolean shouldTint() {
                 return true;
@@ -25,20 +25,20 @@ public class Mesh {
             }
             @Override
             public Optional<PartialModel> getModelExtra() {
-                return Optional.ofNullable(BlockPartials.MESHES.get(WATER_EMPTY.name));
+                return Optional.ofNullable(CCBlockPartials.MESHES.get(WOVEN.name));
             }
             @Override
             public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
                 return Optional.of(InWorldProcessing.Type.SPLASHING);
             }
         },
-        WATER_FROZEN("water_frozen", "Wet Frozen Mesh") {
+        SPLASHING_FROZEN("splashing_frozen", "Frozen Mesh") {
             @Override
             public Optional<PartialModel> getModelExtra() {
                 return Optional.empty();
             }
         },
-        WATER_EMPTY("water_empty", "Dried Mesh"),
+        WOVEN("woven", "Woven Mesh"),
         DENSE("dense", "Dense Mesh") {
             @Override
             public boolean shouldTint() {
@@ -56,7 +56,7 @@ public class Mesh {
                         temp > 323 ? Optional.of(InWorldProcessing.Type.SMOKING) : Optional.empty();
             }
         },
-        HAUNT("haunt", "Soul Mesh") {
+        HAUNTED("haunted", "Haunted Mesh") {
             @Override
             public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
                 return temp > 373 ? Optional.of(InWorldProcessing.Type.HAUNTING) : Optional.empty();
@@ -77,7 +77,7 @@ public class Mesh {
         }
         @Override
         public Optional<PartialModel> getModel() {
-            return Optional.ofNullable(BlockPartials.MESHES.get(name));
+            return Optional.ofNullable(CCBlockPartials.MESHES.get(name));
         }
     }
 

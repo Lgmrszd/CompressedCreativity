@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "compressedcreativity:item/mesh_water_empty"
+    "layer0": "compressedcreativity:item/mesh_haunted"
   }
 }
