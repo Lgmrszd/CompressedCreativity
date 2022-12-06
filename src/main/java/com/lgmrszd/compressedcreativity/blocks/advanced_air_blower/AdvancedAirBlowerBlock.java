@@ -115,6 +115,6 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
 
     @Override
     public BlockEntityType<? extends AdvancedAirBlowerTileEntity> getTileEntityType() {
-        return CCTileEntities.ADVANCED_AIR_BLOWER.get();
+        return CCTileEntities.INDUSTRIAL_AIR_BLOWER.get();
     }
 }

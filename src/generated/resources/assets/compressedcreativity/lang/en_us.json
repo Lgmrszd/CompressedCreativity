@@ -1,5 +1,4 @@
 {
-  "block.compressedcreativity.advanced_air_blower": "Advanced Air Blower",
   "block.compressedcreativity.air_blower": "Air Blower",
   "block.compressedcreativity.black_plastic_bracket": "Black Plastic Bracket",
   "block.compressedcreativity.blue_plastic_bracket": "Blue Plastic Bracket",
@@ -12,6 +11,7 @@
   "block.compressedcreativity.cyan_plastic_bracket": "Cyan Plastic Bracket",
   "block.compressedcreativity.gray_plastic_bracket": "Gray Plastic Bracket",
   "block.compressedcreativity.green_plastic_bracket": "Green Plastic Bracket",
+  "block.compressedcreativity.industrial_air_blower": "Industrial Air Blower",
   "block.compressedcreativity.light_blue_plastic_bracket": "Light Blue Plastic Bracket",
   "block.compressedcreativity.light_gray_plastic_bracket": "Light Gray Plastic Bracket",
   "block.compressedcreativity.lime_plastic_bracket": "Lime Plastic Bracket",

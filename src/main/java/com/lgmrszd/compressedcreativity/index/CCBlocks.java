@@ -107,7 +107,7 @@ public class CCBlocks {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<AdvancedAirBlowerBlock> ADVANCED_AIR_BLOWER = REGISTRATE.block("advanced_air_blower", AdvancedAirBlowerBlock::new)
+    public static final BlockEntry<AdvancedAirBlowerBlock> INDUSTRIAL_AIR_BLOWER = REGISTRATE.block("industrial_air_blower", AdvancedAirBlowerBlock::new)
             .initialProperties(SharedProperties::stone)
             .transform(axeOrPickaxe())
 //            .blockstate(BlockStateGen.directionalBlockProvider(true))

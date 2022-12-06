@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "compressedcreativity:advanced_air_blower"
+          "name": "compressedcreativity:industrial_air_blower"
         }
       ],
       "conditions": [

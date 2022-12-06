@@ -2,7 +2,6 @@ package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
 import me.desht.pneumaticcraft.client.util.TintColor;
-import me.desht.pneumaticcraft.common.block.entity.IHeatTinted;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -16,7 +15,7 @@ import javax.annotation.Nullable;
 public class CCColorHandlers {
     @OnlyIn(Dist.CLIENT)
     public static void registerBlockColorHandlers(ColorHandlerEvent.Block event) {
-        event.getBlockColors().register(CCColorHandlers::getTintColor, CCBlocks.ADVANCED_AIR_BLOWER.get());
+        event.getBlockColors().register(CCColorHandlers::getTintColor, CCBlocks.INDUSTRIAL_AIR_BLOWER.get());
     }
 
     public static int getTintColor(BlockState state, @Nullable BlockAndTintGetter world, @Nullable BlockPos pos, int tintIndex) {

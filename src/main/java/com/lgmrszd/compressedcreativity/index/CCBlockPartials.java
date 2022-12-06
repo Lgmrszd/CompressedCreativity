@@ -19,7 +19,7 @@ public class CCBlockPartials {
                     meshType.getName(),
                     new PartialModel(new ResourceLocation(
                             CompressedCreativity.MOD_ID,
-                            "block/advanced_air_blower/mesh/" + meshType.getName()
+                            "block/industrial_air_blower/mesh/" + meshType.getName()
                     ))
             );
         }

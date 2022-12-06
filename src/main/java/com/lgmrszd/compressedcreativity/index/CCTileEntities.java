@@ -1,7 +1,6 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerInstance;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerRenderer;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
@@ -42,10 +41,10 @@ public class CCTileEntities {
 
 
     // TODO: fix Flywheel Instance
-    public static final BlockEntityEntry<AdvancedAirBlowerTileEntity> ADVANCED_AIR_BLOWER = REGISTRATE
+    public static final BlockEntityEntry<AdvancedAirBlowerTileEntity> INDUSTRIAL_AIR_BLOWER = REGISTRATE
             .tileEntity("advanced_air_blower", AdvancedAirBlowerTileEntity::new)
 //            .instance(() -> AdvancedAirBlowerInstance::new, false)
-            .validBlock(CCBlocks.ADVANCED_AIR_BLOWER)
+            .validBlock(CCBlocks.INDUSTRIAL_AIR_BLOWER)
             .renderer(() -> AdvancedAirBlowerRenderer::new)
             .register();
 
