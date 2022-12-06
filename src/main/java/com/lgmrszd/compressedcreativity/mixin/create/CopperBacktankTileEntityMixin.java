@@ -22,7 +22,7 @@ public abstract class CopperBacktankTileEntityMixin extends BlockEntity implemen
     @Unique
     private AirHandlerBacktankBlockEntity internalAirHandler = null;
 
-    @Shadow
+    @Shadow(remap = false)
     private int capacityEnchantLevel;
 
     public CopperBacktankTileEntityMixin(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {

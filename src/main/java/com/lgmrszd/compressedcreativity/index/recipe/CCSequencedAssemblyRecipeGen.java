@@ -22,7 +22,7 @@ public class CCSequencedAssemblyRecipeGen extends CreateRecipeProvider {
             b.require(CCItems.MESHES.get(Mesh.MeshType.WOVEN.getName()).get())
                     .transitionTo(CCItems.INCOMPLETE_SPLASHING_MESH.get())
                     .addOutput(CCItems.MESHES.get(Mesh.MeshType.SPLASHING.getName()).get(), 1)
-                    .loops(16)
+                    .loops(8)
                     .addStep(FillingRecipe::new, f -> f.require(Fluids.WATER, 1000)));
 
     protected GeneratedRecipe create(String name, UnaryOperator<SequencedAssemblyRecipeBuilder> transform) {
