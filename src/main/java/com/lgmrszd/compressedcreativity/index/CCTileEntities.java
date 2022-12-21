@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity.index;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerRenderer;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
@@ -13,12 +12,11 @@ import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedA
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorInstance;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorRenderer;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
-public class CCTileEntities {
+import static com.lgmrszd.compressedcreativity.CompressedCreativity.REGISTRATE;
 
-    private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate();
+public class CCTileEntities {
 
     public static final BlockEntityEntry<RotationalCompressorTileEntity> ROTATIONAL_COMPRESSOR = REGISTRATE
             .tileEntity("rotational_compressor", RotationalCompressorTileEntity::new)

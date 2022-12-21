@@ -129,6 +129,12 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
     }
 
     @Override
+    public void invalidate() {
+        super.invalidate();
+        airHandlerCap.invalidate();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         airHandler.tick(this);

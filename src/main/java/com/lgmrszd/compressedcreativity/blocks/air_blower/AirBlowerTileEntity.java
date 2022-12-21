@@ -235,8 +235,8 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     }
 
     @Override
-    public void setRemoved() {
-        super.setRemoved();
+    public void invalidate() {
+        super.invalidate();
         airHandlerCap.invalidate();
     }
 

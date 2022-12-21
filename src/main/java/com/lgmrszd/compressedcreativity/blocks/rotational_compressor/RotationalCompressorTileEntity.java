@@ -126,8 +126,9 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         this.updateAirHandler();
     }
 
-    public void setRemoved() {
-        super.setRemoved();
+    @Override
+    public void invalidate() {
+        super.invalidate();
         airHandlerCap.invalidate();
     }
 

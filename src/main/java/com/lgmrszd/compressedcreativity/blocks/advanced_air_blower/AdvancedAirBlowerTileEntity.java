@@ -223,8 +223,8 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     }
 
     @Override
-    public void setRemoved() {
-        super.setRemoved();
+    public void invalidate() {
+        super.invalidate();
         heatCap.invalidate();
     }
 

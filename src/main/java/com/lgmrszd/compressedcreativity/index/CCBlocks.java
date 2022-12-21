@@ -1,9 +1,9 @@
 package com.lgmrszd.compressedcreativity.index;
 
+import static com.lgmrszd.compressedcreativity.CompressedCreativity.REGISTRATE;
 import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
@@ -46,6 +46,10 @@ import java.util.function.Supplier;
 
 public class CCBlocks {
 
+    static {
+        REGISTRATE.creativeModeTab(() -> ModGroup.MAIN);
+    }
+
     // WORKAROUND: Currently, importing AllTags breaks datagen
     // TODO: remove when https://github.com/Creators-of-Create/Create/issues/3498 fix goes live
 
@@ -70,9 +74,6 @@ public class CCBlocks {
     public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> pickaxeOnly() {
         return (b) -> b.tag(BlockTags.MINEABLE_WITH_PICKAXE);
     }
-
-    private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate()
-            .creativeModeTab(() -> ModGroup.MAIN);
 
     public static final BlockEntry<RotationalCompressorBlock> ROTATIONAL_COMPRESSOR = REGISTRATE.block("rotational_compressor", RotationalCompressorBlock::new)
             .initialProperties(SharedProperties::stone)

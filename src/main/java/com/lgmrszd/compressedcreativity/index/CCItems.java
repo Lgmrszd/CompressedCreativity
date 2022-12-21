@@ -1,13 +1,11 @@
 package com.lgmrszd.compressedcreativity.index;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.items.CCUpgradeItem;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.AssetLookup;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,10 +13,13 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.lgmrszd.compressedcreativity.CompressedCreativity.REGISTRATE;
+
 public class CCItems {
 
-    private static final CreateRegistrate REGISTRATE = CompressedCreativity.registrate()
-            .creativeModeTab(() -> ModGroup.MAIN);
+    static {
+        REGISTRATE.creativeModeTab(() -> ModGroup.MAIN);
+    }
 
     public static final ItemEntry<Item> MECHANICAL_VISOR_UPGRADE = REGISTRATE.item(
             "mechanical_visor_upgrade", (properties) -> (Item) new CCUpgradeItem(properties, CCUpgrades.MECHANICAL_VISOR, 1)

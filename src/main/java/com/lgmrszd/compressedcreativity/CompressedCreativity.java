@@ -4,7 +4,6 @@ import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.index.recipe.CCSequencedAssemblyRecipeGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,12 +27,15 @@ public class CompressedCreativity
 
     public static final String MOD_ID = "compressedcreativity";
 
-    private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
+//    private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(CompressedCreativity.MOD_ID);
 
 
     public CompressedCreativity() {
 
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        REGISTRATE.registerEventListeners(eventBus);
+
         CCConfigHelper.init();
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -102,12 +104,8 @@ public class CompressedCreativity
 
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
-        CCPonder.registerLang(registrate());
-        CCLangExtender.ExtendLang(registrate());
+        CCPonder.registerLang(REGISTRATE);
+        CCLangExtender.ExtendLang(REGISTRATE);
         gen.addProvider(new CCSequencedAssemblyRecipeGen((gen)));
-    }
-
-    public static CreateRegistrate registrate() {
-        return registrate.get();
     }
 }
