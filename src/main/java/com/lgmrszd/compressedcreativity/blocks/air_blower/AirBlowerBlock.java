@@ -38,6 +38,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.lgmrszd.compressedcreativity.index.CCMisc.appendPneumaticHoverText;
@@ -84,10 +85,18 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) return this.defaultBlockState()
-                .setValue(FACING, context.getNearestLookingDirection());
-        return this.defaultBlockState()
-                .setValue(FACING, context.getNearestLookingDirection().getOpposite());
+        Direction facing = context.getPlayer() != null && context.getPlayer().isShiftKeyDown() ?
+                context.getNearestLookingDirection():
+                context.getNearestLookingDirection().getOpposite();
+        BlockState state = defaultBlockState().setValue(FACING, facing);
+        for (Direction dir : Direction.values()) {
+            if (dir == facing) continue;
+            BlockEntity te = context.getLevel().getBlockEntity(context.getClickedPos().relative(dir));
+            if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, dir.getOpposite()).isPresent()) {
+                state = state.setValue(CONNECTION_PROPERTIES[dir.get3DDataValue()], true);
+            }
+        }
+        return state;
     }
 
     @Override
@@ -99,8 +108,9 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
         }
     }
 
+    @Nonnull
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updateShape(BlockState stateIn, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull LevelAccessor worldIn, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
 //        BlockEntity te = worldIn.getBlockEntity(currentPos);
 //        if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing).isPresent()) {
         if (facing != stateIn.getValue(FACING)) {
@@ -133,7 +143,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof AirBlowerTileEntity abte) {
@@ -144,8 +154,9 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
         super.onRemove(state, world, pos, newState, isMoving);
     }
 
+    @Nonnull
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, @Nonnull BlockGetter worldIn, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
         return CCShapes.AIR_BLOWER.get(state.getValue(FACING));
     }
 
@@ -171,7 +182,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> infoList, TooltipFlag par4) {
+    public void appendHoverText(@Nonnull ItemStack stack, BlockGetter world, @Nonnull List<Component> infoList, @Nonnull TooltipFlag par4) {
         appendPneumaticHoverText(
                 () -> newBlockEntity(BlockPos.ZERO, defaultBlockState()),
                 infoList);

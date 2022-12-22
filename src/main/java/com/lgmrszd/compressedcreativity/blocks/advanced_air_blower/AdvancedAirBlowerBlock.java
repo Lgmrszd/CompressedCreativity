@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+import javax.annotation.Nonnull;
+
 public class AdvancedAirBlowerBlock extends AirBlowerBlock {
     public AdvancedAirBlowerBlock(Properties properties) {
         super(properties);
@@ -35,7 +37,7 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             AirBlowerTileEntity be = getTileEntity(world, pos);
             if (be instanceof AdvancedAirBlowerTileEntity bbe) {
@@ -74,9 +76,10 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
         }
     }
 
+    @Nonnull
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-                                 BlockHitResult blockRayTraceResult) {
+    public InteractionResult use(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos, Player player, @Nonnull InteractionHand hand,
+                                 @Nonnull BlockHitResult blockRayTraceResult) {
         ItemStack heldItem = player.getItemInHand(hand);
         boolean client = world.isClientSide();
         if(heldItem.getItem() instanceof MeshItem) {
