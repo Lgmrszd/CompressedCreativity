@@ -1,17 +1,13 @@
 package com.lgmrszd.compressedcreativity.blocks.common;
 
-import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
 import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.ITE;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,8 +22,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.lgmrszd.compressedcreativity.index.CCMisc.appendPneumaticHoverText;
@@ -49,7 +45,7 @@ public abstract class PneumaticHorizontalKineticBlock<T extends BlockEntity> ext
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> infoList, TooltipFlag par4) {
+    public void appendHoverText(@Nonnull ItemStack stack, BlockGetter world, @Nonnull List<Component> infoList, @Nonnull TooltipFlag par4) {
         appendPneumaticHoverText(
                 () -> newBlockEntity(BlockPos.ZERO, defaultBlockState()),
                 infoList);
@@ -57,10 +53,12 @@ public abstract class PneumaticHorizontalKineticBlock<T extends BlockEntity> ext
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (state.getBlock() != newState.getBlock() && !isMoving) {
             BlockEntity te = world.getBlockEntity(pos);
-            IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
-            miscHelpers.playMachineBreakEffect(te);
+            if (te != null) {
+                IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
+                miscHelpers.playMachineBreakEffect(te);
+            }
         }
         super.onRemove(state, world, pos, newState, isMoving);
     }
