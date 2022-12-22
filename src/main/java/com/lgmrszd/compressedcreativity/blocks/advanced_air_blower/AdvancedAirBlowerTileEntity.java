@@ -1,25 +1,28 @@
 package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.index.CCItems;
+import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
 import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
 import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
 import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
+import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
 import me.desht.pneumaticcraft.common.heat.HeatExchangerLogicAmbient;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -40,6 +43,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     protected final IHeatExchangerLogic heatExchanger;
     private final LazyOptional<IHeatExchangerLogic> heatCap;
     private double ambientTemp;
+    private float coolingStatus = 0.0f;
 
 //    private LazyOptional<Mesh.MeshType>
 
@@ -62,15 +66,22 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
 
     @Override
     public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
+        super.addToTooltip(tooltip, isPlayerSneaking);
         if (!mesh.isEmpty()) {
-            if (mesh.getItem() instanceof MeshItem meshItem) {
-                tooltip.add(new TextComponent(""));
-                tooltip.add(new TextComponent("Mesh installed type: " + meshItem.getMeshType()));
+            if (mesh.getItem() instanceof MeshItem) {
+                CCLang.translate("tooltip.installed_mesh")
+                        .style(ChatFormatting.WHITE)
+                        .forGoggles(tooltip);
+                CCLang.builder().add(Lang.itemName(mesh))
+                        .style(ChatFormatting.AQUA)
+                        .forGoggles(tooltip, 1);
             }
-            return true;
+        } else {
+            CCLang.translate("tooltip.installed_mesh_none")
+                    .style(ChatFormatting.WHITE)
+                    .forGoggles(tooltip);
         }
-        return added;
+        return true;
     }
 
     public int getTintColor(int tintIndex) {
@@ -149,7 +160,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         }
         Direction[] sides_2 = new Direction[sides.size()];
         heatExchanger.initializeAsHull(getLevel(), getBlockPos(), (levelAccessor, blockPos) -> true, sides.toArray(sides_2));
-        logger.debug("Updated Heat Exchanger! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
+        CompressedCreativity.LOGGER.debug("Updated Heat Exchanger! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
     }
 
     @Nonnull
@@ -162,12 +173,6 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     }
 
     @Override
-    public void extraAirCurrentTick() {
-        heatExchanger.tick();
-        airExchanger.setTemperature(ambientTemp);
-    }
-
-    @Override
     public void tick() {
         super.tick();
         boolean server = level != null && !level.isClientSide();
@@ -176,14 +181,32 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         if (server) {
             int diff = Math.abs(heatExchanger.getTemperatureAsInt() - oldTemp);
             if (diff > 2) {
-                logger.debug("Temp diff: {}", diff);
+                CompressedCreativity.LOGGER.debug("Temp diff: {}", diff);
                 updateTintServer();
                 setChanged();
                 sendData();
             }
             airExchanger.tick();
-            airExchanger.setTemperature(ambientTemp);
+//            airExchanger.setTemperature(ambientTemp);
+
+            if (airHandler.getPressure() > 0 && airCurrent.maxDistance > 0) {
+                coolingStatus += calculateCoolingSpeed();
+                if (Math.floor(coolingStatus) > 1) {
+                    int cooling_ticks = (int) Math.floor(coolingStatus);
+                    for (int i = cooling_ticks; i > 0; i--) {
+                        heatExchanger.tick();
+                        airExchanger.setTemperature(ambientTemp);
+                    }
+                    coolingStatus -= cooling_ticks;
+                }
+            }
         }   
+    }
+
+    private float calculateCoolingSpeed() {
+        Mesh.IMeshType meshType = getMeshType();
+        if (meshType == null) return calculateProcessingSpeed();
+        return calculateProcessingSpeed() * meshType.getCoolingFactor();
     }
 
     @Override
@@ -251,8 +274,9 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
 
     @Override
     public float getMaxDistance() {
-        float speed = Math.abs(this.getSpeed());
-        float distanceFactor = Math.min(speed / 256f, 1);
-        return Mth.lerp(distanceFactor, 3, 32);
+        float pressure = airHandler.getPressure();
+        if (pressure > 7)
+            return Mth.lerp((pressure-7)/3, 1, 2.5f);
+        return 1;
     }
 }

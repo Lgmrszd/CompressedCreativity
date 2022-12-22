@@ -29,8 +29,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +37,6 @@ import java.util.List;
 
 public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoveringInformation, IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource, IPneumaticTileEntity {
 
-    protected static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
     public AirCurrent airCurrent;
     protected int entitySearchCooldown;
@@ -53,7 +50,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     private float airBuffer;
     private float airUsage = 0.0f;
 
-    private float processing_status = 0.0f;
+    private float processingStatus = 0.0f;
 //            processing_speed = 0.0f;
 
     public AirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -82,20 +79,6 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
 
     }
 
-    @Override
-    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-//        if (airHandler.getPressure() < 1) {
-//            CCLang.translate("tooltip.not_enough_pressure")
-//                    .style(ChatFormatting.GOLD)
-//                    .forGoggles(tooltip);
-//            CCLang.translate("tooltip.not_enough_pressure_2")
-//                    .style(ChatFormatting.GRAY)
-//                    .forGoggles(tooltip);
-//            return true;
-//        }
-        return false;
-    }
-
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking){
         ObservePacket.send(worldPosition, 0);
         // "Pressure Stats:"
@@ -122,22 +105,26 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
 //        if (airHandler.getPressure() <= CommonConfig.AIR_BLOWER_WORK_PRESSURE.get()) {
 //            return true;
 //        }
-        // "Air usage:"
-        CCLang.translate("tooltip.air_usage")
-                .style(ChatFormatting.GRAY)
-                .forGoggles(tooltip);
-        // "0.0mL/t"
-        CCLang.number(airUsage)
-                .translate("unit.air_per_tick")
-                .style(ChatFormatting.AQUA)
-                .forGoggles(tooltip, 1);
-        CCLang.translate("tooltip.processing_speed")
-                .style(ChatFormatting.GRAY)
-                .add(
-                        CCLang.number(calculateProcessingSpeed())
-                                .style(ChatFormatting.AQUA)
-                )
-                .forGoggles(tooltip, 1);
+        float speed = calculateProcessingSpeed();
+        if (speed > 0)
+        {
+            // "Air usage:"
+            CCLang.translate("tooltip.air_usage")
+                    .style(ChatFormatting.GRAY)
+                    .forGoggles(tooltip);
+            // "0.0mL/t"
+            CCLang.number(airUsage)
+                    .translate("unit.air_per_tick")
+                    .style(ChatFormatting.AQUA)
+                    .forGoggles(tooltip, 1);
+            CCLang.translate("tooltip.processing_speed_multiplier")
+                    .style(ChatFormatting.GRAY)
+                    .add(
+                            CCLang.number(speed)
+                                    .style(ChatFormatting.AQUA)
+                    )
+                    .forGoggles(tooltip);
+        }
         return true;
     }
 
@@ -166,19 +153,16 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
             }
         }
         airHandler.setConnectedFaces(sides);
-        logger.debug("Updated Air Handler! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
+        CompressedCreativity.LOGGER.debug("Updated Air Handler! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
     }
 
-
-    public void extraAirCurrentTick() {
-    }
 
     @Override
     public void tick() {
         super.tick();
         airHandler.tick(this);
 
-        boolean server = !level.isClientSide || isVirtual();
+        boolean server = (level != null && !level.isClientSide) || isVirtual();
 
         airUsage = calculateAirUsage();
 
@@ -189,7 +173,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
             }
 
 
-            if (airHandler.getPressure() > 0) {
+            if (airHandler.getPressure() > 0 && airCurrent.maxDistance > 0) {
                 airBuffer += airUsage;
                 if (airBuffer > 1f) {
                     int toRemove = Math.min((int) airBuffer, airHandler.getAir());
@@ -214,16 +198,14 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
             airCurrent.findEntities();
         }
 
-        if (airHandler.getPressure() > 0) {
-
-            processing_status += calculateProcessingSpeed();
-            if (Math.floor(processing_status) > 1) {
-                int air_ticks = (int) Math.floor(processing_status);
+        if (airHandler.getPressure() > 0 && airCurrent.maxDistance > 0) {
+            processingStatus += calculateProcessingSpeed();
+            if (Math.floor(processingStatus) > 1) {
+                int air_ticks = (int) Math.floor(processingStatus);
                 for (int i = air_ticks; i > 0; i--) {
                     airCurrent.tick();
-                    if (server) extraAirCurrentTick();
                 }
-                processing_status -= air_ticks;
+                processingStatus -= air_ticks;
             }
         }
     }

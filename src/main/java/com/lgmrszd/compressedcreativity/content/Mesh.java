@@ -55,6 +55,11 @@ public class Mesh {
                 return temp > 373 ? Optional.of(InWorldProcessing.Type.BLASTING) :
                         temp > 323 ? Optional.of(InWorldProcessing.Type.SMOKING) : Optional.empty();
             }
+
+            @Override
+            public int getCoolingFactor() {
+                return 2;
+            }
         },
         HAUNTED("haunted", "Haunted Mesh") {
             @Override
@@ -96,5 +101,6 @@ public class Mesh {
         }
         String getName();
         default Optional<InWorldProcessing.Type> getProcessingType(int temp) {return Optional.empty();}
+        default int getCoolingFactor() {return 1;}
     }
 }

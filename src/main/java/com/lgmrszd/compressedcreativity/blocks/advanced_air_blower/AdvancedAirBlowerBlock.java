@@ -7,7 +7,6 @@ import com.lgmrszd.compressedcreativity.items.MeshItem;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -80,20 +79,16 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
                                  BlockHitResult blockRayTraceResult) {
         ItemStack heldItem = player.getItemInHand(hand);
         boolean client = world.isClientSide();
-        if(heldItem.getItem() instanceof MeshItem meshItem) {
-//            player.displayClientMessage(new TextComponent("Mesh: " + meshItem.getMeshType().getName()), false);
+        if(heldItem.getItem() instanceof MeshItem) {
             return onTileEntityUse(world, pos, te -> {
                 if (!(te instanceof AdvancedAirBlowerTileEntity abte))
                     return InteractionResult.PASS;
                 ItemStack installedMesh = abte.getMesh();
+                // Ignoring if mesh is the same
                 if (heldItem.getItem() == installedMesh.getItem()) {
-//                    player.displayClientMessage(new TextComponent("Same mesh! Cannot install!"), false);
                     return InteractionResult.PASS;
                 }
                 if (client) return InteractionResult.SUCCESS;
-                if (!installedMesh.isEmpty()) {
-                    player.displayClientMessage(new TextComponent("Not empty! Dropping old one: " + meshItem.getMeshType().getName()), false);
-                }
                 ItemStack oldMesh = tryInstallMesh(world, pos, abte, heldItem);
                 if (!oldMesh.isEmpty()) {
                     player.getInventory().placeItemBackInInventory(oldMesh);
