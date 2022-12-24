@@ -123,12 +123,12 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
 
     public Optional<InWorldProcessing.Type> getProcessingType() {
         if (getMesh().getItem() instanceof MeshItem meshItem) {
-            Mesh.IMeshType meshType = meshItem.getMeshType();
-            return meshType.getProcessingType(heatExchanger.getTemperatureAsInt());
+            Optional<InWorldProcessing.Type> processingType = meshItem.getMeshType().getProcessingType(heatExchanger.getTemperatureAsInt());
+            if(processingType.isPresent()) return processingType;
         }
-        if (heatExchanger.getTemperatureAsInt() > 573)
+        if (heatExchanger.getTemperatureAsInt() > 573) // 300
             return Optional.of(InWorldProcessing.Type.BLASTING);
-        if (heatExchanger.getTemperatureAsInt() > 373) {
+        if (heatExchanger.getTemperatureAsInt() > 373) { // 100
             return Optional.of(InWorldProcessing.Type.SMOKING);
         }
         return Optional.empty();
@@ -212,7 +212,10 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
     @Override
     public void lazyTick() {
         super.lazyTick();
-        if (level != null && level.isClientSide) updateTintClient();
+        if (level != null && level.isClientSide) {
+            updateTintClient();
+            return;
+        }
         if (mesh.getItem() instanceof MeshItem meshItem && meshItem.getMeshType() == Mesh.MeshType.SPLASHING) {
             if (heatExchanger.getTemperatureAsInt() < 273 - 5)
                 setMesh(
@@ -228,11 +231,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
                         new ItemStack(CCItems.MESHES.get(Mesh.MeshType.SPLASHING.getName()).get())
                 );
         }
-//        logger.debug("Updating!");
-//        setChanged();
         sendData();
-//        setLazyTickRate(10);
-//        setLazyTickRate(Math.min(10, lazyTickRate + 1));
     }
 
     public void updateTintClient() {

@@ -106,7 +106,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
 //            return true;
 //        }
         float speed = calculateProcessingSpeed();
-        if (speed > 0)
+        if (speed > 0 && airCurrent.maxDistance > 0)
         {
             // "Air usage:"
             CCLang.translate("tooltip.air_usage")
@@ -263,6 +263,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
         return level;
     }
 
+    @Nonnull
     @Override
     public BlockPos getAirCurrentPos() {
         return worldPosition;
@@ -281,6 +282,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
         return Mth.lerp(distanceFactor, 3, 12);
     }
 
+    @Nonnull
     @Override
     public Direction getAirflowOriginSide() {
         return this.getBlockState().getValue(AirBlowerBlock.FACING);

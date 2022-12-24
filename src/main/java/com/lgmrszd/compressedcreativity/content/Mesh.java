@@ -52,8 +52,9 @@ public class Mesh {
             }
             @Override
             public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
-                return temp > 373 ? Optional.of(InWorldProcessing.Type.BLASTING) :
-                        temp > 323 ? Optional.of(InWorldProcessing.Type.SMOKING) : Optional.empty();
+                return temp > 373 ? Optional.of(InWorldProcessing.Type.BLASTING) : // 100
+                        temp > 323 ? Optional.of(InWorldProcessing.Type.SMOKING) :
+                                Optional.of(InWorldProcessing.Type.NONE); // 50
             }
 
             @Override
