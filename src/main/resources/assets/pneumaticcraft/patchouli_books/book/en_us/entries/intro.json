@@ -21,6 +21,11 @@
     },
     {
       "type": "spotlight",
+      "item": "pneumaticcraft:charging_upgrade",
+      "text": "$(l:base_concepts/upgrades#charging)Charging Upgrade$() receives additional functionality: Now it supplies Create Tools such as $(item)Extendo Grip$() and $(item)Potato Cannon$() with air."
+    },
+    {
+      "type": "spotlight",
       "item": "compressedcreativity:air_blower",
       "text": "The $(l:pneumaticcraft:air_blower)Air Blower$() is a machine that uses pressurized air to create Air Current, similar to a $(item)Encased Fan$()."
     },
