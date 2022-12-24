@@ -53,8 +53,8 @@ public class BracketedPressureTubeTileEntity extends SmartTileEntity {
     }
 
     @Override
-    public void setRemoved() {
-        super.setRemoved();
+    public void invalidate() {
+        super.invalidate();
         airHandlerCap.invalidate();
     }
 

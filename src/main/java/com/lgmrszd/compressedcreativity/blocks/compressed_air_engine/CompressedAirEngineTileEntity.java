@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
@@ -17,9 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -43,10 +39,7 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
         super(typeIn, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(
-                        CommonConfig.COMPRESSED_AIR_ENGINE_PRESSURE_TIER.get()
-                                .getPressureTierDefinedOrCustom(
-                                        PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_CUSTOM_TIER
-                                ),
+                        PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_TIER,
                         CommonConfig.COMPRESSED_AIR_ENGINE_VOLUME.get());
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
@@ -136,11 +129,17 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
     }
 
     @Override
+    public void invalidate() {
+        super.invalidate();
+        airHandlerCap.invalidate();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         airHandler.tick(this);
 
-        boolean server = !level.isClientSide || isVirtual();
+        boolean server = level != null && !level.isClientSide || isVirtual();
 
         if (server) {
             if (airHandler.getAir() > 0) {
@@ -231,10 +230,5 @@ public class CompressedAirEngineTileEntity extends GeneratingKineticTileEntity i
     @Override
     public float getDangerPressure() {
         return airHandler.getDangerPressure();
-    }
-
-    @Override
-    public void onObserved(ServerPlayer var1, ObservePacket var2) {
-
     }
 }

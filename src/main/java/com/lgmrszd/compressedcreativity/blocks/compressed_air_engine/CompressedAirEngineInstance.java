@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
 import com.jozufozu.flywheel.api.MaterialManager;
-import com.lgmrszd.compressedcreativity.index.BlockPartials;
+import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.simibubi.create.content.contraptions.base.KineticTileInstance;
 import com.simibubi.create.content.contraptions.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
@@ -23,7 +23,7 @@ public class CompressedAirEngineInstance extends KineticTileInstance<CompressedA
         shaft = setup(getRotatingMaterial().getModel(shaft()).createInstance());
         rotor = modelManager.defaultCutout()
                 .material(AllMaterialSpecs.ROTATING)
-                .getModel(BlockPartials.AIR_ENGINE_ROTOR, blockState, direction)
+                .getModel(CCBlockPartials.AIR_ENGINE_ROTOR, blockState, direction)
                 .createInstance();
         setup(shaft);
         setup(rotor);

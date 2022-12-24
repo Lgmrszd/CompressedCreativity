@@ -4,6 +4,7 @@
     "compressedcreativity:rotational_compressor",
     "compressedcreativity:compressed_air_engine",
     "compressedcreativity:air_blower",
+    "compressedcreativity:industrial_air_blower",
     "compressedcreativity:bracketed_pressure_tube",
     "compressedcreativity:bracketed_reinforced_pressure_tube",
     "compressedcreativity:bracketed_advanced_pressure_tube",
@@ -22,6 +23,7 @@
     "compressedcreativity:brown_plastic_bracket",
     "compressedcreativity:green_plastic_bracket",
     "compressedcreativity:red_plastic_bracket",
-    "compressedcreativity:black_plastic_bracket"
+    "compressedcreativity:black_plastic_bracket",
+    "compressedcreativity:compressed_iron_casing"
   ]
 }

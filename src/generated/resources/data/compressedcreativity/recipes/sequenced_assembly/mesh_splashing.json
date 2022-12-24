@@ -1,0 +1,35 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "compressedcreativity:mesh_woven"
+  },
+  "transitionalItem": {
+    "item": "compressedcreativity:incomplete_mesh_splashing"
+  },
+  "sequence": [
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "compressedcreativity:incomplete_mesh_splashing"
+        },
+        {
+          "fluid": "minecraft:water",
+          "nbt": {},
+          "amount": 1000
+        }
+      ],
+      "results": [
+        {
+          "item": "compressedcreativity:incomplete_mesh_splashing"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "compressedcreativity:mesh_splashing"
+    }
+  ],
+  "loops": 8
+}

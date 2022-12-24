@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
 import com.jozufozu.flywheel.backend.Backend;
-import com.lgmrszd.compressedcreativity.index.BlockPartials;
+import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
@@ -42,7 +42,7 @@ public class CompressedAirEngineRenderer extends KineticTileEntityRenderer {
 //        SuperByteBuffer shaftHalf =
 //                CachedBufferer.partial(shaft(getRotationAxisOf(te)));
         SuperByteBuffer rotor =
-                CachedBufferer.partialFacing(BlockPartials.AIR_ENGINE_ROTOR, te.getBlockState(), direction.getOpposite());
+                CachedBufferer.partialFacing(CCBlockPartials.AIR_ENGINE_ROTOR, te.getBlockState(), direction.getOpposite());
 
 //        float time = AnimationTickHolder.getRenderTime(te.getLevel());
 //        float angle = (time * te.getSpeed() * 3 / 10f) % 360;

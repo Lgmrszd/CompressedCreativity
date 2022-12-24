@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "compressedcreativity:item/incomplete_mesh_splashing"
+  }
+}

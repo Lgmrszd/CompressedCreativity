@@ -1,0 +1,116 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block_connector",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block_connector"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block_connector",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block_connector",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block_connector",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "compressedcreativity:block/industrial_air_blower/block_connector",
+        "x": 90,
+        "y": 90
+      }
+    }
+  ]
+}

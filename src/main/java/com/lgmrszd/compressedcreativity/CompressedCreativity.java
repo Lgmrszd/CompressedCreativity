@@ -1,32 +1,20 @@
 package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.compressedcreativity.config.ClientConfig;
-import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
-import com.lgmrszd.compressedcreativity.network.ObservePacket;
+import com.lgmrszd.compressedcreativity.index.recipe.CCSequencedAssemblyRecipeGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
-//import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,17 +27,15 @@ public class CompressedCreativity
 
     public static final String MOD_ID = "compressedcreativity";
 
-    private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
-    private static final String PROTOCOL = "1";
-    public static final SimpleChannel Network = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MOD_ID, "main"))
-            .clientAcceptedVersions(PROTOCOL::equals)
-            .serverAcceptedVersions(PROTOCOL::equals)
-            .networkProtocolVersion(() -> PROTOCOL)
-            .simpleChannel();
+//    private static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(CompressedCreativity.MOD_ID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(CompressedCreativity.MOD_ID);
+
 
     public CompressedCreativity() {
 
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        REGISTRATE.registerEventListeners(eventBus);
+
         CCConfigHelper.init();
         eventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -60,8 +46,10 @@ public class CompressedCreativity
         eventBus.addListener(this::doClientStuff);
         // TODO: put it in clientstuff if possible
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> BlockPartials::init);
+                () -> CCBlockPartials::init);
         eventBus.addListener(this::postInit);
+
+        eventBus.addListener(CCColorHandlers::registerBlockColorHandlers);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -111,19 +99,13 @@ public class CompressedCreativity
 
 
     public void postInit(FMLLoadCompleteEvent evt) {
-        int i = 0;
-        Network.registerMessage(i++, ObservePacket.class, ObservePacket::encode, ObservePacket::decode, ObservePacket::handle);
 
     }
 
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
-        CCPonder.registerLang(registrate());
-        CCLangExtender.ExtendLang(registrate());
-//        gen.addProvider();
-    }
-
-    public static CreateRegistrate registrate() {
-        return registrate.get();
+        CCPonder.registerLang(REGISTRATE);
+        CCLangExtender.ExtendLang(REGISTRATE);
+        gen.addProvider(new CCSequencedAssemblyRecipeGen((gen)));
     }
 }

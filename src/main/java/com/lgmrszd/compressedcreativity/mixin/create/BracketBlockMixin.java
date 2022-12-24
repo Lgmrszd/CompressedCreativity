@@ -15,7 +15,8 @@ import java.util.Optional;
 @Mixin(BracketBlock.class)
 public abstract class BracketBlockMixin {
 
-    @Shadow protected abstract Optional<BlockState> getSuitableBracket(Direction.Axis targetBlockAxis, Direction direction, BracketBlock.BracketType type);
+    @Shadow(remap = false)
+    protected abstract Optional<BlockState> getSuitableBracket(Direction.Axis targetBlockAxis, Direction direction, BracketBlock.BracketType type);
 
     @Inject(method = "getSuitableBracket(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Ljava/util/Optional;", at = @At("HEAD"), cancellable = true, remap = false)
     public void inGetSuitableBracket(BlockState blockState, Direction direction, CallbackInfoReturnable<Optional<BlockState>> cir) {
