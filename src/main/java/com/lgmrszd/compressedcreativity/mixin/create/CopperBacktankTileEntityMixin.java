@@ -44,12 +44,4 @@ public abstract class CopperBacktankTileEntityMixin extends BlockEntity implemen
             });
         } else internalAirHandler.tick(this);
     }
-
-    // In theory, shouldn't be needed, as air handler gets updated first time it gets cached
-    // and this gets called only on block placement
-//    @Inject(method = "setCapacityEnchantLevel", at = @At("HEAD"), remap = false)
-//    public void updateAirHandler(int capacityEnchantLevel, CallbackInfo ci) {
-//        if (internalAirHandler == null) return;
-//        internalAirHandler.updateVolumeFromEnchant(capacityEnchantLevel);
-//    }
 }

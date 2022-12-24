@@ -12,16 +12,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class AirHandlerBacktankItem extends IAirHandlerItem.Provider {
     private final float MAX_PRESSURE = 3;
+    private final int RATIO = 2;
     private final int volume;
-    private final int max_volume;
+//    private final int maxVolume;
 
     private final LazyOptional<IAirHandlerItem> holder = LazyOptional.of(() -> this);
     private final ItemStack backtank;
 
     public AirHandlerBacktankItem(ItemStack backtank) {
         this.backtank = backtank;
-        this.max_volume = (2 * BackTankUtil.maxAir(backtank));
-        this.volume = (int) (max_volume / MAX_PRESSURE);
+        int maxVolume = (RATIO * BackTankUtil.maxAir(backtank));
+        this.volume = (int) (maxVolume / MAX_PRESSURE);
     }
 
     @NotNull
@@ -32,7 +33,7 @@ public class AirHandlerBacktankItem extends IAirHandlerItem.Provider {
 
     @Override
     public float getPressure() {
-        return MAX_PRESSURE * BackTankUtil.getAir(this.backtank) / BackTankUtil.maxAir(this.backtank);
+        return (float) getAir() / volume;
     }
 
     @Override
@@ -42,26 +43,24 @@ public class AirHandlerBacktankItem extends IAirHandlerItem.Provider {
 
     @Override
     public int getAir() {
-        float air = max_volume * BackTankUtil.getAir(this.backtank) / BackTankUtil.maxAir(this.backtank);
+        float air = RATIO * BackTankUtil.getAir(this.backtank);
 //        int airFloor = (int) Math.round(air);
         return Math.round(air);
     }
 
     @Override
     public void addAir(int i) {
-        BackTankUtil.consumeAir(null, backtank, (-1.0f * i * BackTankUtil.maxAir(this.backtank)) / max_volume);
+        BackTankUtil.consumeAir(null, backtank, -1.0f * i / RATIO);
     }
 
     @Override
     public int getBaseVolume() {
         return volume;
-//        return (int) (VOLUME * BackTankUtil.getAir(this.backtank) / BackTankUtil.maxAir(this.backtank));
     }
 
     @Override
     public int getVolume() {
         return volume;
-//        return (int) (VOLUME * BackTankUtil.getAir(this.backtank) / BackTankUtil.maxAir(this.backtank));
     }
 
     @Override

@@ -32,7 +32,8 @@ public class BackTankUtilMixin {
         if (pressure == 0) return false;
         ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
         ICommonArmorHandler handler = reg.getCommonArmorHandler(player);
-        handler.addAir(EquipmentSlot.CHEST, - Math.round((float) CommonConfig.BACKTANK_VOLUME.get() / usesPerTank));
+        // Assumed volume (1800) * drawback (10)
+        handler.addAir(EquipmentSlot.CHEST, - Math.round((float) 18000 / usesPerTank));
         return true;
     }
 

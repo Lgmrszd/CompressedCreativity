@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.simibubi.create.content.curiosities.armor.BackTankUtil;
 import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
+import com.simibubi.create.foundation.config.AllConfigs;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
@@ -15,8 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.util.LazyOptional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -25,7 +23,6 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
-    protected static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
     private final float MAX_PRESSURE = 3;
     private final int RATIO = 2;
     private int volume;
@@ -36,7 +33,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
 
     public AirHandlerBacktankBlockEntity(CopperBacktankTileEntity copperBacktankBE) {
         this.copperBacktankBE = copperBacktankBE;
-        maxVolume = RATIO * 900;
+        maxVolume = RATIO * AllConfigs.SERVER.curiosities.airInBacktank.get();
         volume = (int) (maxVolume / MAX_PRESSURE);
         delta = 0;
         connectedAirHandler = null;
