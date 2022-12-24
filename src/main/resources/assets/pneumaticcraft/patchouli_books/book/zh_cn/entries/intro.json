@@ -6,31 +6,52 @@
   "priority": "true",
   "pages": [
     {
-      "type": "patchouli:text",
+      "type": "text",
       "text": "你可曾想过：$(o)“气动机器真是酷，但总该能把它们变得酷上加酷。”$()不必担心，现在你就能体验气动工艺和机械动力联动的内容了！"
     },
     {
-      "type": "patchouli:spotlight",
+      "type": "spotlight",
       "item": "compressedcreativity:rotational_compressor",
       "text": "$(l:pneumaticcraft:rotational_compressor)旋转压缩机$()是一种使用机械动力的旋转力产生压力的压缩机。"
     },
     {
-      "type": "patchouli:spotlight",
+      "type": "spotlight",
+      "item": "create:copper_backtank",
+      "text": "The $(l:pneumaticcraft:copper_backtank)Copper Backtank$() received additional functionality, having pneumatic capabilities in both Item and Block form."
+    },
+    {
+      "type": "spotlight",
+      "item": "pneumaticcraft:charging_upgrade",
+      "text": "$(l:base_concepts/upgrades#charging)Charging Upgrade$() receives additional functionality: Now it supplies Create Tools such as $(item)Extendo Grip$() and $(item)Potato Cannon$() with air."
+    },
+    {
+      "type": "spotlight",
       "item": "compressedcreativity:air_blower",
       "text": "$(l:pneumaticcraft:air_blower)吹风机$()是使用压缩空气制造气流的机器，与$(item)鼓风机$()类似。"
     },
     {
-      "type": "patchouli:spotlight",
+      "type": "spotlight",
+      "item": "compressedcreativity:industrial_air_blower",
+      "text": "The $(l:pneumaticcraft:industrial_air_blower)Industrial Air Blower$() is a version of $(item)Air Blower$() that has additional features, such as higher processing speeds and ability to alter processing type using various $(l:pneumaticcraft:industrial_air_blower_meshes)Meshes$()."
+    },
+    {
+      "type": "spotlight",
+      "title": "Meshes",
+      "item": "compressedcreativity:mesh_splashing",
+      "text": "$(l:pneumaticcraft:industrial_air_blower_meshes)Meshes$() provide additional functionality to Industrial Air Blower"
+    },
+    {
+      "type": "spotlight",
       "item": "compressedcreativity:compressed_air_engine",
       "text": "$(l:pneumaticcraft:compressed_air_engine)压缩空气引擎$()是使用压缩空气的动力引擎。就算不处于工作状态，它仍会消耗空气，所以请务必保证其有足够的压力！"
     },
     {
-      "type": "patchouli:spotlight",
+      "type": "spotlight",
       "item": "compressedcreativity:mechanical_visor_upgrade",
       "text": "安装入$(l:armor/pneumatic_helmet)气动头盔$()时，$(l:pneumaticcraft:mechanical_visor_upgrade)机械护面升级$()将会提供与工程师护目镜一致的功能。"
     },
     {
-      "type": "patchouli:spotlight",
+      "type": "spotlight",
       "title": "塑料支架",
       "item": "compressedcreativity:orange_plastic_bracket",
       "text": "$(l:pneumaticcraft:brackets)塑料支架$()是一种五颜六色的全新支架，能支撑传动杆、管道、齿轮以及压力管道！"
