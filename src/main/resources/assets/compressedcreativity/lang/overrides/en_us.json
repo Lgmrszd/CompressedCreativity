@@ -20,6 +20,10 @@
   "compressedcreativity.tooltip.compressed_air_engine.idle_1": "This machine is currently idle:",
   "compressedcreativity.tooltip.compressed_air_engine.idle_2": "This machine uses air even though it's not currently working",
 
+  "compressedcreativity.tooltip.processing_speed_multiplier": "Processing speed multiplier: ",
+  "compressedcreativity.tooltip.installed_mesh": "Installed Mesh:",
+  "compressedcreativity.tooltip.installed_mesh_none": "No Mesh is installed",
+
   "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Mechanical Visor",
 
   "pneumaticcraft.armor.upgrade.compressedcreativity.block_tracker_module_kinetic": "Mechanical Blocks",
