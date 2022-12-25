@@ -17,12 +17,12 @@
     {
       "type": "spotlight",
       "item": "create:copper_backtank",
-      "text": "The $(l:pneumaticcraft:copper_backtank)Copper Backtank$() received additional functionality, having pneumatic capabilities in both Item and Block form."
+      "text": "$(l:pneumaticcraft:copper_backtank)铜背罐$()有了全新功能：在物品状态和方块状态下都有了气动功用。"
     },
     {
       "type": "spotlight",
       "item": "pneumaticcraft:charging_upgrade",
-      "text": "$(l:base_concepts/upgrades#charging)Charging Upgrade$() receives additional functionality: Now it supplies Create Tools such as $(item)Extendo Grip$() and $(item)Potato Cannon$() with air."
+      "text": "$(l:base_concepts/upgrades#charging)充气升级$()有了全新功能：$(item)伸缩机械手$()和$(item)土豆加农炮$()之类的机械动力工具也能以此充入空气。"
     },
     {
       "type": "spotlight",
@@ -32,13 +32,13 @@
     {
       "type": "spotlight",
       "item": "compressedcreativity:industrial_air_blower",
-      "text": "The $(l:pneumaticcraft:industrial_air_blower)Industrial Air Blower$() is a version of $(item)Air Blower$() that has additional features, such as higher processing speeds and ability to alter processing type using various $(l:pneumaticcraft:industrial_air_blower_meshes)Meshes$()."
+      "text": "$(l:pneumaticcraft:industrial_air_blower)工业吹风机$()是具有额外功能的$(item)吹风机$()，如更高的加工速度，和通过$(l:pneumaticcraft:industrial_air_blower_meshes)纱网$()更改加工方式的能力。"
     },
     {
       "type": "spotlight",
       "title": "Meshes",
       "item": "compressedcreativity:mesh_splashing",
-      "text": "$(l:pneumaticcraft:industrial_air_blower_meshes)Meshes$() provide additional functionality to Industrial Air Blower"
+      "text": "$(l:pneumaticcraft:industrial_air_blower_meshes)纱网$()能为工业吹风机提供额外的加工能力。"
     },
     {
       "type": "spotlight",
