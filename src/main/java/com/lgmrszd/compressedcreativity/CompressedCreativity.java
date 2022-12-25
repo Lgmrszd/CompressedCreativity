@@ -49,8 +49,6 @@ public class CompressedCreativity
                 () -> CCBlockPartials::init);
         eventBus.addListener(this::postInit);
 
-        eventBus.addListener(CCColorHandlers::registerBlockColorHandlers);
-
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::serverStart);
