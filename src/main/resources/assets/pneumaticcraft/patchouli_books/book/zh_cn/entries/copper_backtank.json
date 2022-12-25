@@ -16,7 +16,7 @@
     },
     {
       "type": "text",
-      "text": "在物品形态下，其余$(l:pneumaticcraft:components/air_canister)空气罐$()功能类似。也即为其充气，就和任何其他能装压缩空气的物品一样。"
+      "text": "在物品形态下，其与$(l:pneumaticcraft:components/air_canister)空气罐$()功能类似。也即可以充气，就和任何压缩空气容器一样。"
     },
     {
       "type": "image",
