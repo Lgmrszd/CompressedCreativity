@@ -23,7 +23,7 @@ apply plugin: "org.spongepowered.mixin"
 
 //jarJar.enable()
 
-version = '1.18.2-0.1.4-hf1'
+version = '1.18.2-0.1.5'
 group = 'com.lgmrszd.compressedcreativity' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'compressedcreativity'
 

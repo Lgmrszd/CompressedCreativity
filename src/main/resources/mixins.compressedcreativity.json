@@ -9,6 +9,9 @@
     "create.CopperBacktankTileEntityMixin",
     "create.InWorldProcessingMixin"
   ],
+  "client" : [
+    "create.BackTankUtilMixinClient"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
