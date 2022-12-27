@@ -28,6 +28,12 @@ public class CommonConfig {
     public static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec COMMON_SPEC;
 
+    public static final ForgeConfigSpec.BooleanValue BACKTANK_COMPAT_ITEM;
+
+    public static final ForgeConfigSpec.BooleanValue BACKTANK_COMPAT_BLOCK;
+
+    public static final ForgeConfigSpec.BooleanValue CHESTPLATE_COMPAT;
+
     public static final ForgeConfigSpec.DoubleValue CHESTPLATE_MIN_PRESSURE;
 //    public static final ForgeConfigSpec.IntValue BACKTANK_VOLUME;
 
@@ -86,6 +92,18 @@ public class CommonConfig {
 
     static {
         COMMON_BUILDER.comment("General Configuration").push(CATEGORY_GENERAL);
+
+        BACKTANK_COMPAT_ITEM = COMMON_BUILDER
+                .comment("If Copper Backtank has pneumatic capability in item form")
+                .define("backtank_compat_item", true);
+
+        BACKTANK_COMPAT_BLOCK = COMMON_BUILDER
+                .comment("If Copper Backtank has pneumatic capability in block form")
+                .define("backtank_compat_block", true);
+
+        CHESTPLATE_COMPAT = COMMON_BUILDER
+                .comment("If Pneumatic Chestplate (with charging upgrade) can provide air to Create tools")
+                .define("chestplate_compat", true);
 
         CHESTPLATE_MIN_PRESSURE = COMMON_BUILDER
                 .comment("Minimal Pneumatic Chestplate pressure required to act as Copper Backtank")

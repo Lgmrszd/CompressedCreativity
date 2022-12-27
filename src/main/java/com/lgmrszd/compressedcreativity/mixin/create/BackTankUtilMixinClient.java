@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static com.lgmrszd.compressedcreativity.config.CommonConfig.CHESTPLATE_COMPAT;
 import static com.lgmrszd.compressedcreativity.index.CCMisc.chestplatePressureAvailable;
 
 @OnlyIn(Dist.CLIENT)
@@ -25,6 +26,7 @@ public class BackTankUtilMixinClient {
 
     @Inject(method = "isBarVisible", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atIsBarVisible(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Boolean> cir) {
+        if (!CHESTPLATE_COMPAT.get()) return;
         LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
         if(chestplatePressureAvailable(player) > 0) {
             cir.setReturnValue(true);
@@ -33,6 +35,7 @@ public class BackTankUtilMixinClient {
 
     @Inject(method = "getBarWidth", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atGetBarWidth(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Integer> cir) {
+        if (!CHESTPLATE_COMPAT.get()) return;
         LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
         float pressure = chestplatePressureAvailable(player);
         if(pressure > 0) {
@@ -44,6 +47,7 @@ public class BackTankUtilMixinClient {
 
     @Inject(method = "getBarColor", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atGetBarColor(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Integer> cir) {
+        if (!CHESTPLATE_COMPAT.get()) return;
         LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
         ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
         ICommonArmorHandler handler = reg.getCommonArmorHandler(player);

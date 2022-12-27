@@ -12,12 +12,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static com.lgmrszd.compressedcreativity.config.CommonConfig.CHESTPLATE_COMPAT;
 import static com.lgmrszd.compressedcreativity.index.CCMisc.chestplatePressureAvailable;
 
 @Mixin(BackTankUtil.class)
 public class BackTankUtilMixin {
     @Inject(method = "canAbsorbDamage", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
-    private static void atCanAbsorbDamage(LivingEntity entity, int usesPerTank, CallbackInfoReturnable<Boolean> cir){
+    private static void atCanAbsorbDamage(LivingEntity entity, int usesPerTank, CallbackInfoReturnable<Boolean> cir) {
+        if (!CHESTPLATE_COMPAT.get()) return;
         if(canAbsorbDamageChestplate(entity, usesPerTank)) {
             cir.setReturnValue(true);
         }
