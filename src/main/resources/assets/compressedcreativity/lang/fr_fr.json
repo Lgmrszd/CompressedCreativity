@@ -5,18 +5,18 @@
   "compressedcreativity.unit.air": "mL",
   "compressedcreativity.unit.air_per_tick": "mL/t",
 
-  "compressedcreativity.tooltip.pressure_summary": "Statistiques de Pression:",
-  "compressedcreativity.tooltip.pressure": "Pression:",
-  "compressedcreativity.tooltip.air": "Air:",
-  "compressedcreativity.tooltip.air_production": "Air généré:",
-  "compressedcreativity.tooltip.air_usage": "Air utilisé:",
-  "compressedcreativity.tooltip.not_enough_pressure": "Pression Requise:",
+  "compressedcreativity.tooltip.pressure_summary": "Statistiques de Pression :",
+  "compressedcreativity.tooltip.pressure": "Pression :",
+  "compressedcreativity.tooltip.air": "Air :",
+  "compressedcreativity.tooltip.air_production": "Air généré :",
+  "compressedcreativity.tooltip.air_usage": "Air utilisé :",
+  "compressedcreativity.tooltip.not_enough_pressure": "Pression Requise :",
   "compressedcreativity.tooltip.not_enough_pressure_2": "Cette machine à besoin de plus de Pression pour fonctionner.",
 
-  "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Direction de la Rotation Requise:",
+  "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Direction de la Rotation Requise :",
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "Cette machine ne fonctionerais pas avec une rotation dans ce sens.",
 
-  "compressedcreativity.tooltip.compressed_air_engine.idle_1": "Cette machine est actuellement innactive:",
+  "compressedcreativity.tooltip.compressed_air_engine.idle_1": "Cette machine est actuellement innactive :",
   "compressedcreativity.tooltip.compressed_air_engine.idle_2": "Cette machine utilise de l'air même si elle n'est pas en fonctionement.",
 
   "pneumaticcraft.armor.upgrade.compressedcreativity.mechanical_visor": "Visière Mécanique",
@@ -43,7 +43,7 @@
 
   "compressedcreativity.gui.tooltip.expand": "Maintenez Shift Enfoncé pour plus d'Informations",
   
-  "block.compressedcreativity.air_blower": "Souffler d'Air",
+  "block.compressedcreativity.air_blower": "Souffleur d'Air",
   "block.compressedcreativity.compressed_air_engine": "Moteur à Air Comprimmé",
   "block.compressedcreativity.rotational_compressor": "Compresseur Rotatif",
 
@@ -66,5 +66,43 @@
   "item.compressedcreativity.brass_coated_upgrade_matrix": "Matrice d'Augmentation enrobé de Laiton",
   "item.compressedcreativity.brass_gilded_lapis_lazuli": "Lapis Lazuli doré de Laiton",
   "item.compressedcreativity.engine_rotor": "Rotor de Moteur",
-  "item.compressedcreativity.mechanical_visor_upgrade": "Augmentation Visière Mécanique"
+  "item.compressedcreativity.mechanical_visor_upgrade": "Augmentation Visière Mécanique",
+
+
+
+
+  "block.compressedcreativity.black_plastic_bracket": "Support en Plastique Noir",
+  "block.compressedcreativity.blue_plastic_bracket": "Support en Plastique Bleu",
+  "block.compressedcreativity.brown_plastic_bracket": "Support en Plastique Brun",
+  "block.compressedcreativity.cyan_plastic_bracket": "Support en Plastique Cyan",
+  "block.compressedcreativity.gray_plastic_bracket": "Support en Plastique Gris",
+  "block.compressedcreativity.green_plastic_bracket": "Support en Plastique Vert",
+  "block.compressedcreativity.light_blue_plastic_bracket": "Support en Plastique Bleu Clair",
+  "block.compressedcreativity.light_gray_plastic_bracket": "Support en Plastique Gris Clair",
+  "block.compressedcreativity.lime_plastic_bracket": "Support en Plastique Vert Clair",
+  "block.compressedcreativity.magenta_plastic_bracket": "Support en Plastique Magenta",
+  "block.compressedcreativity.orange_plastic_bracket": "Support en Plastique Orange",
+  "block.compressedcreativity.pink_plastic_bracket": "Support en Plastique Rose",
+  "block.compressedcreativity.purple_plastic_bracket": "Support en Plastique Violet",
+  "block.compressedcreativity.red_plastic_bracket": "Support en Plastique Rouge",
+  "block.compressedcreativity.white_plastic_bracket": "Support en Plastique Blanc",
+  "block.compressedcreativity.yellow_plastic_bracket": "Support en Plastique Jaune",
+
+  "block.compressedcreativity.bracketed_advanced_pressure_tube": "Tuyaux Pressurisé Avancé avec Support",
+  "block.compressedcreativity.bracketed_pressure_tube": "Tuyaux Pressurisé avec Support",
+  "block.compressedcreativity.bracketed_reinforced_pressure_tube": "Tuyaux Pressurisé Renforcé avec Support",
+
+  "block.compressedcreativity.industrial_air_blower": "Souffleur Industriel",
+  "block.compressedcreativity.compressed_iron_casing": "Revêtement en Métal Compressé",
+  "compressedcreativity.tooltip.processing_speed_multiplier": "Multiplicateur de Vitesse de Travail : ",
+
+  "compressedcreativity.tooltip.installed_mesh": "Filet installé :",
+  "compressedcreativity.tooltip.installed_mesh_none": "Aucun Filet installé",
+  "item.compressedcreativity.incomplete_mesh_splashing": "Filet Trempé Incomplet",
+  "item.compressedcreativity.mesh_dense": "Filet Dense",
+  "item.compressedcreativity.mesh_empty": "Encadrement de Filet",
+  "item.compressedcreativity.mesh_haunted": "Filet Hanté",
+  "item.compressedcreativity.mesh_splashing": "Filet Trempé",
+  "item.compressedcreativity.mesh_splashing_frozen": "Filet Gelé",
+  "item.compressedcreativity.mesh_woven": "Filet Tissé"
 }
