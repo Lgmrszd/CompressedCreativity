@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -74,7 +73,7 @@ public class BlockTrackerEntryKinetic implements IBlockTrackEntry {
             kte.addToTooltip(infoList, sneaking);
         }
         if (mode == MechanicalVisorConfig.BlockTrackerMode.MIN) {
-            infoList.add(new TranslatableComponent("compressedcreativity.mechanical_visor.armor.gui.block_tracker.min"));
+            infoList.add(Component.translatable("compressedcreativity.mechanical_visor.armor.gui.block_tracker.min"));
         }
     }
 

@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -14,7 +15,6 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -104,6 +104,6 @@ public class CompressedCreativity
         DataGenerator gen = event.getGenerator();
         CCPonder.registerLang(REGISTRATE);
         CCLangExtender.ExtendLang(REGISTRATE);
-        gen.addProvider(new CCSequencedAssemblyRecipeGen((gen)));
+        gen.addProvider(true, new CCSequencedAssemblyRecipeGen((gen)));
     }
 }

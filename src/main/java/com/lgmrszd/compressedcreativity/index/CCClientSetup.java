@@ -5,19 +5,19 @@ import com.lgmrszd.compressedcreativity.upgrades.BlockTrackerEntryKinetic;
 import com.lgmrszd.compressedcreativity.upgrades.MechanicalVisorClientHandler;
 import com.simibubi.create.content.contraptions.goggles.GogglesItem;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IPneumaticHelmetRegistry;
+import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IClientArmorRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class CCClientSetup {
 
     public static MechanicalVisorClientHandler mechanicalVisorClientHandler;
     public static void init(FMLClientSetupEvent event) {
-        IPneumaticHelmetRegistry clientRegistry = PneumaticRegistry.getInstance().getHelmetRegistry();
+        IClientArmorRegistry clientRegistry = PneumaticRegistry.getInstance().getClientArmorRegistry();
 
         clientRegistry.registerBlockTrackEntry(BlockTrackerEntryKinetic.ID, BlockTrackerEntryKinetic::new);
 
         mechanicalVisorClientHandler = new MechanicalVisorClientHandler();
-        clientRegistry.registerRenderHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, mechanicalVisorClientHandler);
+        clientRegistry.registerUpgradeHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, mechanicalVisorClientHandler);
 
 //        CCBlockPartials.init();
 

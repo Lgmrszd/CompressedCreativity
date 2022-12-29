@@ -17,7 +17,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -82,12 +81,15 @@ public class MechanicalVisorClientHandler extends IArmorUpgradeClientHandler.Sim
 
     private void checkBlockFocus() {
         focusedBlockEntity = null;
-        BlockPos focusedBlockPos = PneumaticRegistry.getInstance().getHelmetRegistry().getBlockTrackerFocus().getLeft();
-        if (focusedBlockPos == null) return;
-        BlockEntity currentBlockEntity = Minecraft.getInstance().level.getBlockEntity(focusedBlockPos);
-        if (currentBlockEntity instanceof IHaveHoveringInformation
-                || currentBlockEntity instanceof IHaveGoggleInformation)
-            focusedBlockEntity = currentBlockEntity;
+        PneumaticRegistry.getInstance().getClientArmorRegistry().getBlockTrackerFocus().ifPresent(focus -> {
+            BlockPos focusedBlockPos = focus.pos();
+            if (focusedBlockPos == null) return;
+            if (Minecraft.getInstance().level == null) return;
+            BlockEntity currentBlockEntity = Minecraft.getInstance().level.getBlockEntity(focusedBlockPos);
+            if (currentBlockEntity instanceof IHaveHoveringInformation
+                    || currentBlockEntity instanceof IHaveGoggleInformation)
+                focusedBlockEntity = currentBlockEntity;
+        });
     }
 
     @Override
@@ -103,8 +105,8 @@ public class MechanicalVisorClientHandler extends IArmorUpgradeClientHandler.Sim
     @Override
     public IGuiAnimatedStat getAnimatedStat() {
         if (visorInfo == null) {
-            visorInfo = PneumaticRegistry.getInstance().getHelmetRegistry().makeHUDStatPanel(
-                    new TranslatableComponent("compressedcreativity.mechanical_visor.armor.gui.title"),
+            visorInfo = PneumaticRegistry.getInstance().getClientArmorRegistry().makeHUDStatPanel(
+                    Component.translatable("compressedcreativity.mechanical_visor.armor.gui.title"),
                     CCItems.MECHANICAL_VISOR_UPGRADE.asStack(),
                     this
             );

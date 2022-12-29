@@ -8,8 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 
@@ -35,7 +34,7 @@ public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<Mechani
         super.populateGui(gui);
 
         tooltipMode = new ExtendedButton(30, 50, 150, 20,
-                TextComponent.EMPTY,
+                Component.empty(),
                 b -> {
                     mvClientHandled.tooltipMode = mvClientHandled.tooltipMode.getNext();
                     updateButtonText();
@@ -43,7 +42,7 @@ public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<Mechani
                 }
         );
         blockTrackerMode = new ExtendedButton(30, 82, 150, 20,
-                TextComponent.EMPTY,
+                Component.empty(),
                 b -> {
                     mvClientHandled.blockTrackerMode = mvClientHandled.blockTrackerMode.getNext();
                     updateButtonText();
@@ -53,7 +52,7 @@ public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<Mechani
 //        gui.addWidget()
         gui.addWidget(tooltipMode);
         gui.addWidget(blockTrackerMode);
-        gui.addWidget(PneumaticRegistry.getInstance().getHelmetRegistry().makeStatMoveButton(30, 128, getClientUpgradeHandler()));
+        gui.addWidget(PneumaticRegistry.getInstance().getClientArmorRegistry().makeStatMoveButton(30, 128, getClientUpgradeHandler()));
         updateButtonText();
     }
 
@@ -61,13 +60,13 @@ public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<Mechani
     public void renderPost(PoseStack matrixStack, int x, int y, float partialTicks) {
         Font fontRenderer = Minecraft.getInstance().font;
         FormattedCharSequence widgetCharSequence =
-                new TranslatableComponent("compressedcreativity.mechanical_visor.armor.gui.tooltip_mode")
+                Component.translatable("compressedcreativity.mechanical_visor.armor.gui.tooltip_mode")
                         .withStyle(ChatFormatting.GOLD).getVisualOrderText();
         FormattedCharSequence trackerCharSequence =
-                new TranslatableComponent("compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode")
+                Component.translatable("compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode")
                         .withStyle(ChatFormatting.GOLD).getVisualOrderText();
         FormattedCharSequence settingsCharSequence =
-                new TranslatableComponent("pneumaticcraft.armor.gui.misc.settings")
+                Component.translatable("pneumaticcraft.armor.gui.misc.settings")
                         .withStyle(ChatFormatting.GOLD).getVisualOrderText();
         fontRenderer.drawShadow(matrixStack, widgetCharSequence, (float) (105 - fontRenderer.width(widgetCharSequence) / 2), 40, 0xFFFFFFFF);
         fontRenderer.drawShadow(matrixStack, trackerCharSequence, (float) (105 - fontRenderer.width(trackerCharSequence) / 2), 72 , 0xFFFFFFFF);
@@ -75,11 +74,11 @@ public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<Mechani
     }
 
     private void updateButtonText() {
-        tooltipMode.setMessage(new TranslatableComponent(
+        tooltipMode.setMessage(Component.translatable(
                 "compressedcreativity.mechanical_visor.armor.gui.tooltip_mode." +
                 mvClientHandled.tooltipMode.getID())
         );
-        blockTrackerMode.setMessage(new TranslatableComponent(
+        blockTrackerMode.setMessage(Component.translatable(
                 "compressedcreativity.mechanical_visor.armor.gui.block_tracker_mode." +
                         mvClientHandled.blockTrackerMode.getID())
         );

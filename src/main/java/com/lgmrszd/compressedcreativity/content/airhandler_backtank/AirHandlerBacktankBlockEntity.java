@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -126,16 +125,6 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     }
 
     @Override
-    public Tag serializeNBT() {
-        return null;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag compound) {
-
-    }
-
-    @Override
     public void setConnectedFaces(List<Direction> sides) {
 
     }
@@ -191,7 +180,17 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
 
     @Override
     public void printManometerMessage(Player player, List<Component> curInfo) {
-        curInfo.add(new TranslatableComponent("pneumaticcraft.gui.tooltip.pressure",
+        curInfo.add(Component.translatable("pneumaticcraft.gui.tooltip.pressure",
                 PneumaticCraftUtils.roundNumberTo(getPressure(), 1)));
+    }
+
+    @Override
+    public CompoundTag serializeNBT() {
+        return null;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+
     }
 }

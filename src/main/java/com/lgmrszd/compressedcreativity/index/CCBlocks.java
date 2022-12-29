@@ -17,7 +17,7 @@ import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedA
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
 import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
-import com.lgmrszd.compressedcreativity.config.CommonConfig;
+//import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
@@ -67,7 +67,8 @@ public class CCBlocks {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(BlockStateGen.horizontalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
-            .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
+            .transform(BlockStressDefaults.setImpact(8.0))
+//            .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())
             .register();
@@ -77,7 +78,8 @@ public class CCBlocks {
             .transform(TagGen.pickaxeOnly())
             .blockstate(CompressedAirEngineBlockStateGenerator::blockState)
             .addLayer(() -> RenderType::translucent)
-            .transform(BlockStressDefaults.setCapacity(CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0))
+            .transform(BlockStressDefaults.setCapacity(4.0))
+//            .transform(BlockStressDefaults.setCapacity(CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())
             .register();

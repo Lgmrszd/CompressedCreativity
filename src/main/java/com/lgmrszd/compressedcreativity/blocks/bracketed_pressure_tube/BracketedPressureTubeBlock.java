@@ -182,7 +182,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
     @SubscribeEvent
     public static void usingBracketOnPressureTube(PlayerInteractEvent.RightClickBlock event) {
         ItemStack item = event.getItemStack();
-        Level world = event.getWorld();
+        Level world = event.getLevel();
         BlockPos blockPos = event.getPos();
         BlockState blockState = world.getBlockState(blockPos);
         if (!(item.getItem() instanceof BracketBlockItem)) return;

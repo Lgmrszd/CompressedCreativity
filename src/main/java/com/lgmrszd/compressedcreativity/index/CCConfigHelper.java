@@ -3,7 +3,7 @@ package com.lgmrszd.compressedcreativity.index;
 import com.lgmrszd.compressedcreativity.config.ClientConfig;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.client.pneumatic_armor.ArmorUpgradeClientRegistry;
+import me.desht.pneumaticcraft.client.pneumatic_armor.ClientArmorRegistry;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -26,6 +26,7 @@ public class CCConfigHelper {
     }
 
     static void refreshClient() {
-        ArmorUpgradeClientRegistry.getInstance().refreshConfig();
+//        PneumaticRegistry.getInstance().getClientArmorRegistry().getInstance().refreshConfig();
+        ClientArmorRegistry.getInstance().refreshConfig();
     }
 }

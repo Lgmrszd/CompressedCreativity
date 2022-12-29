@@ -12,7 +12,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -32,11 +31,11 @@ public class CCMisc {
 //            infoList.add(new TranslatableComponent("compressedcreativity.gui.").withStyle(ChatFormatting.GOLD));
             BlockEntity te = BEProvider.get();
             if (te instanceof IPneumaticTileEntity pte) {
-                infoList.add(new TranslatableComponent("pneumaticcraft.gui.tooltip.maxPressure", pte.getDangerPressure()).withStyle(ChatFormatting.GOLD));
+                infoList.add(Component.translatable("pneumaticcraft.gui.tooltip.maxPressure", pte.getDangerPressure()).withStyle(ChatFormatting.GOLD));
             }
 //            PneumaticRegistry.getInstance().getUpgradeRegistry().addUpgradeTooltip(upgrade.get(), infoList);
         } else {
-            infoList.add(new TranslatableComponent("compressedcreativity.gui.tooltip.expand").withStyle(ChatFormatting.GOLD));
+            infoList.add(Component.translatable("compressedcreativity.gui.tooltip.expand").withStyle(ChatFormatting.GOLD));
         }
     }
 
