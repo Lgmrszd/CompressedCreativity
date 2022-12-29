@@ -1,0 +1,18 @@
+{
+  "name": "Скобы",
+  "icon": "create:metal_bracket",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Хотелось ли вам использовать $(item)Деревянные$() или $(item)Металлические скобы$() на $(item)Трубе под давлением$()? Теперь вы можете это сделать!"
+    },
+    {
+      "type": "crafting",
+      "title": "Пластиковые скобы",
+      "recipe": "compressedcreativity:crafting/orange_plastic_bracket",
+      "text": "Вы также можете создать $(item)Пластиковые скобы$()! Они ведут себя так же как их деревянные и металлические аналоги и поставляются во всех доступных 16 цветах."
+    }
+  ]
+}

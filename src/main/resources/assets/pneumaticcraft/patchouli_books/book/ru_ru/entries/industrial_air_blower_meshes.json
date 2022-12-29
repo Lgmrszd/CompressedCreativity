@@ -1,0 +1,45 @@
+{
+  "name": "Сетки для Инд. возд-ки",
+  "icon": "compressedcreativity:mesh_splashing",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Разные виды $(item)Сеток$() позволяют менять поведение Индустриальной воздуходувки."
+    },
+    {
+      "type": "crafting",
+      "title": "Рамка сетки",
+      "recipe": "compressedcreativity:crafting/mesh_empty",
+      "text": "$(item)Рамка сетки$() — основа для остальных сеток."
+    },
+    {
+      "type": "crafting",
+      "title": "Плотная сетка",
+      "recipe": "compressedcreativity:crafting/mesh_dense",
+      "text": "$(item)Плотная сетка$() увеличивает обмен теплом. В результате тепло расходуется быстрее, но более низкая температура (100°C) необходима для плавки."
+    },
+    {
+      "type": "crafting",
+      "title": "Призрачная сетка",
+      "recipe": "compressedcreativity:crafting/mesh_haunted",
+      "text": "Горячий воздух, проходя через $(item)Призрачную сетку$(), начинает призрачное наполнение."
+    },
+    {
+      "type": "crafting",
+      "title": "Тканая сетка",
+      "recipe": "compressedcreativity:crafting/mesh_woven",
+      "text": "$(item)Тканая сетка$() сама по себе бесполезна, но после наполнения водой становится $(item)сеткой, пропитанной водой$()."
+    },
+    {
+      "type": "spotlight",
+      "title": "Пропитанная водой сетка",
+      "item": "compressedcreativity:mesh_splashing",
+      "text": "$(item)Пропитанная водой сетка$() преобразует воздушный поток в промывающий! Убедитесь в том что поддерживается стабильная температура..."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "compressedcreativity:mesh_splashing": 5
+  }
+}

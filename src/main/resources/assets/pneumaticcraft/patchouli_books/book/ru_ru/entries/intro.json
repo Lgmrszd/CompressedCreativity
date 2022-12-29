@@ -1,0 +1,60 @@
+{
+  "name": "Добавление креативности",
+  "icon": "create:cogwheel",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "create:andesite_alloy",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Задумывались ли вы: $(o)\"Эти пневматические машины такие крутые, вот бы их можно было сделать круче...\"$() Не волнуйтесь, теперь вы можете интегрировать ваши установки из PneumaticCraft и Create!"
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:rotational_compressor",
+      "text": "$(l:pneumaticcraft:rotational_compressor)Вращательный компрессор$() — это вид компрессора, использующий вращение из Create для генерации давления."
+    },
+    {
+      "type": "spotlight",
+      "item": "create:copper_backtank",
+      "text": "$(l:pneumaticcraft:copper_backtank)Медный баллон$() получает дополнительный функционал, имея пневматические возможности в форме как блока, так и предмета."
+    },
+    {
+      "type": "spotlight",
+      "item": "pneumaticcraft:charging_upgrade",
+      "text": "$(l:base_concepts/upgrades#charging)Улучшение: Зарядка$() получает дополнительный функционал: теперь оно обеспечивает подачу воздуха к такому оборудованию как $(item)Удлинённая рука$() и $(item)Картофельная пушка$()."
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:air_blower",
+      "text": "$(l:pneumaticcraft:air_blower)Воздуходувка$() — это машина, использующая воздух под давлением для создания воздушного потока, также как и $(item)Вентилятор в корпусе$()."
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:industrial_air_blower",
+      "text": "$(l:pneumaticcraft:industrial_air_blower)Индустриальная воздуходувка$() — это вариант $(item)Воздуходувки$(), имеющий дополнительные возможности, такие как повыщенная скорость обработки и возможность изменения типа обработки с помощью разнообразных $(l:pneumaticcraft:industrial_air_blower_meshes)Сеток$()."
+    },
+    {
+      "type": "spotlight",
+      "title": "Сетки",
+      "item": "compressedcreativity:mesh_splashing",
+      "text": "$(l:pneumaticcraft:industrial_air_blower_meshes)Сетки$() снабжают Индустриальную воздуходувку дополнительными возможностями."
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:compressed_air_engine",
+      "text": "$(l:pneumaticcraft:compressed_air_engine)Двигатель на сжатом воздухе$() — это кинетический двигатель, использующий сжатый воздух. Он использует воздух даже когда не работает, так что убедитесь что он всегда снабжён давлением!"
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:mechanical_visor_upgrade",
+      "text": "При установке в $(l:armor/pneumatic_helmet)Пневмошлем$(), $(l:pneumaticcraft:mechanical_visor_upgrade)Улучшение: Механический визор$() предоставляет фунционал Инженерных очков."
+    },
+    {
+      "type": "spotlight",
+      "title": "Пластиковые скобы",
+      "item": "compressedcreativity:orange_plastic_bracket",
+      "text": "$(l:pneumaticcraft:brackets)Пластиковые скобы$() — это новые разноцветные варианты скоб, поддерживающие Валы, Шестерни, Жидкостные трубы и также Трубы под давлением!"
+    }
+  ]
+}
