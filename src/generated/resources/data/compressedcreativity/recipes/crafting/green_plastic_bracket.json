@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "create:andesite_alloy"
+    },
+    "P": {
+      "item": "pneumaticcraft:plastic_brick_green"
+    }
+  },
   "pattern": [
     " P ",
     "PAP"
   ],
-  "key": {
-    "P": {
-      "item": "pneumaticcraft:plastic_brick_green"
-    },
-    "A": {
-      "item": "create:andesite_alloy"
-    }
-  },
   "result": {
-    "item": "compressedcreativity:green_plastic_bracket",
-    "count": 6
+    "count": 6,
+    "item": "compressedcreativity:green_plastic_bracket"
   }
 }

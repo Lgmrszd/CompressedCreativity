@@ -122,6 +122,7 @@ public class CommonConfig {
 
         ROTATIONAL_COMPRESSOR_STRESS = COMMON_BUILDER
                 .comment("Max Stress Impact of the machine (at 256 rpm)\nDefault value: 2048")
+                .comment("CURRENTLY NOT WORKING")
                 .defineInRange("stress", 2048, 0, Integer.MAX_VALUE);
         ROTATIONAL_COMPRESSOR_VOLUME = makeVolumeField(5000);
         ROTATIONAL_COMPRESSOR_BASE_PRODUCTION = COMMON_BUILDER
@@ -163,6 +164,7 @@ public class CommonConfig {
         COMPRESSED_AIR_ENGINE_STRESS = COMMON_BUILDER
                 .comment("Max/Worl Stress Capacity of the machine (at 256 rpm)\n" +
                         "Default value: 1024")
+                .comment("CURRENTLY NOT WORKING")
                 .defineInRange("stress", 1024, 0, Integer.MAX_VALUE);
         COMPRESSED_AIR_ENGINE_VOLUME = makeVolumeField(1000);
         COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK = COMMON_BUILDER

@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "compressedcreativity:mesh_woven"
   },
-  "transitionalItem": {
-    "item": "compressedcreativity:incomplete_mesh_splashing"
-  },
+  "loops": 8,
+  "results": [
+    {
+      "item": "compressedcreativity:mesh_splashing"
+    }
+  ],
   "sequence": [
     {
       "type": "create:filling",
@@ -14,9 +17,9 @@
           "item": "compressedcreativity:incomplete_mesh_splashing"
         },
         {
+          "amount": 1000,
           "fluid": "minecraft:water",
-          "nbt": {},
-          "amount": 1000
+          "nbt": {}
         }
       ],
       "results": [
@@ -26,10 +29,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "compressedcreativity:mesh_splashing"
-    }
-  ],
-  "loops": 8
+  "transitionalItem": {
+    "item": "compressedcreativity:incomplete_mesh_splashing"
+  }
 }

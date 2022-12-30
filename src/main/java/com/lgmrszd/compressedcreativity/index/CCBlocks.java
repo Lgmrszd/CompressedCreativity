@@ -18,6 +18,7 @@ import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedA
 import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
 //import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
@@ -56,9 +57,9 @@ public class CCBlocks {
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
                 .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ct.get())))
                 .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ct.get())))
-//                .tag(AllTags.AllBlockTags.CASING.tag)
+                .tag(AllTags.AllBlockTags.CASING.tag)
                 .item()
-//                .tag(AllTags.AllItemTags.CASING.tag)
+                .tag(AllTags.AllItemTags.CASING.tag)
                 .build();
     }
 

@@ -1,115 +1,115 @@
 {
   "multipart": [
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block",
+        "x": 180
+      },
       "when": {
         "facing": "down"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block",
-        "x": 180
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block_connector",
+        "x": 180
+      },
       "when": {
         "down": "true"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block_connector",
-        "x": 180
       }
     },
     {
-      "when": {
-        "facing": "up"
-      },
       "apply": {
         "model": "compressedcreativity:block/air_blower/block"
+      },
+      "when": {
+        "facing": "up"
       }
     },
     {
-      "when": {
-        "up": "true"
-      },
       "apply": {
         "model": "compressedcreativity:block/air_blower/block_connector"
+      },
+      "when": {
+        "up": "true"
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block",
+        "x": 90
+      },
       "when": {
         "facing": "north"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block",
-        "x": 90
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block_connector",
+        "x": 90
+      },
       "when": {
         "north": "true"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block_connector",
-        "x": 90
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block",
+        "x": 90,
+        "y": 180
+      },
       "when": {
         "facing": "south"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block",
-        "x": 90,
-        "y": 180
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block_connector",
+        "x": 90,
+        "y": 180
+      },
       "when": {
         "south": "true"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block_connector",
-        "x": 90,
-        "y": 180
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block",
+        "x": 90,
+        "y": 270
+      },
       "when": {
         "facing": "west"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block",
-        "x": 90,
-        "y": 270
       }
     },
     {
+      "apply": {
+        "model": "compressedcreativity:block/air_blower/block_connector",
+        "x": 90,
+        "y": 270
+      },
       "when": {
         "west": "true"
-      },
-      "apply": {
-        "model": "compressedcreativity:block/air_blower/block_connector",
-        "x": 90,
-        "y": 270
       }
     },
     {
-      "when": {
-        "facing": "east"
-      },
       "apply": {
         "model": "compressedcreativity:block/air_blower/block",
         "x": 90,
         "y": 90
+      },
+      "when": {
+        "facing": "east"
       }
     },
     {
-      "when": {
-        "east": "true"
-      },
       "apply": {
         "model": "compressedcreativity:block/air_blower/block_connector",
         "x": 90,
         "y": 90
+      },
+      "when": {
+        "east": "true"
       }
     }
   ]
