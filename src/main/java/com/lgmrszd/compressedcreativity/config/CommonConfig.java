@@ -1,12 +1,14 @@
 package com.lgmrszd.compressedcreativity.config;
 
+import com.simibubi.create.foundation.block.BlockStressValues;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommonConfig {
+import static com.lgmrszd.compressedcreativity.CompressedCreativity.MOD_ID;
 
+public class CommonConfig {
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_MACHINES = "machines";
     public static final String CATEGORY_ROTATIONAL_COMPRESSOR = "rotational_compressor";
@@ -185,8 +187,9 @@ public class CommonConfig {
 
         COMMON_BUILDER.pop();
 
-
-
         COMMON_SPEC = COMMON_BUILDER.build();
+
+        CCStressProvider stressProvider = new CCStressProvider();
+        BlockStressValues.registerProvider(MOD_ID, stressProvider);
     }
 }
