@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
@@ -29,14 +28,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class RotationalCompressorTileEntity extends KineticTileEntity implements IObserveTileEntity, IPneumaticTileEntity {
-
-    private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
-
-
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
     private double airGeneratedPerTick = 0.0f;
@@ -112,14 +104,6 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
         }
         return added;
     }
-
-    @Override
-    public float calculateStressApplied() {
-        float impact = CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get()/256f;
-        this.lastStressApplied = impact;
-        return impact;
-    }
-
 
     public void initialize() {
         super.initialize();
