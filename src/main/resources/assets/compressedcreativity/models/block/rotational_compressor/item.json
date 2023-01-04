@@ -5,8 +5,8 @@
 		"0": "compressedcreativity:block/rotational_compressor",
 		"particle": "compressedcreativity:block/rotational_compressor",
 		"axis": "create:block/axis",
-		"fan_blades": "create:block/fan_blades",
-		"axis_top": "create:block/axis_top"
+		"axis_top": "create:block/axis_top",
+		"fan_blades": "create:block/fan_blades"
 	},
 	"elements": [
 		{
@@ -115,16 +115,11 @@
 		},
 		{
 			"name": "Fan",
-			"from": [1, 1, 4],
+			"from": [1, 1, 10],
 			"to": [15, 15, 12],
 			"rotation": {"angle": 22.5, "axis": "z", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [1, 1, 15, 15], "texture": "#fan_blades"},
-				"east": {"uv": [0, 0, 0, 0], "texture": "#fan_blades"},
-				"south": {"uv": [1, 1, 15, 15], "texture": "#fan_blades"},
-				"west": {"uv": [0, 0, 0, 0], "texture": "#fan_blades"},
-				"up": {"uv": [0, 0, 0, 0], "texture": "#fan_blades"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#fan_blades"}
+				"south": {"uv": [1, 1, 15, 15], "texture": "#fan_blades"}
 			}
 		}
 	],
