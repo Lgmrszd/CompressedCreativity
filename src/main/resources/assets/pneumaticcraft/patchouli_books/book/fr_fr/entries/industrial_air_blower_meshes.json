@@ -30,7 +30,7 @@
       "type": "crafting",
       "title": "Filet Tissé",
       "recipe": "compressedcreativity:crafting/mesh_woven",
-      "text": "Le $(item)Filet Tissé$() n'est pas très utile de lui même, mais le devient après être trempé dans de l'eau"
+      "text": "Le $(item)Filet Tissé$() n'est pas très utile de lui même, mais devient un $(item)Filet Trempé$() après être plongé dans de l'eau"
     },
     {
       "type": "spotlight",
