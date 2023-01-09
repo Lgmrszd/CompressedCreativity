@@ -1,0 +1,18 @@
+{
+  "name": "Улучшение: Мех. визор",
+  "icon": "compressedcreativity:mechanical_visor_upgrade",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Механический визор$() — это улучшение, позволяющее получать кинетическую статистикумашин, как это делают $(item)Инженерные очки$().$(br2)При наличии $(l:base_concepts/upgrades#block_tracker)Улучшения: Трекер блоков$() вы получаете возможности отдельного виджета в вашей броне и наблюдения информации прямо в мире!"
+    },
+    {
+      "type": "crafting",
+      "title": "Улучшение: Мех. визор",
+      "recipe": "compressedcreativity:crafting/mechanical_visor_upgrade",
+      "text": "Создание $(item)Механического визора$()"
+    }
+  ]
+}

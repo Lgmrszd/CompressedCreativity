@@ -30,7 +30,7 @@
       "type": "crafting",
       "title": "Woven Mesh",
       "recipe": "compressedcreativity:crafting/mesh_woven",
-      "text": "$(item)Woven Mesh$() doesn't do much on it's own, but after filling it with water it becomes"
+      "text": "$(item)Woven Mesh$() doesn't do much on it's own, but after filling it with water it becomes $(item)Water Soaked Mesh$()"
     },
     {
       "type": "spotlight",

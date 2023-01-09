@@ -1,0 +1,17 @@
+{
+  "name": "Воздуходувка",
+  "icon": "compressedcreativity:air_blower",
+  "category": "pneumaticcraft:machines",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Воздуходувка$() — это машина, использующая сжатый воздух для создания воздушного потока, так же как и $(item)Вентилятор в корпусе$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/air_blower",
+      "text": "Создание $(item)Воздуходувки$()"
+    }
+  ]
+}

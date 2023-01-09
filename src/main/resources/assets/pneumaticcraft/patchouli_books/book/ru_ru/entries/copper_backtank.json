@@ -1,0 +1,32 @@
+{
+  "name": "Медный баллон",
+  "icon": "create:copper_backtank",
+  "category": "pneumaticcraft:compressed_creativity",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Медный баллон$() получает дополнительный функционал в форме Блока и Предмета!$(br)Он заряжается до 3 бар. $(br2)В виде Блока, он соединяется с пневматическими трубами и машинами снизу, делая его своего рода дешёвым воздушным компрессором. Лишний воздух будет выпущен."
+    },
+    {
+      "type": "image",
+      "images": ["compressedcreativity:textures/gui/bt_block.png"],
+      "border": true,
+      "title": "Медный баллон",
+      "text": "Медный баллон работающий как компрессор"
+    },
+    {
+      "type": "text",
+      "text": "В виде Предмета, он ведёт себя примерно как $(l:pneumaticcraft:components/air_canister)Воздушная канистра$(). Это позволяет заряжать его как любой другой пневматический предмет."
+    },
+    {
+      "type": "image",
+      "images": ["compressedcreativity:textures/gui/bt_item.png"],
+      "border": false,
+      "title": "Copper Backtank",
+      "text": "Зарядка Медного баллона в $(l:pneumaticcraft:machines/charging_station)Станции заправки$()"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "create:copper_backtank": 0
+  }
+}

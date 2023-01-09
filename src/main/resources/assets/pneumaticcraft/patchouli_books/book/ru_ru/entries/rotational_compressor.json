@@ -1,0 +1,17 @@
+{
+  "name": "Вращательный компрессор",
+  "icon": "compressedcreativity:rotational_compressor",
+  "category": "pneumaticcraft:compressors",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Вращательный компрессор$() — тип компрессора, использующий силу вращения из Create для создания давления."
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/rotational_compressor",
+      "text": "Создание $(item)Вращательного компрессора$()"
+    }
+  ]
+}

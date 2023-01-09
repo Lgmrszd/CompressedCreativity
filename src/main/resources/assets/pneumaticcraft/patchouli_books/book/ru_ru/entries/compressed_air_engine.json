@@ -1,0 +1,17 @@
+{
+  "name": "Compressed Air Engine",
+  "icon": "compressedcreativity:compressed_air_engine",
+  "category": "pneumaticcraft:machines",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Двигатель на сжатом воздухе$() — это машина, использущая воздух под давлением для генерации вращательной силы. Он тратит воздух вне зависимости от давления и рабочего статуса, так что убедитесь что он не тратит воздух попусту!"
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/compressed_air_engine",
+      "text": "Создание $(item)двигателя на сжатом воздухе$()"
+    }
+  ]
+}
