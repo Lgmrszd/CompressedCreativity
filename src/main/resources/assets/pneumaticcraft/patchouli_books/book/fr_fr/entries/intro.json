@@ -1,0 +1,60 @@
+{
+  "name": "Ajouter de la Créativité",
+  "icon": "create:cogwheel",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "create:andesite_alloy",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Avez vous déjà pensé : $(o)\"Ces machines pneumatiques sont cool, si seulement il existait un moyen de les rendrent encore plus cool\"$(). Bonne nouvelle, vous pouvez maintenant mélanger vos systèmes de Create et Pneumaticcraft!"
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:rotational_compressor",
+      "text": "Le $(l:pneumaticcraft:rotational_compressor)Compresseur Rotatif$() est un nouveau type de compresseur qui créer de la pression à partir de rotation."
+    },
+    {
+      "type": "spotlight",
+      "item": "create:copper_backtank",
+      "text": "Le $(l:pneumaticcraft:copper_backtank)Réservoir dorsal de cuivre$() a maintenant de nouvelles fonctionalités, en tant que bloc et item."
+    },
+    {
+      "type": "spotlight",
+      "item": "pneumaticcraft:charging_upgrade",
+      "text": "L'$(l:base_concepts/upgrades#charging)Amélioration Chargement$() a de nouvelles fonctionalités : Elle peux maintenant fournir de l'air aux items de Create, tel que la $(item)Main extensible$() et le $(item)Canon à pomme de terre$()."
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:air_blower",
+      "text": "Le $(l:pneumaticcraft:air_blower)Souffleur d'Air$() crée des courrant d'air avec de l'air comprimé, de manière similaire à un $(item)Créateur de vent$()."
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:industrial_air_blower",
+      "text": "Le $(l:pneumaticcraft:industrial_air_blower)Souffleur d'Air Industriel$() est une version du $(item)Souffleur d'Air$() avec des fonctionalités supplémentaires, tel qu'une vitesse de traitement amélioré ou la possibilité de modifier le fonctionement avec des $(l:pneumaticcraft:industrial_air_blower_meshes)Filets$()."
+    },
+    {
+      "type": "spotlight",
+      "title": "Meshes",
+      "item": "compressedcreativity:mesh_splashing",
+      "text": "Les $(l:pneumaticcraft:industrial_air_blower_meshes)Filets$() apportent des nouvelles fonctionalités au Souffleur d'Air Industriel"
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:compressed_air_engine",
+      "text": "Le $(l:pneumaticcraft:compressed_air_engine)Moteur à Air Comprimmé$() est un moteur rotatif utilisant de l'air comprimé. Il utilise de l'air même arreté, donc assurez vous d'avoir suffisament de pression!"
+    },
+    {
+      "type": "spotlight",
+      "item": "compressedcreativity:mechanical_visor_upgrade",
+      "text": "Quand installé sur un $(l:armor/pneumatic_helmet)Casque Pneumatique$(), la $(l:pneumaticcraft:mechanical_visor_upgrade)Visière Mécanique$() fournis les mêmes informations que les Lunettes d'ingénieur."
+    },
+    {
+      "type": "spotlight",
+      "title": "Supports en Plastique",
+      "item": "compressedcreativity:orange_plastic_bracket",
+      "text": "Les $(l:pneumaticcraft:brackets)Supports en Plastique$() sont un nouveau type de supports colorés, pouvant être placé sur les Rotors, Tuyaux, Roues dentée ainsi que les Tuyaux Pressurizés!"
+    }
+  ]
+}

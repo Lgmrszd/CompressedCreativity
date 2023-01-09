@@ -1,0 +1,17 @@
+{
+  "name": "Moteur à Air Comprimmé",
+  "icon": "compressedcreativity:compressed_air_engine",
+  "category": "pneumaticcraft:machines",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Le $(item)Moteur à Air Comprimmé$() utilise de l'air comprimer pour créer une force de rotation. Il utilise de l'air quel que soit son état de fonctionement et la pression disponible, donc vérifiez bien qu'il ne gache pas d'air!"
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/compressed_air_engine",
+      "text": "Crafter un $(item)Moteur à Air Comprimmé$()"
+    }
+  ]
+}
