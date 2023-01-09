@@ -1,0 +1,17 @@
+{
+  "name": "Souffleur d'Air",
+  "icon": "compressedcreativity:air_blower",
+  "category": "pneumaticcraft:machines",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Le $(item)Souffleur d'Air$() crée un courrant d'air, de la même manière qu'un' $(item)Ventilateur enchâssé$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/air_blower",
+      "text": "Crafter un $(item)Souffleur d'Air$()"
+    }
+  ]
+}

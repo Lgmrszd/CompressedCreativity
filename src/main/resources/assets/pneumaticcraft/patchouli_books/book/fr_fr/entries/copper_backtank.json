@@ -1,0 +1,32 @@
+{
+  "name": "Réservoir dorsal de cuivre",
+  "icon": "create:copper_backtank",
+  "category": "pneumaticcraft:compressed_creativity",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Le $(item)Réservoir dorsal de cuivre$() à de nouvelles fonctions!$(br)Il peux se charger jusqu'as 3 Bar. $(br2)Quand placé, il se connecte par le bas au machines pneumatiques et éjecte son surplus d'air, ce qui en fait un compresseur d'air bon marché."
+    },
+    {
+      "type": "image",
+      "images": ["compressedcreativity:textures/gui/bt_block.png"],
+      "border": true,
+      "title": "Réservoir dorsal de cuivre",
+      "text": "un Réservoir dorsal de cuivre utilisé en tant que compresseur"
+    },
+    {
+      "type": "text",
+      "text": "En item, il fonctionne de la même manière qu'une $(l:pneumaticcraft:components/air_canister)Bombonne d'Air$(). Cela permet de charger d'autres items Pneumatiques."
+    },
+    {
+      "type": "image",
+      "images": ["compressedcreativity:textures/gui/bt_item.png"],
+      "border": false,
+      "title": "Réservoir dorsal de cuivre",
+      "text": "Charger le Réservoir dorsal de cuivre dans une $(l:pneumaticcraft:machines/charging_station)Station de Chargement$()"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "create:copper_backtank": 0
+  }
+}

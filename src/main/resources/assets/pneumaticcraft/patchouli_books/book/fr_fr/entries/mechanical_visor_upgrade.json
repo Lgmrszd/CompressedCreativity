@@ -1,0 +1,17 @@
+{
+  "name": "Visière Mécanique",
+  "icon": "compressedcreativity:mechanical_visor_upgrade",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "La $(item)Visière Mécanique$() est une amélioration qui permet d'examiner l'état des machines, de la même maniere que des $(item)Lunettes d'ingénieur$().$(br2)En installant une $(l:base_concepts/upgrades#block_tracker)Amélioration Traqueur de Blocs$(), vous pouvez avoir un widget séparé pour votre armure afin de voir les info-bulles directement dans le monde!"
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/mechanical_visor_upgrade",
+      "text": "Crafter une $(item)Visière Mécanique$()"
+    }
+  ]
+}

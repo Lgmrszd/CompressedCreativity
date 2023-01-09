@@ -1,0 +1,21 @@
+{
+  "name": "Souffleur d'Air Industriel",
+  "icon": "compressedcreativity:industrial_air_blower",
+  "category": "pneumaticcraft:machines",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Le $(item)Souffleur d'Air Industriel$() est une version améliorée du $(item)Souffleur d'Air$() classique.$(br)Il peux utiliser une plus grande pression et atteindre une vitesse de fonctionement plus rapide, mais au cout d'un usage d'air plus élevé ainsi qu'une portée réduite.$(br2)Une autre de ses caractéristique est qu'il peux produire un courrant d'air chaud capable de Fumage ou Fonte."
+    },
+    {
+      "type": "text",
+      "text": "Vous pouvez installer différents types de $(l:pneumaticcraft:industrial_air_blower_meshes)Filet$() pour modifier son comportement.$(br2)Par défaut, le $(item)Souffleur d'Air Industriel$() produit un courrant d'air fumant au dessus de 100°C et fondant au dessus de 300°C"
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/industrial_air_blower",
+      "text": "Crafter un $(item)Souffleur d'Air Industriel$()$(br2)"
+    }
+  ]
+}

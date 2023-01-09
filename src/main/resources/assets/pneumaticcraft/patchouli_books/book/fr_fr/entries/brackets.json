@@ -1,0 +1,18 @@
+{
+  "name": "Supports",
+  "icon": "create:metal_bracket",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Toujours voulu placer un $(item)Support en Bois$() ou $(item)en Métal$() sur un $(item)Tuyau à Air Comprimé$()? Maintenant vous pouvez!"
+    },
+    {
+      "type": "crafting",
+      "title": "Support en Plastique",
+      "recipe": "compressedcreativity:crafting/orange_plastic_bracket",
+      "text": "Vous pouvez aussi crafter des $(item)Supports en Plastique$()! Ils fonctionnent de la même manière que ceux en bois ou métal, et existent en 16 couleurs."
+    }
+  ]
+}
