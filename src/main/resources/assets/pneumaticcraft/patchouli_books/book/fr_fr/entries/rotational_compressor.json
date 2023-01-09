@@ -1,0 +1,17 @@
+{
+  "name": "Compresseur Rotatif",
+  "icon": "compressedcreativity:rotational_compressor",
+  "category": "pneumaticcraft:compressors",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Le $(item)Compresseur Rotatif$() utilise une force de rotation pour créer de la pression."
+    },
+    {
+      "type": "crafting",
+      "recipe": "compressedcreativity:crafting/rotational_compressor",
+      "text": "Crafter un $(item)Compresseur Rotatif$()"
+    }
+  ]
+}

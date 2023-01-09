@@ -1,0 +1,45 @@
+{
+  "name": "Filet de S.A.I.",
+  "icon": "compressedcreativity:mesh_splashing",
+  "category": "pneumaticcraft:compressed_creativity",
+  "advancement": "pneumaticcraft:pressure_tube",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Different types de $(item)Filet$() peuvent être utilisés pour modifier le comportement du Souffleur d'Air Industriel"
+    },
+    {
+      "type": "crafting",
+      "title": "Encadrement de Filet",
+      "recipe": "compressedcreativity:crafting/mesh_empty",
+      "text": "L'$(item)Encadrement de Filet$() est la base des autres Filets"
+    },
+    {
+      "type": "crafting",
+      "title": "Filet Dense",
+      "recipe": "compressedcreativity:crafting/mesh_dense",
+      "text": "Le $(item)Filet Dense$() augmente le transfert de chaleur. En conséquence, la perte de chaleur est plus importante, mais une température plus faible (100°C) est requise pour Fondre"
+    },
+    {
+      "type": "crafting",
+      "title": "Filet Hanté",
+      "recipe": "compressedcreativity:crafting/mesh_haunted",
+      "text": "Quand de l'air chaud passe au travers d'un' $(item)Filet Hanté$(), il peux faire du Hantement de masse"
+    },
+    {
+      "type": "crafting",
+      "title": "Filet Tissé",
+      "recipe": "compressedcreativity:crafting/mesh_woven",
+      "text": "Le $(item)Filet Tissé$() n'est pas très utile de lui même, mais le devient après être trempé dans de l'eau"
+    },
+    {
+      "type": "spotlight",
+      "title": "Filet Trempé",
+      "item": "compressedcreativity:mesh_splashing",
+      "text": "Le $(item)Filet Trempé$() transforme un courrant d'air éclaboussant! Assurez vous de garder une température stable..."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "compressedcreativity:mesh_splashing": 5
+  }
+}

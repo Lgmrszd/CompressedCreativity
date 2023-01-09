@@ -53,9 +53,9 @@
   "compressedcreativity.ponder.compressed_air_engine.header": "Rotation à partir de Pression",
   "compressedcreativity.ponder.compressed_air_engine.text_1": "Le Moteur à Air Comprimmé utilise de l'Air sous Pression pour créer une Force de Rotation",
   "compressedcreativity.ponder.compressed_air_engine.text_2": "Plusieurs Moteurs peuvent être combinés ensemble en les plaçant les uns sur les autres ou avec une Clé",
-  "compressedcreativity.ponder.rotational_compressor.header": "Générer de la Pression en utilisant un Compresseur Rotatif",
-  "compressedcreativity.ponder.rotational_compressor.text_1": "Le Comprésseur Rotatif est utilisé pour générer de la Pression",
-  "compressedcreativity.ponder.rotational_compressor.text_2": "Le Comprésseur à besoin d'un sens de Rotation Précis.",
+  "compressedcreativity.ponder.rotational_compressor.header": "Générer de la Pression en utilisant un && Rotatif",
+  "compressedcreativity.ponder.rotational_compressor.text_1": "Le Compresseur Rotatif est utilisé pour générer de la Pression",
+  "compressedcreativity.ponder.rotational_compressor.text_2": "Le Compresseur à besoin d'un sens de Rotation Précis.",
   "compressedcreativity.ponder.rotational_compressor.text_3": "de l'Air peut s'échapper des faces ou tubes non connectés de certaines Machines!",
   "compressedcreativity.ponder.rotational_compressor.text_4": "Ne laissez pas la Pression monter.",
   "compressedcreativity.ponder.rotational_compressor.text_5": "Si la Pression est trop elevée...",
@@ -67,9 +67,6 @@
   "item.compressedcreativity.brass_gilded_lapis_lazuli": "Lapis Lazuli doré de Laiton",
   "item.compressedcreativity.engine_rotor": "Rotor de Moteur",
   "item.compressedcreativity.mechanical_visor_upgrade": "Augmentation Visière Mécanique",
-
-
-
 
   "block.compressedcreativity.black_plastic_bracket": "Support en Plastique Noir",
   "block.compressedcreativity.blue_plastic_bracket": "Support en Plastique Bleu",
