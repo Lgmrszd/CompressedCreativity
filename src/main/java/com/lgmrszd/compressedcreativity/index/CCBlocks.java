@@ -15,9 +15,10 @@ import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.Bracketed
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedReinforcedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
+import com.lgmrszd.compressedcreativity.blocks.heater.HeaterBlock;
 import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
-import com.simibubi.create.foundation.data.TagGen;
+import com.simibubi.create.foundation.data.*;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.base.CasingBlock;
 import com.simibubi.create.content.contraptions.fluids.PipeAttachmentModel;
@@ -27,9 +28,6 @@ import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviou
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.DyedBlockList;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -97,6 +95,14 @@ public class CCBlocks {
             .addLayer(() -> RenderType::cutoutMipped)
             .item()
             .transform(customItemModel())
+            .register();
+
+    public static final BlockEntry<HeaterBlock> HEATER = REGISTRATE.block("heater", HeaterBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p,
+                    state -> AssetLookup.partialBaseModel(c, p)))
+            .simpleItem()
             .register();
 
     public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_PRESSURE_TUBE =

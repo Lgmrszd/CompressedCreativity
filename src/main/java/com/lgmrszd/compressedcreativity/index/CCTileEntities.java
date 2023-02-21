@@ -9,6 +9,7 @@ import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.Bracketed
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineInstance;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineRenderer;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.heater.HeaterTileEntity;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorInstance;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorRenderer;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorTileEntity;
@@ -44,6 +45,11 @@ public class CCTileEntities {
 //            .instance(() -> AdvancedAirBlowerInstance::new, false)
             .validBlock(CCBlocks.INDUSTRIAL_AIR_BLOWER)
             .renderer(() -> AdvancedAirBlowerRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<HeaterTileEntity> HEATER = REGISTRATE
+            .tileEntity("heater", HeaterTileEntity::new)
+            .validBlock(CCBlocks.HEATER)
             .register();
 
     public static final BlockEntityEntry<BracketedPressureTubeTileEntity> BRACKETED_PRESSURE_TUBE = REGISTRATE
