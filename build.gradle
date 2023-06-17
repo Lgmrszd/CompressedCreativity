@@ -132,12 +132,12 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
+//    maven {
+//        url "https://cursemaven.com"
+//        content {
+//            includeGroup "curse.maven"
+//        }
+//    }
     maven {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
@@ -146,8 +146,9 @@ repositories {
         }
     }
     maven {
-        name "Progwml6 maven"
-        url "https://dvs1.progwml6.com/files/maven/"
+        // JEI, Vazkii mods
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
     }
     maven {
         url "https://maven.tterrag.com/"
@@ -165,7 +166,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.73'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.4'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
@@ -182,19 +183,10 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-//    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:3989401")
-    implementation fg.deobf("maven.modrinth:pneumaticcraft-repressurized:1.18.2-3.4.3")
-//    implementation fg.deobf("libs:pneumaticcraft-repressurized-1.18.2:3.4.1-136")
-//    implementation fg.deobf("maven.modrinth:create:1.18.2-0.5.0.d")
-//    implementation fg.deobf("maven.modrinth:flywheel:0.6.5-1.18.2")
+    implementation fg.deobf("maven.modrinth:pneumaticcraft-repressurized:1.18.2-3.6.0")
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-1.18.2:${flywheel_version}")
     implementation fg.deobf("com.simibubi.create:create-1.18.2:${create_version}:all") { transitive = false }
-    implementation fg.deobf("maven.modrinth:patchouli:1.18.2-71.1-forge")
-
-
-//    def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
-//    implementation fg.deobf(registrate)
-//    shade registrate
+    implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-${patchouli_version}")
 
 }
 

@@ -1,6 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
+import com.lgmrszd.compressedcreativity.blocks.ITintedBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements IUpdateBlockEntity {
+public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements IUpdateBlockEntity, ITintedBlockEntity {
     private ItemStack mesh;
     private final IHeatExchangerLogic airExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
     protected final IHeatExchangerLogic heatExchanger;
@@ -181,7 +182,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         if (server) {
             int diff = Math.abs(heatExchanger.getTemperatureAsInt() - oldTemp);
             if (diff > 2) {
-                CompressedCreativity.LOGGER.debug("Temp diff: {}", diff);
+//                CompressedCreativity.LOGGER.debug("Temp diff: {}", diff);
                 updateTintServer();
                 setChanged();
                 sendData();

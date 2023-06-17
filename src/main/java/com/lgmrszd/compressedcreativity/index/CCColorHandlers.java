@@ -1,8 +1,9 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.ITintedBlockEntity;
 import me.desht.pneumaticcraft.client.util.TintColor;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,13 +19,15 @@ import javax.annotation.Nullable;
 public class CCColorHandlers {
     @SubscribeEvent
     public static void registerBlockColorHandlers(ColorHandlerEvent.Block event) {
-        event.getBlockColors().register(CCColorHandlers::getTintColor, CCBlocks.INDUSTRIAL_AIR_BLOWER.get());
+        BlockColors blockColors = event.getBlockColors();
+        blockColors.register(CCColorHandlers::getTintColor, CCBlocks.INDUSTRIAL_AIR_BLOWER.get());
+        blockColors.register(CCColorHandlers::getTintColor, CCBlocks.HEATER.get());
     }
 
     public static int getTintColor(BlockState state, @Nullable BlockAndTintGetter world, @Nullable BlockPos pos, int tintIndex) {
         if (world != null && pos != null) {
             BlockEntity te = world.getBlockEntity(pos);
-            return te instanceof AdvancedAirBlowerTileEntity ? ((AdvancedAirBlowerTileEntity) te).getTintColor(tintIndex) : TintColor.WHITE.getRGB();
+            return te instanceof ITintedBlockEntity ? ((ITintedBlockEntity) te).getTintColor(tintIndex) : TintColor.WHITE.getRGB();
         } else {
             return -1;
         }
