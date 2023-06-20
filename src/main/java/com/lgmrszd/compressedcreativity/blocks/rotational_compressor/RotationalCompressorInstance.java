@@ -42,7 +42,7 @@ public class RotationalCompressorInstance extends KineticBlockEntityInstance<Rot
     }
 
     private float getFanSpeed() {
-        float speed = ((RotationalCompressorBlockEntity)this.blockEntity).getSpeed() * 5;
+        float speed = this.blockEntity.getSpeed() * 5;
         if (speed > 0)
             speed = Mth.clamp(speed, 80, 64 * 20);
         if (speed < 0)

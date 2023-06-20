@@ -9,10 +9,8 @@ import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockStateGenerator;
-import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedAdvancedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlockStateGenerator;
-import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedReinforcedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
 import com.lgmrszd.compressedcreativity.blocks.heater.HeaterBlock;
@@ -106,7 +104,7 @@ public class CCBlocks {
             .register();
 
     public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_PRESSURE_TUBE =
-            REGISTRATE.block("bracketed_pressure_tube", BracketedPressureTubeBlock::new)
+            REGISTRATE.block("bracketed_pressure_tube", properties -> new BracketedPressureTubeBlock(properties, 0))
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
@@ -114,8 +112,8 @@ public class CCBlocks {
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
-    public static final BlockEntry<BracketedReinforcedPressureTubeBlock> BRACKETED_REINFORCED_PRESSURE_TUBE =
-            REGISTRATE.block("bracketed_reinforced_pressure_tube", BracketedReinforcedPressureTubeBlock::new)
+    public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_REINFORCED_PRESSURE_TUBE =
+            REGISTRATE.block("bracketed_reinforced_pressure_tube", properties -> new BracketedPressureTubeBlock(properties, 1))
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
@@ -123,8 +121,8 @@ public class CCBlocks {
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
-    public static final BlockEntry<BracketedAdvancedPressureTubeBlock> BRACKETED_ADVANCED_PRESSURE_TUBE =
-            REGISTRATE.block("bracketed_advanced_pressure_tube", BracketedAdvancedPressureTubeBlock::new)
+    public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_ADVANCED_PRESSURE_TUBE =
+            REGISTRATE.block("bracketed_advanced_pressure_tube", properties -> new BracketedPressureTubeBlock(properties, 2))
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)

@@ -49,8 +49,11 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
         IBE<BracketedPressureTubeBlockEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock,
         ISpecialBlockItemRequirement, ITubeNetworkConnector {
 
-    public BracketedPressureTubeBlock(Properties properties) {
+    private final int tubeTier;
+
+    public BracketedPressureTubeBlock(Properties properties, int tier) {
         super(properties);
+        this.tubeTier = tier;
         registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
     }
 
@@ -131,6 +134,8 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
 
     @Override
     public BlockEntityType<? extends BracketedPressureTubeBlockEntity> getBlockEntityType() {
+        if (tubeTier == 1) return CCBlockEntities.BRACKETED_REINFORCED_PRESSURE_TUBE.get();
+        if (tubeTier == 2) return CCBlockEntities.BRACKETED_ADVANCED_PRESSURE_TUBE.get();
         return CCBlockEntities.BRACKETED_PRESSURE_TUBE.get();
     }
 
