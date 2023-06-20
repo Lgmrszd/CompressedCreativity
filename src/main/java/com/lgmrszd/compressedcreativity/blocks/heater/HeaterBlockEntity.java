@@ -1,12 +1,11 @@
 package com.lgmrszd.compressedcreativity.blocks.heater;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.ITintedBlockEntity;
 import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
 import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
-import com.simibubi.create.content.contraptions.fluids.tank.FluidTankTileEntity;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
@@ -23,11 +22,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HeaterTileEntity extends SmartTileEntity implements ITintedBlockEntity, IUpdateBlockEntity {
+public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockEntity, IUpdateBlockEntity {
     protected final IHeatExchangerLogic heatExchanger;
     private final LazyOptional<IHeatExchangerLogic> heatCap;
     private int heatLevel = -1;
-    public HeaterTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public HeaterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         heatExchanger.setThermalCapacity(1);
@@ -56,8 +55,9 @@ public class HeaterTileEntity extends SmartTileEntity implements ITintedBlockEnt
     }
 
     public double getCoolingSpeed() {
-        double heat = 0.1 * (heatExchanger.getTemperature()-273);
+        double heat = 0.1 * (heatExchanger.getTemperature()-373);
         return heat > 0 ? heat : 0;
+//        return 0;
     }
 
     @Override
@@ -81,8 +81,8 @@ public class HeaterTileEntity extends SmartTileEntity implements ITintedBlockEnt
             if (level == null || level.isClientSide()) {
                 return;
             }
-            if (level.getBlockEntity(getBlockPos().above()) instanceof FluidTankTileEntity ftte) {
-                ftte.updateBoilerTemperature();
+            if (level.getBlockEntity(getBlockPos().above()) instanceof FluidTankBlockEntity ftbe) {
+                ftbe.updateBoilerTemperature();
             }
         }
     }
@@ -131,7 +131,7 @@ public class HeaterTileEntity extends SmartTileEntity implements ITintedBlockEnt
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
     }
 

@@ -7,9 +7,9 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 */
 
 import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticTileInstance;
-import com.simibubi.create.content.contraptions.base.flwdata.RotatingData;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
+import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -18,23 +18,23 @@ import net.minecraft.util.Mth;
 //import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class RotationalCompressorInstance extends KineticTileInstance<RotationalCompressorTileEntity> {
+public class RotationalCompressorInstance extends KineticBlockEntityInstance<RotationalCompressorBlockEntity> {
 
     protected final RotatingData shaft;
     protected final RotatingData fan;
     final Direction direction;
     private final Direction opposite;
 
-    public RotationalCompressorInstance(MaterialManager modelManager, RotationalCompressorTileEntity tile) {
+    public RotationalCompressorInstance(MaterialManager modelManager, RotationalCompressorBlockEntity tile) {
         super(modelManager, tile);
 
         direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         opposite = direction.getOpposite();
-        shaft = getRotatingMaterial().getModel(AllBlockPartials.SHAFT_HALF, blockState, opposite).createInstance();
+        shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, blockState, opposite).createInstance();
         fan = modelManager.defaultCutout()
                 .material(AllMaterialSpecs.ROTATING)
-                .getModel(AllBlockPartials.ENCASED_FAN_INNER, blockState, opposite)
+                .getModel(AllPartialModels.ENCASED_FAN_INNER, blockState, opposite)
                 .createInstance();
 
         setup(shaft);
@@ -42,7 +42,7 @@ public class RotationalCompressorInstance extends KineticTileInstance<Rotational
     }
 
     private float getFanSpeed() {
-        float speed = ((RotationalCompressorTileEntity)this.blockEntity).getSpeed() * 5;
+        float speed = ((RotationalCompressorBlockEntity)this.blockEntity).getSpeed() * 5;
         if (speed > 0)
             speed = Mth.clamp(speed, 80, 64 * 20);
         if (speed < 0)

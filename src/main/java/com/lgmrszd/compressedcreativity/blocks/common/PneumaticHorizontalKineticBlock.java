@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.blocks.common;
 
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
+import com.simibubi.create.foundation.block.IBE;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
@@ -28,7 +28,7 @@ import java.util.List;
 
 import static com.lgmrszd.compressedcreativity.index.CCMisc.appendPneumaticHoverText;
 
-public abstract class PneumaticHorizontalKineticBlock<T extends BlockEntity> extends HorizontalKineticBlock implements IPneumaticWrenchable, ITE<T> {
+public abstract class PneumaticHorizontalKineticBlock<T extends BlockEntity> extends HorizontalKineticBlock implements IPneumaticWrenchable, IBE<T> {
     public PneumaticHorizontalKineticBlock(Properties properties) {
         super(properties);
     }

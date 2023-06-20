@@ -3,7 +3,7 @@ package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.ITintedBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
-import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.content.Mesh;
@@ -12,7 +12,7 @@ import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
 import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
 import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
-import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
+import com.simibubi.create.content.kinetics.fan.FanProcessing;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements IUpdateBlockEntity, ITintedBlockEntity {
+public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implements IUpdateBlockEntity, ITintedBlockEntity {
     private ItemStack mesh;
     private final IHeatExchangerLogic airExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
     protected final IHeatExchangerLogic heatExchanger;
@@ -49,7 +49,7 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
 //    private LazyOptional<Mesh.MeshType>
 
 
-    public AdvancedAirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public AdvancedAirBlowerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(
                 type,
                 pos,
@@ -122,15 +122,15 @@ public class AdvancedAirBlowerTileEntity extends AirBlowerTileEntity implements 
         sendData();
     }
 
-    public Optional<InWorldProcessing.Type> getProcessingType() {
+    public Optional<FanProcessing.Type> getProcessingType() {
         if (getMesh().getItem() instanceof MeshItem meshItem) {
-            Optional<InWorldProcessing.Type> processingType = meshItem.getMeshType().getProcessingType(heatExchanger.getTemperatureAsInt());
+            Optional<FanProcessing.Type> processingType = meshItem.getMeshType().getProcessingType(heatExchanger.getTemperatureAsInt());
             if(processingType.isPresent()) return processingType;
         }
         if (heatExchanger.getTemperatureAsInt() > 573) // 300
-            return Optional.of(InWorldProcessing.Type.BLASTING);
+            return Optional.of(FanProcessing.Type.BLASTING);
         if (heatExchanger.getTemperatureAsInt() > 373) { // 100
-            return Optional.of(InWorldProcessing.Type.SMOKING);
+            return Optional.of(FanProcessing.Type.SMOKING);
         }
         return Optional.empty();
     }

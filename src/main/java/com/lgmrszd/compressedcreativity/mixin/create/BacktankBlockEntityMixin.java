@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.mixin.create;
 
 import com.lgmrszd.compressedcreativity.content.airhandler_backtank.AirHandlerBacktankBlockEntity;
-import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
+import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
@@ -17,15 +17,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(CopperBacktankTileEntity.class)
-public abstract class CopperBacktankTileEntityMixin extends BlockEntity implements ICapabilityProvider {
+@Mixin(BacktankBlockEntity.class)
+public abstract class BacktankBlockEntityMixin extends BlockEntity implements ICapabilityProvider {
     @Unique
     private AirHandlerBacktankBlockEntity internalAirHandler = null;
 
     @Shadow(remap = false)
     private int capacityEnchantLevel;
 
-    public CopperBacktankTileEntityMixin(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
+    public BacktankBlockEntityMixin(BlockEntityType<?> p_155228_, BlockPos p_155229_, BlockState p_155230_) {
         super(p_155228_, p_155229_, p_155230_);
     }
 

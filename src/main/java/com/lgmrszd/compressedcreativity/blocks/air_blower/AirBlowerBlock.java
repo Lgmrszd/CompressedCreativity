@@ -1,10 +1,10 @@
 package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.block.IBE;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
@@ -44,7 +44,7 @@ import java.util.List;
 import static com.lgmrszd.compressedcreativity.index.CCMisc.appendPneumaticHoverText;
 
 
-public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWrenchable, ITE<AirBlowerTileEntity> {
+public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWrenchable, IBE<AirBlowerBlockEntity> {
 
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty UP = BlockStateProperties.UP;
@@ -103,7 +103,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof AirBlowerTileEntity abte) {
+        if (te instanceof AirBlowerBlockEntity abte) {
             abte.updateAirHandler();
         }
     }
@@ -134,7 +134,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
             IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
             miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
             if(!context.getLevel().isClientSide()){
-                if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof AirBlowerTileEntity abte) {
+                if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof AirBlowerBlockEntity abte) {
                     abte.updateAirHandler();
                 }
             }
@@ -146,7 +146,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     public void onRemove(BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity te = world.getBlockEntity(pos);
-            if (te instanceof AirBlowerTileEntity abte) {
+            if (te instanceof AirBlowerBlockEntity abte) {
                 IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
                 miscHelpers.playMachineBreakEffect(abte);
             }
@@ -161,13 +161,13 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     }
 
     @Override
-    public Class<AirBlowerTileEntity> getTileEntityClass() {
-        return AirBlowerTileEntity.class;
+    public Class<AirBlowerBlockEntity> getBlockEntityClass() {
+        return AirBlowerBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends AirBlowerTileEntity> getTileEntityType() {
-        return CCTileEntities.AIR_BLOWER.get();
+    public BlockEntityType<? extends AirBlowerBlockEntity> getBlockEntityType() {
+        return CCBlockEntities.AIR_BLOWER.get();
     }
 
     @Override

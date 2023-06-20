@@ -2,19 +2,19 @@ package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticTileInstance;
-import com.simibubi.create.content.contraptions.base.flwdata.RotatingData;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
+import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class CompressedAirEngineInstance extends KineticTileInstance<CompressedAirEngineTileEntity> {
+public class CompressedAirEngineInstance extends KineticBlockEntityInstance<CompressedAirEngineBlockEntity> {
 
     protected final RotatingData shaft;
     protected final RotatingData rotor;
     final Direction direction;
 
-    public CompressedAirEngineInstance(MaterialManager modelManager, CompressedAirEngineTileEntity tile) {
+    public CompressedAirEngineInstance(MaterialManager modelManager, CompressedAirEngineBlockEntity tile) {
         super(modelManager, tile);
 
         direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();

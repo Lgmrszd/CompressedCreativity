@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.content;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.simibubi.create.content.curiosities.armor.CopperBacktankItem;
+import com.simibubi.create.content.equipment.armor.BacktankItem;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
 import net.minecraft.ChatFormatting;
@@ -24,7 +24,7 @@ public class TooltipEventHandler {
 
         ItemStack stack = event.getItemStack();
 
-        if (stack.getItem() instanceof CopperBacktankItem) {
+        if (stack.getItem() instanceof BacktankItem) {
             addPressureTooltip(stack, event.getToolTip());
         }
     }

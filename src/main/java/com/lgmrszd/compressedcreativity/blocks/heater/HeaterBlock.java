@@ -2,9 +2,9 @@ package com.lgmrszd.compressedcreativity.blocks.heater;
 
 import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
-import com.simibubi.create.content.contraptions.fluids.tank.BoilerHeaters;
-import com.simibubi.create.foundation.block.ITE;
+import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
+import com.simibubi.create.content.fluids.tank.BoilerHeaters;
+import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -20,19 +20,19 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class HeaterBlock extends Block implements ITE<HeaterTileEntity> {
+public class HeaterBlock extends Block implements IBE<HeaterBlockEntity> {
     public HeaterBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public Class<HeaterTileEntity> getTileEntityClass() {
-        return HeaterTileEntity.class;
+    public Class<HeaterBlockEntity> getBlockEntityClass() {
+        return HeaterBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends HeaterTileEntity> getTileEntityType() {
-        return CCTileEntities.HEATER.get();
+    public BlockEntityType<? extends HeaterBlockEntity> getBlockEntityType() {
+        return CCBlockEntities.HEATER.get();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class HeaterBlock extends Block implements ITE<HeaterTileEntity> {
     public static void registerHeater() {
         BoilerHeaters.registerHeater(CCBlocks.HEATER.get(), (level, pos, state) -> {
             BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof HeaterTileEntity hbe) return hbe.getHeatLevel();
+            if (be instanceof HeaterBlockEntity hbe) return hbe.getHeatLevel();
             return -1;
         });
     }
@@ -52,7 +52,7 @@ public class HeaterBlock extends Block implements ITE<HeaterTileEntity> {
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof HeaterTileEntity hte) {
+        if (te instanceof HeaterBlockEntity hte) {
             hte.updateHeatExchanger();
         }
     }

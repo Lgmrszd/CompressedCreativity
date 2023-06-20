@@ -6,7 +6,7 @@ import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RotationalCompressorTileEntity extends KineticTileEntity implements IObserveTileEntity, IPneumaticTileEntity {
+public class RotationalCompressorBlockEntity extends KineticBlockEntity implements IObserveTileEntity, IPneumaticTileEntity {
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
     private double airGeneratedPerTick = 0.0f;
@@ -38,7 +38,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
     private float airBuffer = 0f;
 
-    public RotationalCompressorTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public RotationalCompressorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(

@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity.config;
 
-import com.simibubi.create.foundation.block.BlockStressValues;
+import com.simibubi.create.content.kinetics.BlockStressValues;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;

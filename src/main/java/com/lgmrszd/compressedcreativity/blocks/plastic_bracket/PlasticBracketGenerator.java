@@ -2,7 +2,7 @@ package com.lgmrszd.compressedcreativity.blocks.plastic_bracket;
 
 // This code is based on Create's Bracket Generator
 
-import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlock;
+import com.simibubi.create.content.decoration.bracket.BracketBlock;
 import com.simibubi.create.foundation.data.DirectionalAxisBlockStateGen;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
