@@ -4,25 +4,37 @@ import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.simibubi.create.content.fluids.tank.BoilerHeaters;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HEAT_LEVEL;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class HeaterBlock extends Block implements IBE<HeaterBlockEntity> {
     public HeaterBlock(Properties properties) {
         super(properties);
+        registerDefaultState(defaultBlockState().setValue(HEAT_LEVEL, BlazeBurnerBlock.HeatLevel.NONE));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(HEAT_LEVEL);
+        super.createBlockStateDefinition(builder);
     }
 
     @Override
@@ -42,9 +54,17 @@ public class HeaterBlock extends Block implements IBE<HeaterBlockEntity> {
 
     public static void registerHeater() {
         BoilerHeaters.registerHeater(CCBlocks.HEATER.get(), (level, pos, state) -> {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof HeaterBlockEntity hbe) return hbe.getHeatLevel();
-            return -1;
+            BlazeBurnerBlock.HeatLevel value = state.getOptionalValue(HEAT_LEVEL).orElse(BlazeBurnerBlock.HeatLevel.NONE);
+            if (value == BlazeBurnerBlock.HeatLevel.NONE) {
+                return -1;
+            }
+            if (value == BlazeBurnerBlock.HeatLevel.SEETHING) {
+                return 2;
+            }
+            if (value.isAtLeast(BlazeBurnerBlock.HeatLevel.FADING)) {
+                return 1;
+            }
+            return 0;
         });
     }
 

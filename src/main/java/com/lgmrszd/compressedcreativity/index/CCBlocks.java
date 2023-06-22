@@ -98,8 +98,7 @@ public class CCBlocks {
     public static final BlockEntry<HeaterBlock> HEATER = REGISTRATE.block("heater", HeaterBlock::new)
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
-            .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p,
-                    state -> AssetLookup.partialBaseModel(c, p)))
+            .blockstate((c, p) -> p.simpleBlock(c.get(), AssetLookup.standardModel(c, p)))
             .simpleItem()
             .register();
 

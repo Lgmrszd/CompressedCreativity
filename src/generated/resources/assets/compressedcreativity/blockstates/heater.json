@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "compressedcreativity:block/heater/block"
+      "model": "compressedcreativity:block/heater"
     }
   }
 }

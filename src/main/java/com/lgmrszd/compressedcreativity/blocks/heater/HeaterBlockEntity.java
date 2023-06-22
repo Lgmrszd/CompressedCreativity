@@ -1,18 +1,23 @@
 package com.lgmrszd.compressedcreativity.blocks.heater;
 
 import com.lgmrszd.compressedcreativity.blocks.ITintedBlockEntity;
+import com.lgmrszd.compressedcreativity.config.CommonConfig;
+import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
 import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,15 +27,45 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockEntity, IUpdateBlockEntity {
+import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HEAT_LEVEL;
+
+public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockEntity, IUpdateBlockEntity, IHaveGoggleInformation {
     protected final IHeatExchangerLogic heatExchanger;
     private final LazyOptional<IHeatExchangerLogic> heatCap;
-    private int heatLevel = -1;
+    private BlazeBurnerBlock.HeatLevel heatLevel = BlazeBurnerBlock.HeatLevel.NONE;
     public HeaterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
-        heatExchanger.setThermalCapacity(1);
+        heatExchanger.setThermalCapacity(CommonConfig.HEATER_THERMAL_CAPACITY.get());
+        heatExchanger.setThermalResistance(CommonConfig.HEATER_THERMAL_RESISTANCE.get());
         heatCap = LazyOptional.of(() -> heatExchanger);
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        // "Heat Stats:"
+        CCLang.translate("tooltip.heat_summary")
+                .forGoggles(tooltip);
+        // "Temperature:"
+        CCLang.translate("tooltip.temperature")
+                .style(ChatFormatting.GRAY)
+                .forGoggles(tooltip);
+        // "0.0C°"
+        CCLang.number(heatExchanger.getTemperature() - 273)
+                .translate("unit.temp")
+                .style(ChatFormatting.AQUA)
+                .forGoggles(tooltip, 1);
+        CCLang.builder().text("[DEV] Debug info")
+                .forGoggles(tooltip);
+        CCLang.builder().text(String.format("Cooling speed: %f heat/tick", getCoolingSpeed()))
+                .forGoggles(tooltip);
+        CCLang.builder().text(String.format("Heat level: %s", heatLevel))
+                .forGoggles(tooltip);
+        CCLang.builder().text(String.format("Thermal capacity: %f", heatExchanger.getThermalCapacity()))
+                .forGoggles(tooltip);
+        CCLang.builder().text(String.format("Thermal resistance: %f", heatExchanger.getThermalResistance()))
+                .forGoggles(tooltip);
+        return true;
     }
 
     @Nonnull
@@ -55,7 +90,7 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
     }
 
     public double getCoolingSpeed() {
-        double heat = 0.1 * (heatExchanger.getTemperature()-373);
+        double heat = CommonConfig.HEATER_TEMPERATURE_COEFFICIENT.get() * (heatExchanger.getTemperature() - CommonConfig.HEATER_STARTING_TEMPERATURE.get() - 273);
         return heat > 0 ? heat : 0;
 //        return 0;
     }
@@ -65,25 +100,26 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
         super.tick();
         boolean server = level != null && !level.isClientSide();
         int oldTemp = heatExchanger.getTemperatureAsInt();
-        heatExchanger.tick();
-        heatExchanger.addHeat(-getCoolingSpeed());
         if (server) {
+            heatExchanger.tick();
+            heatExchanger.addHeat(-getCoolingSpeed());
             int diff = Math.abs(heatExchanger.getTemperatureAsInt() - oldTemp);
-            if (diff > 2) {
+            if (diff > 5) {
                 updateTintServer();
                 setChanged();
                 sendData();
             }
         }
-        int oldHeatLevel = heatLevel;
+        BlazeBurnerBlock.HeatLevel oldHeatLevel = heatLevel;
         updateHeatLevel();
         if (heatLevel != oldHeatLevel) {
-            if (level == null || level.isClientSide()) {
-                return;
-            }
-            if (level.getBlockEntity(getBlockPos().above()) instanceof FluidTankBlockEntity ftbe) {
-                ftbe.updateBoilerTemperature();
-            }
+            updateBlockHeat();
+//            if (level == null || level.isClientSide()) {
+//                return;
+//            }
+//            if (level.getBlockEntity(getBlockPos().above()) instanceof FluidTankBlockEntity ftbe) {
+//                ftbe.updateBoilerTemperature();
+//            }
         }
     }
 
@@ -136,12 +172,18 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
     }
 
     private void updateHeatLevel() {
-        int temp = heatExchanger.getTemperatureAsInt();
-        heatLevel = temp < 373 ? -1 :
-                temp < 473 ? 0 : 1;
+        int temp = heatExchanger.getTemperatureAsInt() - 273;
+        heatLevel = temp < CommonConfig.HEATER_TEMPERATURE_PASSIVE.get() ? BlazeBurnerBlock.HeatLevel.NONE :
+                temp < CommonConfig.HEATER_TEMPERATURE_KINDLED.get() ? BlazeBurnerBlock.HeatLevel.SMOULDERING :
+                        temp < CommonConfig.HEATER_TEMPERATURE_SEETHING.get() ? BlazeBurnerBlock.HeatLevel.KINDLED :
+                                BlazeBurnerBlock.HeatLevel.SEETHING;
     }
-    public float getHeatLevel() {
-        return heatLevel;
+
+    private void updateBlockHeat() {
+        BlockState blockState = getBlockState();
+        BlazeBurnerBlock.HeatLevel oldHeatLevel = BlazeBurnerBlock.getHeatLevelOf(blockState);
+        if (oldHeatLevel == heatLevel) return;
+        if (level != null) level.setBlockAndUpdate(worldPosition, blockState.setValue(HEAT_LEVEL, heatLevel));
     }
 
     @Override

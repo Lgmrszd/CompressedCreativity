@@ -14,8 +14,8 @@ public class CommonConfig {
     public static final String CATEGORY_ROTATIONAL_COMPRESSOR = "rotational_compressor";
     public static final String CATEGORY_AIR_BLOWER = "air_blower";
     public static final String CATEGORY_INDUSTRIAL_AIR_BLOWER = "industrial_air_blower";
-
     public static final String CATEGORY_ENGINE = "compressed_air_engine";
+    public static final String CATEGORY_HEATER = "heater";
     public static final String CATEGORY_CUSTOM_PRESSURE = "custom_pressure";
 
     public static final Map<String, ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum>>
@@ -56,6 +56,14 @@ public class CommonConfig {
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_WORK_PRESSURE;
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE;
     public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK;
+
+    public static final ForgeConfigSpec.DoubleValue HEATER_THERMAL_CAPACITY;
+    public static final ForgeConfigSpec.DoubleValue HEATER_THERMAL_RESISTANCE;
+    public static final ForgeConfigSpec.IntValue HEATER_TEMPERATURE_PASSIVE;
+    public static final ForgeConfigSpec.IntValue HEATER_TEMPERATURE_KINDLED;
+    public static final ForgeConfigSpec.IntValue HEATER_TEMPERATURE_SEETHING;
+    public static final ForgeConfigSpec.IntValue HEATER_STARTING_TEMPERATURE;
+    public static final ForgeConfigSpec.DoubleValue HEATER_TEMPERATURE_COEFFICIENT;
 
     private static ForgeConfigSpec.IntValue makeVolumeField(int def) {
         return COMMON_BUILDER
@@ -182,6 +190,38 @@ public class CommonConfig {
                 .defineInRange("work_pressure", 3d, 0d, 20d);
 
         makePressureFields(PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_TIER.getKey());
+
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.comment("Heater").push(CATEGORY_HEATER);
+
+        HEATER_STARTING_TEMPERATURE = COMMON_BUILDER
+                .comment("At what temperature the heater will start cooling down")
+                .defineInRange("starting_temperature", 100, 0, Integer.MAX_VALUE);
+
+        HEATER_TEMPERATURE_COEFFICIENT = COMMON_BUILDER
+                .comment("Temperature coefficient increase, this much heat is consumed for each degree over starting temperature")
+                .defineInRange("temperature_coefficient", 0.1, 0, 100);
+
+        HEATER_TEMPERATURE_PASSIVE = COMMON_BUILDER
+                .comment("At what temperature the heater will be considered as passive heat source for Steam Engine (like a campfire)")
+                .defineInRange("temperature_passive", 100, 0, Integer.MAX_VALUE);
+
+        HEATER_TEMPERATURE_KINDLED = COMMON_BUILDER
+                .comment("At what temperature the heater will be considered as active heat source for Steam Engine and Basin recipes (like a fueled Blaze Burner)")
+                .defineInRange("temperature_kindled", 200, 0, Integer.MAX_VALUE);
+
+        HEATER_TEMPERATURE_SEETHING = COMMON_BUILDER
+                .comment("At what temperature the heater will be considered as seething (like a Blaze Burner fed with Blaze Cake)")
+                .defineInRange("temperature_seething", 300, 0, Integer.MAX_VALUE);
+
+        HEATER_THERMAL_CAPACITY = COMMON_BUILDER
+                .comment("Thermal capacity of a Heater")
+                .defineInRange("thermal_capacity", 2., 0, 100);
+
+        HEATER_THERMAL_RESISTANCE = COMMON_BUILDER
+                .comment("Thermal resistance of a Heater")
+                .defineInRange("thermal_resistance", 1., 0, 100);
 
         COMMON_BUILDER.pop();
 

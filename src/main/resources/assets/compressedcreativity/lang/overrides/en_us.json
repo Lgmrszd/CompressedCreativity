@@ -4,6 +4,8 @@
   "compressedcreativity.unit.bar": "bar",
   "compressedcreativity.unit.air": "mL",
   "compressedcreativity.unit.air_per_tick": "mL/t",
+  "compressedcreativity.unit.temp": "C°",
+  "compressedcreativity.unit.temp_per_tick": "C°/t",
 
 
   "compressedcreativity.tooltip.pressure_summary": "Pressure Stats:",
@@ -13,6 +15,10 @@
   "compressedcreativity.tooltip.air_usage": "Air used:",
   "compressedcreativity.tooltip.not_enough_pressure": "Pressure Requirement:",
   "compressedcreativity.tooltip.not_enough_pressure_2": "This machine requires more pressure to operate.",
+
+  "compressedcreativity.tooltip.heat_summary": "Heat Stats:",
+  "compressedcreativity.tooltip.temperature": "Temperature:",
+  "compressedcreativity.tooltip.temperature_cooling": "Cooling speed:",
 
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction": "Rotation Direction Requirement:",
   "compressedcreativity.tooltip.rotational_compressor.wrong_direction_desc": "This machine would not work with rotation in this direction",

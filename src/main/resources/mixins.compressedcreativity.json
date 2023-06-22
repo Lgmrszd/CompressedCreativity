@@ -4,12 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "mixins.compressedcreativity.refmap.json",
   "mixins": [
+    "create.BacktankBlockEntityMixin",
     "create.BackTankUtilMixin",
     "create.BracketBlockMixin",
-    "create.BacktankBlockEntityMixin",
     "create.FanProcessingMixin"
   ],
-  "client" : [
+  "client": [
     "create.BackTankUtilMixinClient"
   ],
   "injectors": {
