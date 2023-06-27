@@ -4,8 +4,8 @@ import com.jozufozu.flywheel.backend.Backend;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -16,13 +16,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
 
-public class CompressedAirEngineRenderer extends KineticTileEntityRenderer {
+public class CompressedAirEngineRenderer extends KineticBlockEntityRenderer {
     public CompressedAirEngineRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    protected void renderSafe(KineticTileEntity ote, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+    protected void renderSafe(KineticBlockEntity ote, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
 
 //        super.renderSafe(ote, partialTicks, ms, buffer, light, overlay);
@@ -30,7 +30,7 @@ public class CompressedAirEngineRenderer extends KineticTileEntityRenderer {
 
         if (Backend.canUseInstancing(ote.getLevel())) return;
 
-        if (!(ote instanceof CompressedAirEngineTileEntity te)) return;
+        if (!(ote instanceof CompressedAirEngineBlockEntity te)) return;
 
         Direction direction = te.getBlockState()
                 .getValue(CompressedAirEngineBlock.HORIZONTAL_FACING);

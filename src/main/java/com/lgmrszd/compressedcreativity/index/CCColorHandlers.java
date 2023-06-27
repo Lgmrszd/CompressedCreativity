@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlockEntity;
 import me.desht.pneumaticcraft.client.util.TintColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -24,7 +24,7 @@ public class CCColorHandlers {
     public static int getTintColor(BlockState state, @Nullable BlockAndTintGetter world, @Nullable BlockPos pos, int tintIndex) {
         if (world != null && pos != null) {
             BlockEntity te = world.getBlockEntity(pos);
-            return te instanceof AdvancedAirBlowerTileEntity ? ((AdvancedAirBlowerTileEntity) te).getTintColor(tintIndex) : TintColor.WHITE.getRGB();
+            return te instanceof AdvancedAirBlowerBlockEntity ? ((AdvancedAirBlowerBlockEntity) te).getTintColor(tintIndex) : TintColor.WHITE.getRGB();
         } else {
             return -1;
         }

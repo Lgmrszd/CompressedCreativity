@@ -3,9 +3,9 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.base.KineticTileEntityRenderer;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
@@ -18,14 +18,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 
 
-public class RotationalCompressorRenderer extends KineticTileEntityRenderer {
+public class RotationalCompressorRenderer extends KineticBlockEntityRenderer {
     public RotationalCompressorRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
 
     @Override
-    protected void renderSafe(KineticTileEntity ote, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+    protected void renderSafe(KineticBlockEntity ote, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
 
 //        super.renderSafe(ote, partialTicks, ms, buffer, light, overlay);
@@ -34,8 +34,8 @@ public class RotationalCompressorRenderer extends KineticTileEntityRenderer {
 
         if (Backend.canUseInstancing(ote.getLevel())) return;
 
-        if (!(ote instanceof RotationalCompressorTileEntity)) return;
-        RotationalCompressorTileEntity te = (RotationalCompressorTileEntity) ote;
+        if (!(ote instanceof RotationalCompressorBlockEntity)) return;
+        RotationalCompressorBlockEntity te = (RotationalCompressorBlockEntity) ote;
 
         Direction direction = te.getBlockState()
                 .getValue(RotationalCompressorBlock.HORIZONTAL_FACING);
@@ -45,9 +45,9 @@ public class RotationalCompressorRenderer extends KineticTileEntityRenderer {
         int lightInFront = LevelRenderer.getLightColor(te.getLevel(), te.getBlockPos().relative(direction));
 
         SuperByteBuffer shaftHalf =
-                CachedBufferer.partialFacing(AllBlockPartials.SHAFT_HALF, te.getBlockState(), direction.getOpposite());
+                CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, te.getBlockState(), direction.getOpposite());
         SuperByteBuffer fanInner =
-                CachedBufferer.partialFacing(AllBlockPartials.ENCASED_FAN_INNER, te.getBlockState(), direction.getOpposite());
+                CachedBufferer.partialFacing(AllPartialModels.ENCASED_FAN_INNER, te.getBlockState(), direction.getOpposite());
 
         float time = AnimationTickHolder.getRenderTime(te.getLevel());
         float speed = te.getSpeed() * 5;

@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.mixin.create;
 
-import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
-import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlockEntity;
+import com.simibubi.create.content.kinetics.fan.FanProcessing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(InWorldProcessing.Type.class)
+@Mixin(FanProcessing.Type.class)
 public class InWorldProcessingMixin {
     @Inject(method = "byBlock", at = @At("HEAD"), cancellable = true, remap = false)
-    private static void inByBlock(BlockGetter reader, BlockPos pos, CallbackInfoReturnable<InWorldProcessing.Type> cir) {
+    private static void inByBlock(BlockGetter reader, BlockPos pos, CallbackInfoReturnable<FanProcessing.Type> cir) {
         BlockEntity be = reader.getBlockEntity(pos);
-        if (be instanceof AdvancedAirBlowerTileEntity abbe) {
+        if (be instanceof AdvancedAirBlowerBlockEntity abbe) {
             abbe.getProcessingType().ifPresent(cir::setReturnValue);
         }
     }

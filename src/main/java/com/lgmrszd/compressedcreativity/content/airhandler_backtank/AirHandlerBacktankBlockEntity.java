@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
-import com.simibubi.create.content.curiosities.armor.BackTankUtil;
-import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
-import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
+import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
@@ -26,20 +26,20 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     private final int RATIO = 2;
     private int volume;
     private int maxVolume;
-    private final CopperBacktankTileEntity copperBacktankBE;
+    private final BacktankBlockEntity copperBacktankBE;
     private IAirHandlerMachine connectedAirHandler;
     private int delta;
 
-    public AirHandlerBacktankBlockEntity(CopperBacktankTileEntity copperBacktankBE) {
+    public AirHandlerBacktankBlockEntity(BacktankBlockEntity copperBacktankBE) {
         this.copperBacktankBE = copperBacktankBE;
-        maxVolume = RATIO * AllConfigs.SERVER.curiosities.airInBacktank.get();
+        maxVolume = RATIO * AllConfigs.server().equipment.airInBacktank.get();
         volume = (int) (maxVolume / MAX_PRESSURE);
         delta = 0;
         connectedAirHandler = null;
     }
 
     public void updateVolumeFromEnchant(int capacityEnchantLevel) {
-        maxVolume = RATIO * BackTankUtil.maxAir(capacityEnchantLevel);
+        maxVolume = RATIO * BacktankUtil.maxAir(capacityEnchantLevel);
         volume = (int) (maxVolume / MAX_PRESSURE);
     }
 
@@ -65,7 +65,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
 
     @Override
     public void tick(BlockEntity ownerTE) {
-        if (!(ownerTE instanceof CopperBacktankTileEntity cbte)) return;
+        if (!(ownerTE instanceof BacktankBlockEntity cbte)) return;
         if (this.copperBacktankBE != cbte) return;
         Level world = Objects.requireNonNull(ownerTE.getLevel());
         if (!world.isClientSide) {

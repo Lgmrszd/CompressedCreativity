@@ -6,7 +6,7 @@
   "mixins": [
     "create.BackTankUtilMixin",
     "create.BracketBlockMixin",
-    "create.CopperBacktankTileEntityMixin",
+    "create.BacktankBlockEntityMixin",
     "create.InWorldProcessingMixin"
   ],
   "client" : [

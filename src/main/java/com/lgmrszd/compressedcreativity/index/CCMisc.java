@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticBlockEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -30,7 +30,7 @@ public class CCMisc {
         if (Screen.hasShiftDown()) {
 //            infoList.add(new TranslatableComponent("compressedcreativity.gui.").withStyle(ChatFormatting.GOLD));
             BlockEntity te = BEProvider.get();
-            if (te instanceof IPneumaticTileEntity pte) {
+            if (te instanceof IPneumaticBlockEntity pte) {
                 infoList.add(Component.translatable("pneumaticcraft.gui.tooltip.maxPressure", pte.getDangerPressure()).withStyle(ChatFormatting.GOLD));
             }
 //            PneumaticRegistry.getInstance().getUpgradeRegistry().addUpgradeTooltip(upgrade.get(), infoList);

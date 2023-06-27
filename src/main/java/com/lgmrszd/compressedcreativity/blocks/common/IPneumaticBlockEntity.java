@@ -1,5 +1,5 @@
 package com.lgmrszd.compressedcreativity.blocks.common;
 
-public interface IPneumaticTileEntity {
+public interface IPneumaticBlockEntity {
     float getDangerPressure();
 }

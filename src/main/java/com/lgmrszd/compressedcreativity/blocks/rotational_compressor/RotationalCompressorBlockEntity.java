@@ -1,13 +1,13 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticBlockEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.index.CCLang;
-import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
+import com.lgmrszd.compressedcreativity.network.IObserveBlockEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -32,7 +32,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class RotationalCompressorTileEntity extends KineticTileEntity implements IObserveTileEntity, IPneumaticTileEntity {
+public class RotationalCompressorBlockEntity extends KineticBlockEntity implements IObserveBlockEntity, IPneumaticBlockEntity {
 
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
@@ -46,7 +46,7 @@ public class RotationalCompressorTileEntity extends KineticTileEntity implements
 
     private float airBuffer = 0f;
 
-    public RotationalCompressorTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public RotationalCompressorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(

@@ -23,7 +23,7 @@ apply plugin: "org.spongepowered.mixin"
 
 //jarJar.enable()
 
-version = "${minecraft_version}-0.1.5"
+version = "${minecraft_version}-0.1.6"
 group = 'com.lgmrszd.compressedcreativity' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'compressedcreativity'
 
@@ -165,7 +165,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19.2-43.1.52'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.2.3'
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 

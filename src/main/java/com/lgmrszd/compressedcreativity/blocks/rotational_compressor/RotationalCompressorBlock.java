@@ -1,11 +1,10 @@
 package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 
 import com.lgmrszd.compressedcreativity.blocks.common.PneumaticHorizontalKineticBlock;
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
-import com.simibubi.create.content.contraptions.base.HorizontalKineticBlock;
-import com.simibubi.create.content.contraptions.base.IRotate;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.kinetics.base.IRotate;
+import com.simibubi.create.foundation.block.IBE;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
@@ -28,10 +27,10 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 
 
-//public class RotationalCompressorBlock extends HorizontalKineticBlock implements ITE<RotationalCompressorTileEntity>, IRotate {
+//public class RotationalCompressorBlock extends HorizontalKineticBlock implements IBE<RotationalCompressorBlockEntity>, IRotate {
 
 
-public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<RotationalCompressorTileEntity> implements IRotate {
+public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<RotationalCompressorBlockEntity> implements IRotate {
 
 //    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 10, 16);
 
@@ -69,7 +68,7 @@ public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<R
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof RotationalCompressorTileEntity rcte) {
+        if (te instanceof RotationalCompressorBlockEntity rcte) {
             rcte.updateAirHandler();
         }
     }
@@ -80,13 +79,13 @@ public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<R
     }
 
     @Override
-    public Class<RotationalCompressorTileEntity> getTileEntityClass() {
-        return RotationalCompressorTileEntity.class;
+    public Class<RotationalCompressorBlockEntity> getBlockEntityClass() {
+        return RotationalCompressorBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends RotationalCompressorTileEntity> getTileEntityType() {
-        return CCTileEntities.ROTATIONAL_COMPRESSOR.get();
+    public BlockEntityType<? extends RotationalCompressorBlockEntity> getBlockEntityType() {
+        return CCBlockEntities.ROTATIONAL_COMPRESSOR.get();
     }
 
     @Override
@@ -96,7 +95,7 @@ public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<R
             IMiscHelpers miscHelpers = PneumaticRegistry.getInstance().getMiscHelpers();
             miscHelpers.forceClientShapeRecalculation(context.getLevel(), context.getClickedPos());
             if(!context.getLevel().isClientSide()){
-                if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof RotationalCompressorTileEntity rcte) {
+                if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof RotationalCompressorBlockEntity rcte) {
                     rcte.updateAirHandler();
                 }
             }

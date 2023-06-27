@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockEntity;
 import com.simibubi.create.foundation.ponder.SceneBuilder;
 import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
 import com.simibubi.create.foundation.ponder.Selection;
@@ -21,7 +21,7 @@ public class PonderScenes {
     private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
 
     private static void updatePressure(SceneBuilder scene, BlockPos air_blower) {
-        scene.world.modifyTileEntity(air_blower, AirBlowerTileEntity.class, te -> {
+        scene.world.modifyBlockEntity(air_blower, AirBlowerBlockEntity.class, te -> {
             te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent(cap -> {
                 cap.setPressure(cap.getDangerPressure());
             });
@@ -73,10 +73,10 @@ public class PonderScenes {
             return -f;
         });
 //        scene.idle(20);
-//        scene.world.modifyTileEntity(compressor, RotationalCompressorTileEntity.class, rct -> {
+//        scene.world.modifyBlockEntity(compressor, RotationalCompressorBlockEntity.class, rct -> {
 //            rct.onSpeedChanged(-128);
 //        });
-//        scene.world.modifyTileEntity(compressor, RotationalCompressorTileEntity.class, rct -> {
+//        scene.world.modifyBlockEntity(compressor, RotationalCompressorBlockEntity.class, rct -> {
 //            LazyOptional<IAirHandlerMachine> cap = rct.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY);
 //            cap.ifPresent((h) -> {
 //                logger.debug("Air handler in Ponder: " + h.getPressure() + " " + h.getAir());

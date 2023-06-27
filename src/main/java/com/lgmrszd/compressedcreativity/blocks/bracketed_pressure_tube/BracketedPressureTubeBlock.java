@@ -2,15 +2,15 @@ package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 
 import com.lgmrszd.compressedcreativity.index.CCMisc;
 import com.lgmrszd.compressedcreativity.index.CCModsReference;
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
-import com.simibubi.create.content.contraptions.relays.elementary.BracketedTileEntityBehaviour;
-import com.simibubi.create.content.contraptions.wrench.IWrenchableWithBracket;
-import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
-import com.simibubi.create.content.schematics.ItemRequirement;
-import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.decoration.bracket.BracketBlockItem;
+import com.simibubi.create.content.decoration.bracket.BracketedBlockEntityBehaviour;
+import com.simibubi.create.content.equipment.wrench.IWrenchableWithBracket;
+import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.content.schematics.requirement.ItemRequirement;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.ITubeNetworkConnector;
 import me.desht.pneumaticcraft.api.block.PNCBlockStateProperties;
@@ -46,7 +46,7 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber
 public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
-        ITE<BracketedPressureTubeTileEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock,
+        IBE<BracketedPressureTubeBlockEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock,
         ISpecialBlockItemRequirement, ITubeNetworkConnector {
 
     public BracketedPressureTubeBlock(Properties properties) {
@@ -115,7 +115,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
 
     @Override
     public Optional<ItemStack> removeBracket(BlockGetter world, BlockPos pos, boolean inOnReplacedContext) {
-        BracketedTileEntityBehaviour behaviour = TileEntityBehaviour.get(world, pos, BracketedTileEntityBehaviour.TYPE);
+        BracketedBlockEntityBehaviour behaviour = BlockEntityBehaviour.get(world, pos, BracketedBlockEntityBehaviour.TYPE);
         if (behaviour == null)
             return Optional.empty();
         BlockState bracket = behaviour.removeBracket(inOnReplacedContext);
@@ -125,13 +125,13 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
     }
 
     @Override
-    public Class<BracketedPressureTubeTileEntity> getTileEntityClass() {
-        return BracketedPressureTubeTileEntity.class;
+    public Class<BracketedPressureTubeBlockEntity> getBlockEntityClass() {
+        return BracketedPressureTubeBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends BracketedPressureTubeTileEntity> getTileEntityType() {
-        return CCTileEntities.BRACKETED_PRESSURE_TUBE.get();
+    public BlockEntityType<? extends BracketedPressureTubeBlockEntity> getBlockEntityType() {
+        return CCBlockEntities.BRACKETED_PRESSURE_TUBE.get();
     }
 
     @Override
@@ -169,7 +169,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
     @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, level, pos, neighbor);
-        if ((state.hasBlockEntity() ? level.getBlockEntity(pos) : null) instanceof BracketedPressureTubeTileEntity tte) {
+        if ((state.hasBlockEntity() ? level.getBlockEntity(pos) : null) instanceof BracketedPressureTubeBlockEntity tte) {
             tte.updateAirHandler();
         }
     }

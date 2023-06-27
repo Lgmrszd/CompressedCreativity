@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
-import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerTileEntity;
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockEntity;
+import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import net.minecraft.core.BlockPos;
@@ -39,8 +39,8 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
     @Override
     public void onRemove(BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            AirBlowerTileEntity be = getTileEntity(world, pos);
-            if (be instanceof AdvancedAirBlowerTileEntity bbe) {
+            AirBlowerBlockEntity be = getBlockEntity(world, pos);
+            if (be instanceof AdvancedAirBlowerBlockEntity bbe) {
                 Block.popResource(world, pos, bbe.getMesh());
             }
         }
@@ -52,8 +52,8 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
-        AirBlowerTileEntity be = getTileEntity(world, pos);
-        if (player != null && !world.isClientSide() && be instanceof AdvancedAirBlowerTileEntity bbe) {
+        AirBlowerBlockEntity be = getBlockEntity(world, pos);
+        if (player != null && !world.isClientSide() && be instanceof AdvancedAirBlowerBlockEntity bbe) {
             ItemStack mesh = bbe.getMesh();
             if (!mesh.isEmpty()) {
                 player.getInventory().placeItemBackInInventory(mesh);
@@ -71,7 +71,7 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof AdvancedAirBlowerTileEntity aabte) {
+        if (te instanceof AdvancedAirBlowerBlockEntity aabte) {
             aabte.updateHeatExchanger();
         }
     }
@@ -83,8 +83,8 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
         ItemStack heldItem = player.getItemInHand(hand);
         boolean client = world.isClientSide();
         if(heldItem.getItem() instanceof MeshItem) {
-            return onTileEntityUse(world, pos, te -> {
-                if (!(te instanceof AdvancedAirBlowerTileEntity abte))
+            return onBlockEntityUse(world, pos, te -> {
+                if (!(te instanceof AdvancedAirBlowerBlockEntity abte))
                     return InteractionResult.PASS;
                 ItemStack installedMesh = abte.getMesh();
                 // Ignoring if mesh is the same
@@ -102,7 +102,7 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
         return InteractionResult.PASS;
     }
 
-    public ItemStack tryInstallMesh(Level world, BlockPos pos, AdvancedAirBlowerTileEntity abte, ItemStack stack) {
+    public ItemStack tryInstallMesh(Level world, BlockPos pos, AdvancedAirBlowerBlockEntity abte, ItemStack stack) {
         if (!(stack.getItem() instanceof MeshItem)) return ItemStack.EMPTY;
         playRotateSound(world, pos);
         ItemStack oldMesh = abte.getMesh();
@@ -112,7 +112,7 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
     }
 
     @Override
-    public BlockEntityType<? extends AdvancedAirBlowerTileEntity> getTileEntityType() {
-        return CCTileEntities.INDUSTRIAL_AIR_BLOWER.get();
+    public BlockEntityType<? extends AdvancedAirBlowerBlockEntity> getBlockEntityType() {
+        return CCBlockEntities.INDUSTRIAL_AIR_BLOWER.get();
     }
 }

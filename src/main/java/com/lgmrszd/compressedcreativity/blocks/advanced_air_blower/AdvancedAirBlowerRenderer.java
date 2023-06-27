@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer;
+import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -15,12 +15,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
 
-public class AdvancedAirBlowerRenderer extends SafeTileEntityRenderer<AdvancedAirBlowerTileEntity> {
+public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedAirBlowerBlockEntity> {
     public AdvancedAirBlowerRenderer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    protected void renderSafe(AdvancedAirBlowerTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+    protected void renderSafe(AdvancedAirBlowerBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         // TODO: fix Flywheel Instance
 //        if (Backend.canUseInstancing(te.getLevel())) return;
 

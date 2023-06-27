@@ -51,11 +51,11 @@ public class ObservePacket {
 
     private static void sendUpdate(ObservePacket pkt, ServerPlayer player) {
         BlockEntity te = player.level.getBlockEntity(pkt.pos);
-        if (te instanceof IObserveTileEntity) {
-            ((IObserveTileEntity)te).onObserved(player, pkt);
-            Packet<ClientGamePacketListener> supdatetileentitypacket = te.getUpdatePacket();
-            if (supdatetileentitypacket != null) {
-                player.connection.send(supdatetileentitypacket);
+        if (te instanceof IObserveBlockEntity) {
+            ((IObserveBlockEntity)te).onObserved(player, pkt);
+            Packet<ClientGamePacketListener> supdateblockentitypacket = te.getUpdatePacket();
+            if (supdateblockentitypacket != null) {
+                player.connection.send(supdateblockentitypacket);
             }
         }
 

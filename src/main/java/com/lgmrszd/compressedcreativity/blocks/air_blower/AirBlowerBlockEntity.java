@@ -1,19 +1,19 @@
 package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticBlockEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.index.CCLang;
-import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
+import com.lgmrszd.compressedcreativity.network.IObserveBlockEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
-import com.simibubi.create.content.contraptions.components.fan.AirCurrent;
-import com.simibubi.create.content.contraptions.components.fan.IAirCurrentSource;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.contraptions.goggles.IHaveHoveringInformation;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.kinetics.fan.AirCurrent;
+import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoveringInformation, IHaveGoggleInformation, IObserveTileEntity, IAirCurrentSource, IPneumaticTileEntity {
+public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHoveringInformation, IHaveGoggleInformation, IObserveBlockEntity, IAirCurrentSource, IPneumaticBlockEntity {
 
 
     public AirCurrent airCurrent;
@@ -53,7 +53,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     private float processingStatus = 0.0f;
 //            processing_speed = 0.0f;
 
-    public AirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public AirBlowerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         this(
                 type,
                 pos,
@@ -63,7 +63,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
         );
     }
 
-    protected AirBlowerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier pressureTier, int volume) {
+    protected AirBlowerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier pressureTier, int volume) {
         super(type, pos, state);
         airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(pressureTier, volume);
@@ -75,7 +75,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
     }
 
@@ -168,7 +168,7 @@ public class AirBlowerTileEntity extends SmartTileEntity implements IHaveHoverin
 
         if (server) {
             if (airCurrentUpdateCooldown-- <= 0) {
-                airCurrentUpdateCooldown = AllConfigs.SERVER.kinetics.fanBlockCheckRate.get();
+                airCurrentUpdateCooldown = AllConfigs.server().kinetics.fanBlockCheckRate.get();
                 updateAirFlow = true;
             }
 

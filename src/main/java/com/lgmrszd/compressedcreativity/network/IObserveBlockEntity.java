@@ -7,6 +7,6 @@ package com.lgmrszd.compressedcreativity.network;
 
 import net.minecraft.server.level.ServerPlayer;
 
-public interface IObserveTileEntity {
+public interface IObserveBlockEntity {
     default void onObserved(ServerPlayer var1, ObservePacket var2) {}
 }
