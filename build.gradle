@@ -23,7 +23,7 @@ apply plugin: "org.spongepowered.mixin"
 
 //jarJar.enable()
 
-version = '1.18.2-0.1.5'
+version = '1.18.2-0.1.6'
 group = 'com.lgmrszd.compressedcreativity' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'compressedcreativity'
 
@@ -52,6 +52,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            jvmArg "-XX:+AllowEnhancedClassRedefinition"
 
             // Recommended logging data for a userdev environment
             // The markers can be changed as needed.
@@ -75,7 +76,8 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run_server')
+            jvmArg "-XX:+AllowEnhancedClassRedefinition"
 
             // Recommended logging data for a userdev environment
             // The markers can be changed as needed.
@@ -100,6 +102,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            jvmArg "-XX:+AllowEnhancedClassRedefinition"
 
             // Recommended logging data for a userdev environment
             // The markers can be changed as needed.
@@ -183,10 +186,10 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-    implementation fg.deobf("maven.modrinth:pneumaticcraft-repressurized:1.18.2-3.6.0")
-    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-1.18.2:${flywheel_version}")
-    implementation fg.deobf("com.simibubi.create:create-1.18.2:${create_version}:all") { transitive = false }
-    implementation fg.deobf("vazkii.patchouli:Patchouli:1.18.2-${patchouli_version}")
+    implementation fg.deobf("maven.modrinth:pneumaticcraft-repressurized:${minecraft_version}-${pnc_version}")
+    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:all") { transitive = false }
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
 
 }
 
