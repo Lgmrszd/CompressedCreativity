@@ -75,6 +75,20 @@ public class CCShapes {
         return shape;
     }
 
+    public static VoxelShape heaterShape(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(0.0625, 0.875, 0.0625, 0.9375, 1, 0.9375), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.125, 0.125, 0.125, 0.875, 0.875, 0.875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.25, 0.25, 0, 0.75, 0.75, 0.125), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.25, 0, 0.25, 0.75, 0.125, 0.75), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.25, 0.25, 0.875, 0.75, 0.75, 1), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0, 0.25, 0.25, 0.125, 0.75, 0.75), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(0.875, 0.25, 0.25, 1, 0.75, 0.75), BooleanOp.OR);
+
+        return shape;
+    }
+
+
     public static final VoxelShaper
         ROTATIONAL_COMPRESSOR = new AllShapes.Builder(rotationalCompressorShape()).forHorizontal(Direction.NORTH),
         AIR_BLOWER = new AllShapes.Builder(airBlowerShape()).forDirectional(Direction.SOUTH),
@@ -83,4 +97,7 @@ public class CCShapes {
         COMPRESSED_AIR_ENGINE_BACK_OPEN = new AllShapes.Builder(compressedAirEngineShapeBackOpen()).forDirectional(Direction.NORTH),
         COMPRESSED_AIR_ENGINE_FRONT_END = new AllShapes.Builder(compressedAirEngineShapeFrontEnd()).forDirectional(Direction.NORTH),
         COMPRESSED_AIR_ENGINE_FRONT_OPEN = new AllShapes.Builder(compressedAirEngineShapeFrontOpen()).forDirectional(Direction.NORTH);
+
+    public static VoxelShape
+        HEATER_SHAPE = heaterShape();
 }

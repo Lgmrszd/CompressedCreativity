@@ -2,7 +2,7 @@ package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
 import com.lgmrszd.compressedcreativity.blocks.common.PneumaticHorizontalKineticBlock;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
-import com.lgmrszd.compressedcreativity.index.CCTileEntities;
+import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<CompressedAirEngineTileEntity> {
+public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<CompressedAirEngineBlockEntity> {
 
     public static final BooleanProperty BACK = BooleanProperty.create("back");
     public static final BooleanProperty FRONT = BooleanProperty.create("front");
@@ -84,7 +84,7 @@ public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<Co
         InteractionResult result = super.onWrenched(state, context);
         if (!context.getLevel().isClientSide()) {
             BlockEntity te = state.hasBlockEntity() ? context.getLevel().getBlockEntity(context.getClickedPos()) : null;
-            if (te instanceof CompressedAirEngineTileEntity caete) {
+            if (te instanceof CompressedAirEngineBlockEntity caete) {
                 caete.updateAirHandler();
             }
         }
@@ -166,20 +166,20 @@ public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<Co
     }
 
     @Override
-    public Class<CompressedAirEngineTileEntity> getTileEntityClass() {
-        return CompressedAirEngineTileEntity.class;
+    public Class<CompressedAirEngineBlockEntity> getBlockEntityClass() {
+        return CompressedAirEngineBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends CompressedAirEngineTileEntity> getTileEntityType() {
-        return CCTileEntities.COMPRESSED_AIR_ENGINE.get();
+    public BlockEntityType<? extends CompressedAirEngineBlockEntity> getBlockEntityType() {
+        return CCBlockEntities.COMPRESSED_AIR_ENGINE.get();
     }
 
     @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, level, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-        if (te instanceof CompressedAirEngineTileEntity caete) {
+        if (te instanceof CompressedAirEngineBlockEntity caete) {
             caete.updateAirHandler();
         }
     }

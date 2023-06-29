@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
 import com.lgmrszd.compressedcreativity.index.CCMisc;
-import com.simibubi.create.content.curiosities.armor.CopperBacktankItem;
-import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
+import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
+import com.simibubi.create.content.equipment.armor.BacktankItem;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +24,7 @@ import static com.lgmrszd.compressedcreativity.config.CommonConfig.BACKTANK_COMP
 public class AirHandlerBacktankAttach {
     @SubscribeEvent
     public static void onAttachingCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
-        if (!(event.getObject().getItem() instanceof CopperBacktankItem)) return;
+        if (!(event.getObject().getItem() instanceof BacktankItem)) return;
 
 
         AirHandlerBacktankItem airHandlerBacktankItem = new AirHandlerBacktankItem(event.getObject());
@@ -46,10 +46,10 @@ public class AirHandlerBacktankAttach {
     }
     @SubscribeEvent
     public static void onAttachingCapabilitiesBE(final AttachCapabilitiesEvent<BlockEntity> event) {
-        if (!(event.getObject() instanceof CopperBacktankTileEntity copperBacktankTileEntity)) return;
+        if (!(event.getObject() instanceof BacktankBlockEntity bbe)) return;
 
         AirHandlerBacktankBlockEntity airHandlerBacktankBlockEntity =
-                new AirHandlerBacktankBlockEntity(copperBacktankTileEntity);
+                new AirHandlerBacktankBlockEntity(bbe);
         LazyOptional<AirHandlerBacktankBlockEntity> airHandlerBacktankCap = LazyOptional.of(() -> airHandlerBacktankBlockEntity);
 
         ICapabilityProvider provider = new ICapabilityProvider() {

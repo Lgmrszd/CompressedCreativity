@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.mixin.create;
 
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlock;
-import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlock;
+import com.simibubi.create.content.decoration.bracket.BracketBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;

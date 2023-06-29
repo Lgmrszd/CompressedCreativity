@@ -9,29 +9,26 @@ import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockStateGenerator;
-import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedAdvancedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlockStateGenerator;
-import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedReinforcedPressureTubeBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockStateGenerator;
+import com.lgmrszd.compressedcreativity.blocks.heater.HeaterBlock;
 import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
+import com.simibubi.create.content.decoration.bracket.BracketBlock;
+import com.simibubi.create.content.decoration.bracket.BracketBlockItem;
+import com.simibubi.create.content.decoration.encasing.CasingBlock;
+import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
+import com.simibubi.create.content.fluids.PipeAttachmentModel;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.foundation.data.*;
 //import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.base.CasingBlock;
-import com.simibubi.create.content.contraptions.fluids.PipeAttachmentModel;
-import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlock;
-import com.simibubi.create.content.contraptions.fluids.pipes.BracketBlockItem;
-import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
-import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.DyedBlockList;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -69,7 +66,6 @@ public class CCBlocks {
             .blockstate(BlockStateGen.horizontalBlockProvider(true))
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(BlockStressDefaults.setImpact(8.0))
-//            .transform(BlockStressDefaults.setImpact(CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())
             .register();
@@ -80,7 +76,6 @@ public class CCBlocks {
             .blockstate(CompressedAirEngineBlockStateGenerator::blockState)
             .addLayer(() -> RenderType::translucent)
             .transform(BlockStressDefaults.setCapacity(4.0))
-//            .transform(BlockStressDefaults.setCapacity(CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0))
             .item()
             .transform(customItemModel())
             .register();
@@ -103,8 +98,15 @@ public class CCBlocks {
             .transform(customItemModel())
             .register();
 
+    public static final BlockEntry<HeaterBlock> HEATER = REGISTRATE.block("heater", HeaterBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .transform(TagGen.pickaxeOnly())
+            .blockstate((c, p) -> p.simpleBlock(c.get(), AssetLookup.standardModel(c, p)))
+            .simpleItem()
+            .register();
+
     public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_PRESSURE_TUBE =
-            REGISTRATE.block("bracketed_pressure_tube", BracketedPressureTubeBlock::new)
+            REGISTRATE.block("bracketed_pressure_tube", properties -> new BracketedPressureTubeBlock(properties, 0))
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
@@ -112,8 +114,8 @@ public class CCBlocks {
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
-    public static final BlockEntry<BracketedReinforcedPressureTubeBlock> BRACKETED_REINFORCED_PRESSURE_TUBE =
-            REGISTRATE.block("bracketed_reinforced_pressure_tube", BracketedReinforcedPressureTubeBlock::new)
+    public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_REINFORCED_PRESSURE_TUBE =
+            REGISTRATE.block("bracketed_reinforced_pressure_tube", properties -> new BracketedPressureTubeBlock(properties, 1))
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
@@ -121,8 +123,8 @@ public class CCBlocks {
             .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
             .register();
 
-    public static final BlockEntry<BracketedAdvancedPressureTubeBlock> BRACKETED_ADVANCED_PRESSURE_TUBE =
-            REGISTRATE.block("bracketed_advanced_pressure_tube", BracketedAdvancedPressureTubeBlock::new)
+    public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_ADVANCED_PRESSURE_TUBE =
+            REGISTRATE.block("bracketed_advanced_pressure_tube", properties -> new BracketedPressureTubeBlock(properties, 2))
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)

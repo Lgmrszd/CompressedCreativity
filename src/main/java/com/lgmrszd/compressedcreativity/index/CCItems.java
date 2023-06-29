@@ -4,7 +4,7 @@ import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.items.CCUpgradeItem;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
-import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;

@@ -56,7 +56,7 @@ public class CompressedCreativity
 
         CCItems.register(eventBus);
         CCBlocks.register();
-        CCTileEntities.register();
+        CCBlockEntities.register();
 
         CCUpgrades.UPGRADES_DEFERRED.register(eventBus);
 

@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
-import com.simibubi.create.content.curiosities.armor.BackTankUtil;
-import com.simibubi.create.content.curiosities.armor.CopperBacktankTileEntity;
-import com.simibubi.create.foundation.config.AllConfigs;
+import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
@@ -26,20 +26,20 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     private final int RATIO = 2;
     private int volume;
     private int maxVolume;
-    private final CopperBacktankTileEntity copperBacktankBE;
+    private final BacktankBlockEntity BacktankBE;
     private IAirHandlerMachine connectedAirHandler;
     private int delta;
 
-    public AirHandlerBacktankBlockEntity(CopperBacktankTileEntity copperBacktankBE) {
-        this.copperBacktankBE = copperBacktankBE;
-        maxVolume = RATIO * AllConfigs.SERVER.curiosities.airInBacktank.get();
+    public AirHandlerBacktankBlockEntity(BacktankBlockEntity BacktankBE) {
+        this.BacktankBE = BacktankBE;
+        maxVolume = RATIO * AllConfigs.server().equipment.airInBacktank.get();
         volume = (int) (maxVolume / MAX_PRESSURE);
         delta = 0;
         connectedAirHandler = null;
     }
 
     public void updateVolumeFromEnchant(int capacityEnchantLevel) {
-        maxVolume = RATIO * BackTankUtil.maxAir(capacityEnchantLevel);
+        maxVolume = RATIO * BacktankUtil.maxAir(capacityEnchantLevel);
         volume = (int) (maxVolume / MAX_PRESSURE);
     }
 
@@ -65,8 +65,8 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
 
     @Override
     public void tick(BlockEntity ownerTE) {
-        if (!(ownerTE instanceof CopperBacktankTileEntity cbte)) return;
-        if (this.copperBacktankBE != cbte) return;
+        if (!(ownerTE instanceof BacktankBlockEntity bbe)) return;
+        if (this.BacktankBE != bbe) return;
         Level world = Objects.requireNonNull(ownerTE.getLevel());
         if (!world.isClientSide) {
             disperseAir();
@@ -81,8 +81,8 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
         // Basically copying code from MachineAirHandler default implementation
         // 1. Since we only have one connection we don't need lists, we simply cache AirHandler itself
         if (connectedAirHandler == null) {
-            BlockEntity blockEntityBelow = Objects.requireNonNull(copperBacktankBE.getLevel())
-                    .getBlockEntity(copperBacktankBE.getBlockPos().relative(Direction.DOWN));
+            BlockEntity blockEntityBelow = Objects.requireNonNull(BacktankBE.getLevel())
+                    .getBlockEntity(BacktankBE.getBlockPos().relative(Direction.DOWN));
             if (blockEntityBelow == null) return;
             LazyOptional<IAirHandlerMachine> lazyCap = blockEntityBelow.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY);
             lazyCap.ifPresent(cap -> {
@@ -136,7 +136,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
 
     @Override
     public int getAir() {
-        return RATIO * copperBacktankBE.getAirLevel() + delta;
+        return RATIO * BacktankBE.getAirLevel() + delta;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
         int total = getAir() + amount;
         int transformed = Math.min(total, maxVolume) / RATIO;
         delta = total - transformed * RATIO;
-        copperBacktankBE.setAirLevel(transformed);
+        BacktankBE.setAirLevel(transformed);
 //        if (total == maxVolume) copperBacktankBE.sendData();
     }
 

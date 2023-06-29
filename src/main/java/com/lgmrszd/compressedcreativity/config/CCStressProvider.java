@@ -2,7 +2,7 @@ package com.lgmrszd.compressedcreativity.config;
 
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
-import com.simibubi.create.foundation.block.BlockStressValues;
+import com.simibubi.create.content.kinetics.BlockStressValues;
 import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.world.level.block.Block;
 

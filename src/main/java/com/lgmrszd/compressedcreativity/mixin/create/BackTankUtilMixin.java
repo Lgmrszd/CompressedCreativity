@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity.mixin.create;
 
-import com.simibubi.create.content.curiosities.armor.BackTankUtil;
+import com.simibubi.create.content.equipment.armor.BacktankUtil;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorRegistry;
@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static com.lgmrszd.compressedcreativity.config.CommonConfig.CHESTPLATE_COMPAT;
 import static com.lgmrszd.compressedcreativity.index.CCMisc.chestplatePressureAvailable;
 
-@Mixin(BackTankUtil.class)
+@Mixin(BacktankUtil.class)
 public class BackTankUtilMixin {
-    @Inject(method = "canAbsorbDamage", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
+    @Inject(method = "canAbsorbDamage", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atCanAbsorbDamage(LivingEntity entity, int usesPerTank, CallbackInfoReturnable<Boolean> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
         if(canAbsorbDamageChestplate(entity, usesPerTank)) {

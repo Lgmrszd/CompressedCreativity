@@ -115,11 +115,11 @@
 		},
 		{
 			"name": "Fan",
-			"from": [1, 1, 10],
-			"to": [15, 15, 12],
+			"from": [1, 1, 4],
+			"to": [15, 15, 4],
 			"rotation": {"angle": 22.5, "axis": "z", "origin": [8, 8, 8]},
 			"faces": {
-				"south": {"uv": [1, 1, 15, 15], "texture": "#fan_blades"}
+				"north": {"uv": [15, 1, 1, 15], "texture": "#fan_blades"}
 			}
 		}
 	],

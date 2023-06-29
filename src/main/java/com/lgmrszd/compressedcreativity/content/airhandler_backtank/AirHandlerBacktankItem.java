@@ -1,6 +1,6 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
-import com.simibubi.create.content.curiosities.armor.BackTankUtil;
+import com.simibubi.create.content.equipment.armor.BacktankUtil;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerItem;
 import net.minecraft.core.Direction;
@@ -21,7 +21,7 @@ public class AirHandlerBacktankItem extends IAirHandlerItem.Provider {
 
     public AirHandlerBacktankItem(ItemStack backtank) {
         this.backtank = backtank;
-        int maxVolume = (RATIO * BackTankUtil.maxAir(backtank));
+        int maxVolume = (RATIO * BacktankUtil.maxAir(backtank));
         this.volume = (int) (maxVolume / MAX_PRESSURE);
     }
 
@@ -43,14 +43,14 @@ public class AirHandlerBacktankItem extends IAirHandlerItem.Provider {
 
     @Override
     public int getAir() {
-        float air = RATIO * BackTankUtil.getAir(this.backtank);
+        float air = RATIO * BacktankUtil.getAir(this.backtank);
 //        int airFloor = (int) Math.round(air);
         return Math.round(air);
     }
 
     @Override
     public void addAir(int i) {
-        BackTankUtil.consumeAir(null, backtank, -1.0f * i / RATIO);
+        BacktankUtil.consumeAir(null, backtank, -1.0f * i / RATIO);
     }
 
     @Override

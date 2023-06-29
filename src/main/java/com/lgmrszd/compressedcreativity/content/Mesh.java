@@ -1,9 +1,9 @@
 package com.lgmrszd.compressedcreativity.content;
 
 import com.jozufozu.flywheel.core.PartialModel;
-import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerTileEntity;
+import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
-import com.simibubi.create.content.contraptions.processing.InWorldProcessing;
+import com.simibubi.create.content.kinetics.fan.FanProcessing;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.client.renderer.BiomeColors;
@@ -19,7 +19,7 @@ public class Mesh {
             }
 
             @Override
-            public int getTintColor(AdvancedAirBlowerTileEntity te) {
+            public int getTintColor(AdvancedAirBlowerBlockEntity te) {
                 if (te.getLevel() == null) return 0xffffffff;
                 return BiomeColors.getAverageWaterColor(te.getLevel(), te.getBlockPos());
             }
@@ -28,8 +28,8 @@ public class Mesh {
                 return Optional.ofNullable(CCBlockPartials.MESHES.get(WOVEN.name));
             }
             @Override
-            public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
-                return Optional.of(InWorldProcessing.Type.SPLASHING);
+            public Optional<FanProcessing.Type> getProcessingType(int temp) {
+                return Optional.of(FanProcessing.Type.SPLASHING);
             }
         },
         SPLASHING_FROZEN("splashing_frozen", "Frozen Mesh") {
@@ -45,16 +45,16 @@ public class Mesh {
                 return true;
             }
             @Override
-            public int getTintColor(AdvancedAirBlowerTileEntity te) {
+            public int getTintColor(AdvancedAirBlowerBlockEntity te) {
                 return  te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY)
                         .map((cap) -> HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB())
                         .orElse(0xffffffff);
             }
             @Override
-            public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
-                return temp > 373 ? Optional.of(InWorldProcessing.Type.BLASTING) : // 100
-                        temp > 323 ? Optional.of(InWorldProcessing.Type.SMOKING) :
-                                Optional.of(InWorldProcessing.Type.NONE); // 50
+            public Optional<FanProcessing.Type> getProcessingType(int temp) {
+                return temp > 373 ? Optional.of(FanProcessing.Type.BLASTING) : // 100
+                        temp > 323 ? Optional.of(FanProcessing.Type.SMOKING) :
+                                Optional.of(FanProcessing.Type.NONE); // 50
             }
 
             @Override
@@ -64,8 +64,8 @@ public class Mesh {
         },
         HAUNTED("haunted", "Haunted Mesh") {
             @Override
-            public Optional<InWorldProcessing.Type> getProcessingType(int temp) {
-                return temp > 373 ? Optional.of(InWorldProcessing.Type.HAUNTING) : Optional.empty();
+            public Optional<FanProcessing.Type> getProcessingType(int temp) {
+                return temp > 373 ? Optional.of(FanProcessing.Type.HAUNTING) : Optional.empty();
             }
         };
 
@@ -91,7 +91,7 @@ public class Mesh {
         default boolean shouldTint() {
             return false;
         }
-        default int getTintColor(AdvancedAirBlowerTileEntity te) {
+        default int getTintColor(AdvancedAirBlowerBlockEntity te) {
             return 0xffffffff;
         }
         default Optional<PartialModel> getModel() {
@@ -101,7 +101,7 @@ public class Mesh {
             return Optional.empty();
         }
         String getName();
-        default Optional<InWorldProcessing.Type> getProcessingType(int temp) {return Optional.empty();}
+        default Optional<FanProcessing.Type> getProcessingType(int temp) {return Optional.empty();}
         default int getCoolingFactor() {return 1;}
     }
 }

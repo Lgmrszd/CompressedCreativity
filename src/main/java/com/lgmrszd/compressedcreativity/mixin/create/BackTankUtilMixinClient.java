@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.mixin.create;
 
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
-import com.simibubi.create.content.curiosities.armor.BackTankUtil;
+import com.simibubi.create.content.equipment.armor.BacktankUtil;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorRegistry;
@@ -21,10 +21,10 @@ import static com.lgmrszd.compressedcreativity.config.CommonConfig.CHESTPLATE_CO
 import static com.lgmrszd.compressedcreativity.index.CCMisc.chestplatePressureAvailable;
 
 @OnlyIn(Dist.CLIENT)
-@Mixin(BackTankUtil.class)
+@Mixin(BacktankUtil.class)
 public class BackTankUtilMixinClient {
 
-    @Inject(method = "isBarVisible", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
+    @Inject(method = "isBarVisible", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atIsBarVisible(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Boolean> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
         LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
@@ -33,7 +33,7 @@ public class BackTankUtilMixinClient {
         }
     }
 
-    @Inject(method = "getBarWidth", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
+    @Inject(method = "getBarWidth", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atGetBarWidth(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Integer> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
         LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
@@ -45,7 +45,7 @@ public class BackTankUtilMixinClient {
         }
     }
 
-    @Inject(method = "getBarColor", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/curiosities/armor/BackTankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
+    @Inject(method = "getBarColor", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
     private static void atGetBarColor(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Integer> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
         LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);

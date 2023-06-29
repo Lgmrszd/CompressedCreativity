@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 
-import com.simibubi.create.content.contraptions.relays.elementary.BracketedTileEntityBehaviour;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.decoration.bracket.BracketedBlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
@@ -24,26 +24,26 @@ import java.util.List;
 
 import static com.lgmrszd.compressedcreativity.index.CCModsReference.getAirParticle;
 
-public class BracketedPressureTubeTileEntity extends SmartTileEntity {
+public class BracketedPressureTubeBlockEntity extends SmartBlockEntity {
     protected final IAirHandlerMachine airHandler;
     private final LazyOptional<IAirHandlerMachine> airHandlerCap;
-    public BracketedPressureTubeTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public BracketedPressureTubeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         this(type, pos, state, PressureTier.TIER_ONE, 1000);
     }
-    protected BracketedPressureTubeTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier tier, int volume) {
+    protected BracketedPressureTubeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, PressureTier tier, int volume) {
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(tier, volume);
         this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 //
-//    public BracketedPressureTubeTileEntity basic(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-//        return new BracketedPressureTubeTileEntity(type, pos, state, PressureTier.TIER_ONE, 1000);
+//    public BracketedPressureTubeBlockEntity basic(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+//        return new BracketedPressureTubeBlockEntity(type, pos, state, PressureTier.TIER_ONE, 1000);
 //    }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {
-        behaviours.add(new BracketedTileEntityBehaviour(this));
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        behaviours.add(new BracketedBlockEntityBehaviour(this));
     }
 
     @Override
