@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -84,7 +83,7 @@ public class HeaterBlock extends Block implements IBE<HeaterBlockEntity> {
 
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> curInfo, TooltipFlag flag) {
-        curInfo.add(new TextComponent("[Work in progress!!!]"));
+        curInfo.add(Component.literal("[Work in progress!!!]"));
         super.appendHoverText(stack, world, curInfo, flag);
     }
 }
