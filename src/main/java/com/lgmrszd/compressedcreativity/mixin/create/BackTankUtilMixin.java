@@ -17,7 +17,7 @@ import static com.lgmrszd.compressedcreativity.index.CCMisc.chestplatePressureAv
 
 @Mixin(BacktankUtil.class)
 public class BackTankUtilMixin {
-    @Inject(method = "canAbsorbDamage", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;get(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"), cancellable = true, remap = false)
+    @Inject(method = "canAbsorbDamage", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;getAllWithAir(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;"), cancellable = true, remap = false)
     private static void atCanAbsorbDamage(LivingEntity entity, int usesPerTank, CallbackInfoReturnable<Boolean> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
         if(canAbsorbDamageChestplate(entity, usesPerTank)) {
