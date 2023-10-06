@@ -3,7 +3,8 @@ package com.lgmrszd.compressedcreativity.content;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
-import com.simibubi.create.content.kinetics.fan.FanProcessing;
+import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
+import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.client.renderer.BiomeColors;
@@ -28,8 +29,8 @@ public class Mesh {
                 return Optional.ofNullable(CCBlockPartials.MESHES.get(WOVEN.name));
             }
             @Override
-            public Optional<FanProcessing.Type> getProcessingType(int temp) {
-                return Optional.of(FanProcessing.Type.SPLASHING);
+            public Optional<FanProcessingType> getProcessingType(int temp) {
+                return Optional.of(AllFanProcessingTypes.SPLASHING);
             }
         },
         SPLASHING_FROZEN("splashing_frozen", "Frozen Mesh") {
@@ -51,10 +52,10 @@ public class Mesh {
                         .orElse(0xffffffff);
             }
             @Override
-            public Optional<FanProcessing.Type> getProcessingType(int temp) {
-                return temp > 373 ? Optional.of(FanProcessing.Type.BLASTING) : // 100
-                        temp > 323 ? Optional.of(FanProcessing.Type.SMOKING) :
-                                Optional.of(FanProcessing.Type.NONE); // 50
+            public Optional<FanProcessingType> getProcessingType(int temp) {
+                return temp > 373 ? Optional.of(AllFanProcessingTypes.BLASTING) : // 100
+                        temp > 323 ? Optional.of(AllFanProcessingTypes.SMOKING) :
+                                Optional.of(AllFanProcessingTypes.NONE); // 50
             }
 
             @Override
@@ -64,8 +65,8 @@ public class Mesh {
         },
         HAUNTED("haunted", "Haunted Mesh") {
             @Override
-            public Optional<FanProcessing.Type> getProcessingType(int temp) {
-                return temp > 373 ? Optional.of(FanProcessing.Type.HAUNTING) : Optional.empty();
+            public Optional<FanProcessingType> getProcessingType(int temp) {
+                return temp > 373 ? Optional.of(AllFanProcessingTypes.HAUNTING) : Optional.empty();
             }
         };
 
@@ -101,7 +102,7 @@ public class Mesh {
             return Optional.empty();
         }
         String getName();
-        default Optional<FanProcessing.Type> getProcessingType(int temp) {return Optional.empty();}
+        default Optional<FanProcessingType> getProcessingType(int temp) {return Optional.empty();}
         default int getCoolingFactor() {return 1;}
     }
 }
