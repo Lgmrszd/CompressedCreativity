@@ -58,7 +58,7 @@ Bridging Create and PneumaticCraft: Repressurized together
 [[dependencies.compressedcreativity]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.1.c,)"
+    versionRange="[0.5.1.e,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.compressedcreativity]]
