@@ -11,6 +11,7 @@ import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.fan.AirCurrent;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
+import com.simibubi.create.content.logistics.chute.ChuteBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
@@ -19,6 +20,7 @@ import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -186,6 +188,7 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
         if (updateAirFlow) {
             updateAirFlow = false;
             airCurrent.rebuild();
+            updateChute();
             sendData();
         }
 
@@ -220,6 +223,26 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
     public void invalidate() {
         super.invalidate();
         airHandlerCap.invalidate();
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        updateChute();
+    }
+
+    public void updateChute() {
+        Direction direction = getBlockState().getValue(AirBlowerBlock.FACING);
+        if (!direction.getAxis()
+                .isVertical())
+            return;
+        BlockEntity poweredChute = level.getBlockEntity(worldPosition.relative(direction));
+        if (!(poweredChute instanceof ChuteBlockEntity chuteBE))
+            return;
+        if (direction == Direction.DOWN)
+            chuteBE.updatePull();
+        else
+            chuteBE.updatePush(1);
     }
 
     @Nonnull
