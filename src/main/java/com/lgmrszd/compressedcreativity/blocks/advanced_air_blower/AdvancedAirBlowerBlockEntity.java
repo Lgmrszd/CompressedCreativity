@@ -12,7 +12,8 @@ import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
 import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
 import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
-import com.simibubi.create.content.kinetics.fan.FanProcessing;
+import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
+import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.utility.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
@@ -122,15 +123,15 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
         sendData();
     }
 
-    public Optional<FanProcessing.Type> getProcessingType() {
+    public Optional<FanProcessingType> getProcessingType() {
         if (getMesh().getItem() instanceof MeshItem meshItem) {
-            Optional<FanProcessing.Type> processingType = meshItem.getMeshType().getProcessingType(heatExchanger.getTemperatureAsInt());
+            Optional<FanProcessingType> processingType = meshItem.getMeshType().getProcessingType(heatExchanger.getTemperatureAsInt());
             if(processingType.isPresent()) return processingType;
         }
         if (heatExchanger.getTemperatureAsInt() > 573) // 300
-            return Optional.of(FanProcessing.Type.BLASTING);
+            return Optional.of(AllFanProcessingTypes.BLASTING);
         if (heatExchanger.getTemperatureAsInt() > 373) { // 100
-            return Optional.of(FanProcessing.Type.SMOKING);
+            return Optional.of(AllFanProcessingTypes.SMOKING);
         }
         return Optional.empty();
     }
