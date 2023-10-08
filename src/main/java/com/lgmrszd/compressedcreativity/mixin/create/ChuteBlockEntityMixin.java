@@ -28,7 +28,7 @@ public abstract class ChuteBlockEntityMixin extends SmartBlockEntity {
             at = @At(
                     value = "INVOKE_ASSIGN",
                     target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
-                    ordinal = 0
+                    remap = true
             ),
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILSOFT,
@@ -50,7 +50,7 @@ public abstract class ChuteBlockEntityMixin extends SmartBlockEntity {
             at = @At(
                     value = "INVOKE_ASSIGN",
                     target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
-                    ordinal = 0
+                    remap = true
             ),
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILSOFT,
