@@ -25,17 +25,15 @@ public class AirHandlerBacktankAttach {
     @SubscribeEvent
     public static void onAttachingCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
         if (!(event.getObject().getItem() instanceof BacktankItem)) return;
+        if (!BACKTANK_COMPAT_ITEM.get()) return;
 
-
-        AirHandlerBacktankItem airHandlerBacktankItem = new AirHandlerBacktankItem(event.getObject());
-        LazyOptional<AirHandlerBacktankItem> airHandlerBacktankCap = LazyOptional.of(() -> airHandlerBacktankItem);
+        LazyOptional<AirHandlerBacktankItem> airHandlerBacktankCap = LazyOptional.of(() -> new AirHandlerBacktankItem(event.getObject()));
 
         ICapabilityProvider provider = new ICapabilityProvider() {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction) {
-                if (BACKTANK_COMPAT_ITEM.get() &&
-                        cap == PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY) {
+                if (cap == PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY) {
                     return airHandlerBacktankCap.cast();
                 }
                 return LazyOptional.empty();
