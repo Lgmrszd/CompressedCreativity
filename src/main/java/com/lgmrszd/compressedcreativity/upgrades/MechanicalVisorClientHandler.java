@@ -14,6 +14,7 @@ import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IGuiScreen;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IOptionPage;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -55,8 +56,9 @@ public class MechanicalVisorClientHandler extends IArmorUpgradeClientHandler.Sim
     }
 
     @Override
-    public void tickClient(ICommonArmorHandler armorHandler) {
-        super.tickClient(armorHandler);
+    public void tickClient(ICommonArmorHandler armorHandler, boolean isEnabled) {
+        super.tickClient(armorHandler, isEnabled);
+        if (visorInfo == null || !isEnabled) return;
 
         if (!tooltipMode.isWidget()) {
             visorInfo.setText(Collections.emptyList());
@@ -98,8 +100,8 @@ public class MechanicalVisorClientHandler extends IArmorUpgradeClientHandler.Sim
     }
 
     @Override
-    public void render2D(PoseStack matrixStack, float partialTicks, boolean armorPieceHasPressure) {
-        super.render2D(matrixStack, partialTicks, armorPieceHasPressure);
+    public void render2D(GuiGraphics graphics, float partialTicks, boolean armorPieceHasPressure) {
+        super.render2D(graphics, partialTicks, armorPieceHasPressure);
     }
 
     @Override

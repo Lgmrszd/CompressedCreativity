@@ -3,7 +3,6 @@ package com.lgmrszd.compressedcreativity.index;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlock;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -64,8 +63,8 @@ public class CCModsReference {
         }
 
         public static PNCPressureTube getByBlock(Block block){
-            ResourceLocation loc = Registry.BLOCK.getKey(block);
-            if (!loc.getNamespace().equals(PneumaticRegistry.MOD_ID)) return null;
+            ResourceLocation loc = ForgeRegistries.BLOCKS.getKey(block);
+            if (loc == null || !loc.getNamespace().equals(PneumaticRegistry.MOD_ID)) return null;
             String path = loc.getPath();
             if (path.equals(BASIC.id)) return BASIC;
             if (path.equals(ADVANCED.id)) return ADVANCED;

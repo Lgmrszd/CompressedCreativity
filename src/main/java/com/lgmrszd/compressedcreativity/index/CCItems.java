@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity.index;
 
-import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.lgmrszd.compressedcreativity.items.CCUpgradeItem;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
@@ -18,7 +17,7 @@ import static com.lgmrszd.compressedcreativity.CompressedCreativity.REGISTRATE;
 public class CCItems {
 
     static {
-        REGISTRATE.creativeModeTab(() -> ModGroup.MAIN);
+        REGISTRATE.setCreativeTab(CCCreativeTabs.BASE_CREATIVE_TAB);
     }
 
     public static final ItemEntry<Item> MECHANICAL_VISOR_UPGRADE = REGISTRATE.item(

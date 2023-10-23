@@ -50,7 +50,7 @@ public class ObservePacket {
     }
 
     private static void sendUpdate(ObservePacket pkt, ServerPlayer player) {
-        BlockEntity te = player.level.getBlockEntity(pkt.pos);
+        BlockEntity te = player.level().getBlockEntity(pkt.pos);
         if (te instanceof IObserveTileEntity) {
             ((IObserveTileEntity)te).onObserved(player, pkt);
             Packet<ClientGamePacketListener> supdatetileentitypacket = te.getUpdatePacket();

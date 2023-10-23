@@ -5,7 +5,6 @@ import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnect
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
-import com.lgmrszd.compressedcreativity.ModGroup;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockStateGenerator;
@@ -23,7 +22,6 @@ import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.fluids.PipeAttachmentModel;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.*;
-//import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.AllItems;
@@ -34,16 +32,17 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Supplier;
 
 public class CCBlocks {
 
     static {
-        REGISTRATE.creativeModeTab(() -> ModGroup.MAIN);
+        REGISTRATE.setCreativeTab(CCCreativeTabs.BASE_CREATIVE_TAB);
     }
 
     public static <B extends CasingBlock> NonNullUnaryOperator<BlockBuilder<B, CreateRegistrate>> myCasing(
@@ -135,11 +134,11 @@ public class CCBlocks {
     public static final DyedBlockList<BracketBlock> DYED_PLASTIC_BRACKETS = new DyedBlockList<>(colour -> {
         String colourName = colour.getSerializedName();
         return REGISTRATE.block(colourName + "_plastic_bracket", BracketBlock::new)
-                .properties(p -> p.color(colour.getMaterialColor()))
+                .properties(p -> p.mapColor(colour))
                 .blockstate(new PlasticBracketGenerator(colourName + "_plastic")::generate)
                 .properties(p -> p.sound(SoundType.WOOD))
                 .transform(TagGen.pickaxeOnly())
-                .recipe((c, p) -> ShapedRecipeBuilder.shaped(c.get(), 6)
+                .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, c.get(), 6)
                         .define('P', CCModsReference.getPlasticBrickBlockByColor(colour).asItem())
                         .define('A', AllItems.ANDESITE_ALLOY.get())
                         .pattern(" P ")
@@ -153,7 +152,7 @@ public class CCBlocks {
 
     public static final BlockEntry<CasingBlock> COMPRESSED_IRON_CASING =
             REGISTRATE.block("compressed_iron_casing", CasingBlock::new)
-                    .properties(p -> p.color(MaterialColor.TERRACOTTA_GRAY))
+                    .properties(p -> p.mapColor(MapColor.TERRACOTTA_GRAY))
                     .transform(myCasing(() -> CCSpriteShifts.COMPRESSED_IRON_CASING))
                     .register();
 

@@ -3,12 +3,12 @@ package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 import com.simibubi.create.content.equipment.armor.BacktankUtil;
 import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import it.unimi.dsi.fastutil.floats.FloatPredicate;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -54,7 +54,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     }
 
     @Override
-    public void enableSafetyVenting(Predicate<Float> pressureCheck, Direction dir) {
+    public void enableSafetyVenting(FloatPredicate floatPredicate, Direction direction) {
 
     }
 

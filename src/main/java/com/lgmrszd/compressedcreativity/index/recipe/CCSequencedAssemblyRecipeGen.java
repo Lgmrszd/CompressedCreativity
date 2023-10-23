@@ -6,15 +6,15 @@ import com.lgmrszd.compressedcreativity.index.CCMisc;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.function.UnaryOperator;
 
 public class CCSequencedAssemblyRecipeGen extends CreateRecipeProvider {
 
-    public CCSequencedAssemblyRecipeGen(DataGenerator generator) {
-        super(generator);
+    public CCSequencedAssemblyRecipeGen(PackOutput output) {
+        super(output);
     }
 
     GeneratedRecipe
@@ -31,10 +31,5 @@ public class CCSequencedAssemblyRecipeGen extends CreateRecipeProvider {
                         .build(c);
         all.add(generatedRecipe);
         return generatedRecipe;
-    }
-
-    @Override
-    public String getName() {
-        return "Compressed Creativity Sequenced Assembly Recipes";
     }
 }

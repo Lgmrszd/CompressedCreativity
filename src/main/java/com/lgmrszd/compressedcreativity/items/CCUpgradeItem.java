@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.items;
 
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
-import me.desht.pneumaticcraft.api.item.IUpgradeItem;
-import me.desht.pneumaticcraft.api.item.PNCUpgrade;
+import me.desht.pneumaticcraft.api.upgrade.IUpgradeItem;
+import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -18,10 +18,10 @@ import java.util.function.Supplier;
 
 
 public class CCUpgradeItem extends Item implements IUpgradeItem {
-    private final Supplier<PNCUpgrade> upgrade;
+    private final PNCUpgrade upgrade;
     private final int tier;
 
-    public CCUpgradeItem(Properties properties, Supplier<PNCUpgrade> upgrade, int tier) {
+    public CCUpgradeItem(Properties properties, PNCUpgrade upgrade, int tier) {
         super(properties);
         this.upgrade = upgrade;
         this.tier = tier;
@@ -29,7 +29,7 @@ public class CCUpgradeItem extends Item implements IUpgradeItem {
 
     @Override
     public PNCUpgrade getUpgradeType() {
-        return upgrade.get();
+        return upgrade;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CCUpgradeItem extends Item implements IUpgradeItem {
     public void appendHoverText(ItemStack stack, Level world, List<Component> infoList, TooltipFlag par4) {
         if (Screen.hasShiftDown()) {
             infoList.add(Component.translatable("pneumaticcraft.gui.tooltip.item.upgrade.usedIn").withStyle(ChatFormatting.GOLD));
-            PneumaticRegistry.getInstance().getUpgradeRegistry().addUpgradeTooltip(upgrade.get(), infoList);
+            PneumaticRegistry.getInstance().getUpgradeRegistry().addUpgradeTooltip(upgrade, infoList);
         } else {
             infoList.add(Component.translatable("pneumaticcraft.gui.tooltip.item.upgrade.shiftMessage").withStyle(ChatFormatting.GOLD));
         }

@@ -5,13 +5,12 @@ import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.index.recipe.CCSequencedAssemblyRecipeGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -44,21 +43,21 @@ public class CompressedCreativity
         eventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         eventBus.addListener(this::doClientStuff);
-        // TODO: put it in clientstuff if possible
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> CCBlockPartials::init);
+
         eventBus.addListener(this::postInit);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::serverStart);
 
-
+        CCCreativeTabs.register(eventBus);
         CCItems.register(eventBus);
         CCBlocks.register();
         CCBlockEntities.register();
 
-        CCUpgrades.UPGRADES_DEFERRED.register(eventBus);
+//        CCUpgrades.UPGRADES_DEFERRED.register(eventBus);
+        CCUpgrades.init();
+
 
 
         eventBus.addListener(EventPriority.LOWEST, CompressedCreativity::gatherData);
@@ -102,8 +101,9 @@ public class CompressedCreativity
 
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
+        PackOutput output = gen.getPackOutput();
         CCPonder.registerLang(REGISTRATE);
         CCLangExtender.ExtendLang(REGISTRATE);
-        gen.addProvider(true, new CCSequencedAssemblyRecipeGen((gen)));
+        gen.addProvider(true, new CCSequencedAssemblyRecipeGen(output));
     }
 }
