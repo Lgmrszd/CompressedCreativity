@@ -19,7 +19,7 @@ public class CCClientSetup {
         mechanicalVisorClientHandler = new MechanicalVisorClientHandler();
         clientRegistry.registerUpgradeHandler(CCCommonUpgradeHandlers.mechanicalVisorHandler, mechanicalVisorClientHandler);
 
-        CCBlockPartials.init();
+//        CCBlockPartials.init();
 
         GogglesItem.addIsWearingPredicate(GoggledChecker::hasMechanicalVisorUpgrade);
         event.enqueueWork(CCClientSetup::initLate);
