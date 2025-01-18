@@ -102,9 +102,18 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     @Override
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
-        BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof AirBlowerBlockEntity abte) {
-            abte.updateAirHandler();
+        BlockEntity be = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        if (be instanceof AirBlowerBlockEntity abbe) {
+            abbe.updateAirHandler();
+        }
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+        BlockEntity be = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        if (be instanceof AirBlowerBlockEntity abbe) {
+            abbe.updateAirHandler();
         }
     }
 

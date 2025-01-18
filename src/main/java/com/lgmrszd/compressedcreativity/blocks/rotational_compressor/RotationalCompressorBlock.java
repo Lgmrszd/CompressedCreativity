@@ -8,6 +8,8 @@ import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -57,9 +59,18 @@ public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<R
     @Override
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
-        BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-        if (te instanceof RotationalCompressorBlockEntity rcte) {
-            rcte.updateAirHandler();
+        BlockEntity be = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        if (be instanceof RotationalCompressorBlockEntity rcbe) {
+            rcbe.updateAirHandler();
+        }
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+        BlockEntity be = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        if (be instanceof RotationalCompressorBlockEntity rcbe) {
+            rcbe.updateAirHandler();
         }
     }
 

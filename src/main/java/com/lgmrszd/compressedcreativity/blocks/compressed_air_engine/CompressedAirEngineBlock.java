@@ -178,9 +178,18 @@ public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<Co
     @Override
     public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, level, pos, neighbor);
-        BlockEntity te = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-        if (te instanceof CompressedAirEngineBlockEntity caete) {
-            caete.updateAirHandler();
+        BlockEntity be = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+        if (be instanceof CompressedAirEngineBlockEntity caebe) {
+            caebe.updateAirHandler();
+        }
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+        BlockEntity be = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+        if (be instanceof CompressedAirEngineBlockEntity caebe) {
+            caebe.updateAirHandler();
         }
     }
 }
