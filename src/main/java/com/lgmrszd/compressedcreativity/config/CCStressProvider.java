@@ -1,43 +1,38 @@
 package com.lgmrszd.compressedcreativity.config;
 
+import com.google.common.base.Supplier;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlock;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
-import com.simibubi.create.content.kinetics.BlockStressValues;
-import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.world.level.block.Block;
 
-import javax.annotation.Nullable;
+import java.util.function.DoubleSupplier;
 
-public class CCStressProvider implements BlockStressValues.IStressValueProvider {
-    @Override
-    public double getImpact(Block block) {
+public class CCStressProvider {
+
+    public DoubleSupplier getImpact(Block block) {
         if (block instanceof RotationalCompressorBlock) {
-            return CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0;
+            return new StressDoubleSupplier(() -> CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0);
         }
-        return 0;
+        return new StressDoubleSupplier(() -> 0.0);
     }
 
-    @Override
-    public double getCapacity(Block block) {
+    public DoubleSupplier getCapacity(Block block) {
         if (block instanceof CompressedAirEngineBlock) {
-            return CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0;
+            return new StressDoubleSupplier (() -> CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0);
         }
-        return 0;
+        return new StressDoubleSupplier(() -> 0.0);
     }
 
-    @Override
-    public boolean hasImpact(Block block) {
-        return block instanceof RotationalCompressorBlock;
-    }
+    private class StressDoubleSupplier implements DoubleSupplier {
+        private Supplier<Double> supplier;
 
-    @Override
-    public boolean hasCapacity(Block block) {
-        return block instanceof CompressedAirEngineBlock;
-    }
+        public StressDoubleSupplier(Supplier<Double> supplier) {
+            this.supplier = supplier;
+        }
 
-    @Nullable
-    @Override
-    public Couple<Integer> getGeneratedRPM(Block block) {
-        return null;
+        @Override
+        public double getAsDouble() {
+            return supplier.get();
+        }
     }
 }

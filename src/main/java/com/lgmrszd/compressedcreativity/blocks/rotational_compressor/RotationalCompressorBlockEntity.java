@@ -7,7 +7,7 @@ import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
@@ -80,7 +80,7 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
                 .translate("unit.air_per_tick")
                 .style(ChatFormatting.AQUA)
                 .space()
-                .add(Lang.translate("gui.goggles.at_current_speed")
+                .add(CreateLang.translate("gui.goggles.at_current_speed")
                         .style(ChatFormatting.DARK_GRAY))
                 .forGoggles(tooltip, 1);
         return true;

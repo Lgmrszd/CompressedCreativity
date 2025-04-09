@@ -14,7 +14,8 @@ import com.lgmrszd.compressedcreativity.network.ForceUpdatePacket;
 import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
+import net.createmod.catnip.lang.Lang;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
@@ -74,7 +75,7 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
                 CCLang.translate("tooltip.installed_mesh")
                         .style(ChatFormatting.WHITE)
                         .forGoggles(tooltip);
-                CCLang.builder().add(Lang.itemName(mesh))
+                CCLang.builder().add(CreateLang.itemName(mesh))
                         .style(ChatFormatting.AQUA)
                         .forGoggles(tooltip, 1);
             }

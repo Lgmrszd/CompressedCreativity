@@ -7,7 +7,7 @@ import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.decoration.bracket.BracketBlockItem;
 import com.simibubi.create.content.decoration.bracket.BracketedBlockEntityBehaviour;
 import com.simibubi.create.content.equipment.wrench.IWrenchableWithBracket;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -47,7 +47,7 @@ import java.util.Optional;
 @Mod.EventBusSubscriber
 public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
         IBE<BracketedPressureTubeBlockEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock,
-        ISpecialBlockItemRequirement, ITubeNetworkConnector {
+        SpecialBlockItemRequirement, ITubeNetworkConnector {
 
     private final int tubeTier;
 

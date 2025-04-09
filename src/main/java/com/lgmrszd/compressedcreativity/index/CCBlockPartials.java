@@ -1,15 +1,15 @@
 package com.lgmrszd.compressedcreativity.index;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.content.Mesh;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 
 public class CCBlockPartials {
     public static final PartialModel
-        AIR_ENGINE_ROTOR = new PartialModel(new ResourceLocation(CompressedCreativity.MOD_ID, "block/compressed_air_engine/rotor"));
+        AIR_ENGINE_ROTOR = PartialModel.of(new ResourceLocation(CompressedCreativity.MOD_ID, "block/compressed_air_engine/rotor"));
 
     public static Map<String, PartialModel> MESHES = new HashMap<>();
 
@@ -17,7 +17,7 @@ public class CCBlockPartials {
         for (Mesh.MeshType meshType : Mesh.MeshType.values()) {
             MESHES.put(
                     meshType.getName(),
-                    new PartialModel(new ResourceLocation(
+                    PartialModel.of(new ResourceLocation(
                             CompressedCreativity.MOD_ID,
                             "block/industrial_air_blower/mesh/" + meshType.getName()
                     ))

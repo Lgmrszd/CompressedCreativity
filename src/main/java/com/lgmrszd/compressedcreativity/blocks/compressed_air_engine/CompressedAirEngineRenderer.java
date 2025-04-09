@@ -1,13 +1,13 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -28,7 +28,7 @@ public class CompressedAirEngineRenderer extends KineticBlockEntityRenderer {
 //        super.renderSafe(ote, partialTicks, ms, buffer, light, overlay);
 
 
-        if (Backend.canUseInstancing(ote.getLevel())) return;
+        if (VisualizationManager.supportsVisualization(ote.getLevel())) return;
 
         if (!(ote instanceof CompressedAirEngineBlockEntity te)) return;
 
@@ -42,7 +42,7 @@ public class CompressedAirEngineRenderer extends KineticBlockEntityRenderer {
 //        SuperByteBuffer shaftHalf =
 //                CachedBufferer.partial(shaft(getRotationAxisOf(te)));
         SuperByteBuffer rotor =
-                CachedBufferer.partialFacing(CCBlockPartials.AIR_ENGINE_ROTOR, te.getBlockState(), direction.getOpposite());
+                CachedBuffers.partialFacing(CCBlockPartials.AIR_ENGINE_ROTOR, te.getBlockState(), direction.getOpposite());
 
 //        float time = AnimationTickHolder.getRenderTime(te.getLevel());
 //        float angle = (time * te.getSpeed() * 3 / 10f) % 360;

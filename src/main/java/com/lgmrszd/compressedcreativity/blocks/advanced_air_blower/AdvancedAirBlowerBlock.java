@@ -4,6 +4,7 @@ import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.lgmrszd.compressedcreativity.items.MeshItem;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,7 +59,7 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
             if (!mesh.isEmpty()) {
                 player.getInventory().placeItemBackInInventory(mesh);
                 bbe.setMesh(ItemStack.EMPTY);
-                playRemoveSound(world, pos);
+                IWrenchable.playRemoveSound(world, pos);
                 return InteractionResult.SUCCESS;
             }
         }
@@ -104,7 +105,7 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
 
     public ItemStack tryInstallMesh(Level world, BlockPos pos, AdvancedAirBlowerBlockEntity abte, ItemStack stack) {
         if (!(stack.getItem() instanceof MeshItem)) return ItemStack.EMPTY;
-        playRotateSound(world, pos);
+        IWrenchable.playRotateSound(world, pos);
         ItemStack oldMesh = abte.getMesh();
         abte.setMesh(stack);
         stack.shrink(1);

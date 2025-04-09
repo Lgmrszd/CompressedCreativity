@@ -1,8 +1,8 @@
 package com.lgmrszd.compressedcreativity.index;
 
 import com.lgmrszd.compressedcreativity.CompressedCreativity;
-import com.simibubi.create.foundation.utility.LangBuilder;
-import com.simibubi.create.foundation.utility.LangNumberFormat;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.lang.LangNumberFormat;
 
 public class CCLang {
 

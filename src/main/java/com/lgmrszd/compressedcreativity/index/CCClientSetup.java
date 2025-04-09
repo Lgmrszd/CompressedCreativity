@@ -27,6 +27,6 @@ public class CCClientSetup {
     }
 
     private static void initLate() {
-        CCPonder.register();
+//        CCPonder.register();
     }
 }

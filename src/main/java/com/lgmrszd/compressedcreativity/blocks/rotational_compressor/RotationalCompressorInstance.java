@@ -6,39 +6,47 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
     Source code: https://github.com/Creators-of-Create/Create
 */
 
-import com.jozufozu.flywheel.api.MaterialManager;
 import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
-import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
-import com.simibubi.create.foundation.render.AllMaterialSpecs;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
+import com.simibubi.create.content.kinetics.base.RotatingInstance;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.model.Models;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 
-//import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.jetbrains.annotations.Nullable;
 
-public class RotationalCompressorInstance extends KineticBlockEntityInstance<RotationalCompressorBlockEntity> {
+import java.util.function.Consumer;
 
-    protected final RotatingData shaft;
-    protected final RotatingData fan;
+public class RotationalCompressorInstance extends KineticBlockEntityVisual<RotationalCompressorBlockEntity> {
+
+    protected final RotatingInstance shaft;
+    protected final RotatingInstance fan;
     final Direction direction;
     private final Direction opposite;
 
-    public RotationalCompressorInstance(MaterialManager modelManager, RotationalCompressorBlockEntity tile) {
-        super(modelManager, tile);
+    public RotationalCompressorInstance(VisualizationContext context, RotationalCompressorBlockEntity tile, float partialTick) {
+        super(context, tile, partialTick);
 
         direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);
 
         opposite = direction.getOpposite();
-        shaft = getRotatingMaterial().getModel(AllPartialModels.SHAFT_HALF, blockState, opposite).createInstance();
-        fan = modelManager.defaultCutout()
-                .material(AllMaterialSpecs.ROTATING)
-                .getModel(AllPartialModels.ENCASED_FAN_INNER, blockState, opposite)
-                .createInstance();
+        shaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF)).createInstance();
+        fan = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.ENCASED_FAN_INNER)).createInstance();
 
-        setup(shaft);
-        setup(fan, getFanSpeed());
+        shaft.setup(tile)
+                .setPosition(getVisualPosition())
+                .rotateToFace(Direction.SOUTH, opposite)
+                .setChanged();
+
+        fan.setup(tile, getFanSpeed())
+                .setPosition(getVisualPosition())
+                .rotateToFace(Direction.SOUTH, opposite)
+                .setChanged();
     }
 
     private float getFanSpeed() {
@@ -51,13 +59,13 @@ public class RotationalCompressorInstance extends KineticBlockEntityInstance<Rot
     }
 
     @Override
-    public void update() {
-        updateRotation(shaft);
-        updateRotation(fan, getFanSpeed());
+    public void update(float partialTick) {
+        shaft.setup(blockEntity).setChanged();
+        fan.setup(blockEntity, getFanSpeed()).setChanged();
     }
 
     @Override
-    public void updateLight() {
+    public void updateLight(float partialTick) {
         BlockPos behind = pos.relative(opposite);
         relight(behind, shaft);
 
@@ -66,8 +74,14 @@ public class RotationalCompressorInstance extends KineticBlockEntityInstance<Rot
     }
 
     @Override
-    public void remove() {
+    protected void _delete() {
         shaft.delete();
         fan.delete();
+    }
+
+    @Override
+    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+        consumer.accept(shaft);
+        consumer.accept(fan);
     }
 }

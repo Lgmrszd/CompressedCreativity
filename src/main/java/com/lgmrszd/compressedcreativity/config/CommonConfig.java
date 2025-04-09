@@ -1,12 +1,10 @@
 package com.lgmrszd.compressedcreativity.config;
 
-import com.simibubi.create.content.kinetics.BlockStressValues;
+import com.simibubi.create.api.stress.BlockStressValues;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.lgmrszd.compressedcreativity.CompressedCreativity.MOD_ID;
 
 public class CommonConfig {
     public static final String CATEGORY_GENERAL = "general";
@@ -230,6 +228,7 @@ public class CommonConfig {
         COMMON_SPEC = COMMON_BUILDER.build();
 
         CCStressProvider stressProvider = new CCStressProvider();
-        BlockStressValues.registerProvider(MOD_ID, stressProvider);
+        BlockStressValues.IMPACTS.registerProvider(stressProvider::getImpact);
+        BlockStressValues.CAPACITIES.registerProvider(stressProvider::getCapacity);
     }
 }

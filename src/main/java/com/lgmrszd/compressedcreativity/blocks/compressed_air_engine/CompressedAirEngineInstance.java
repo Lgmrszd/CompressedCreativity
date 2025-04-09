@@ -1,50 +1,66 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
-import com.jozufozu.flywheel.api.MaterialManager;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
+import com.simibubi.create.content.kinetics.base.RotatingInstance;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.material.Material;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
-import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
-import com.simibubi.create.foundation.render.AllMaterialSpecs;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.model.Models;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.jetbrains.annotations.Nullable;
 
-public class CompressedAirEngineInstance extends KineticBlockEntityInstance<CompressedAirEngineBlockEntity> {
+import java.util.function.Consumer;
 
-    protected final RotatingData shaft;
-    protected final RotatingData rotor;
+public class CompressedAirEngineInstance extends KineticBlockEntityVisual<CompressedAirEngineBlockEntity> {
+
+    protected final RotatingInstance shaft;
+    protected final RotatingInstance rotor;
     final Direction direction;
 
-    public CompressedAirEngineInstance(MaterialManager modelManager, CompressedAirEngineBlockEntity tile) {
-        super(modelManager, tile);
+    public CompressedAirEngineInstance(VisualizationContext context, CompressedAirEngineBlockEntity tile, float partialTick) {
+        super(context, tile, partialTick);
 
         direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
 
-//        shaft = getRotatingMaterial().getModel(AllBlockPartials.SHAFT_HALF, blockState, opposite).createInstance();
-        shaft = setup(getRotatingMaterial().getModel(shaft()).createInstance());
-        rotor = modelManager.defaultCutout()
-                .material(AllMaterialSpecs.ROTATING)
-                .getModel(CCBlockPartials.AIR_ENGINE_ROTOR, blockState, direction)
-                .createInstance();
-        setup(shaft);
-        setup(rotor);
+        shaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT, direction)).createInstance();
+        rotor = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(CCBlockPartials.AIR_ENGINE_ROTOR)).createInstance();
+
+        shaft.setup(tile)
+                .setPosition(getVisualPosition())
+                .rotateToFace(Direction.UP, direction.getAxis())
+                .setChanged();
+
+        rotor.setup(tile)
+                .setPosition(getVisualPosition())
+                .rotateToFace(Direction.SOUTH, direction)
+                .setChanged();
     }
 
     @Override
-    public void update() {
-        updateRotation(shaft);
-        updateRotation(rotor);
+    public void update(float partialTick) {
+        shaft.setup(blockEntity).setChanged();
+        rotor.setup(blockEntity).setChanged();
     }
 
     @Override
-    public void updateLight() {
-        super.updateLight();
+    public void updateLight(float partialTick) {
         relight(pos, shaft);
         relight(pos, rotor);
     }
 
     @Override
-    public void remove() {
+    public void _delete() {
         shaft.delete();
         rotor.delete();
+    }
+
+    @Override
+    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+        consumer.accept(shaft);
+        consumer.accept(rotor);
     }
 }
