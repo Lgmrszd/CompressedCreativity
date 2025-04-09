@@ -7,8 +7,8 @@ import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
 import com.lgmrszd.compressedcreativity.index.CCLang;
 import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveHoveringInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.fan.AirCurrent;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
 import com.simibubi.create.content.logistics.chute.ChuteBlockEntity;
@@ -86,6 +86,7 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
         // "Pressure Stats:"
         CCLang.translate("tooltip.pressure_summary")
                 .forGoggles(tooltip);
+
         // "Pressure:"
         CCLang.translate("tooltip.pressure")
                 .style(ChatFormatting.GRAY)

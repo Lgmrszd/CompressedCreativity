@@ -15,18 +15,19 @@ import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedA
 import com.lgmrszd.compressedcreativity.blocks.heater.HeaterBlock;
 import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.decoration.bracket.BracketBlock;
 import com.simibubi.create.content.decoration.bracket.BracketBlockItem;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.fluids.PipeAttachmentModel;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.*;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.block.DyedBlockList;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import com.simibubi.create.infrastructure.config.CStress;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.material.MapColor;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("removal")
 public class CCBlocks {
 
     static {
@@ -63,8 +65,8 @@ public class CCBlocks {
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.axeOrPickaxe())
             .blockstate(BlockStateGen.horizontalBlockProvider(true))
+            .onRegister(BlockStressValues.IMPACTS::get)
             .addLayer(() -> RenderType::cutoutMipped)
-            .transform(BlockStressDefaults.setImpact(8.0))
             .item()
             .transform(customItemModel())
             .register();
@@ -73,8 +75,8 @@ public class CCBlocks {
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
             .blockstate(CompressedAirEngineBlockStateGenerator::blockState)
+            .onRegister(BlockStressValues.CAPACITIES::get)
             .addLayer(() -> RenderType::translucent)
-            .transform(BlockStressDefaults.setCapacity(4.0))
             .item()
             .transform(customItemModel())
             .register();
@@ -110,7 +112,7 @@ public class CCBlocks {
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
             .loot((p, b) -> p.dropOther(b, CCModsReference.PNCPressureTube.getBlockByTier(0).asItem()))
-            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
+            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::withAO))
             .register();
 
     public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_REINFORCED_PRESSURE_TUBE =
@@ -119,7 +121,7 @@ public class CCBlocks {
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
             .loot((p, b) -> p.dropOther(b, CCModsReference.PNCPressureTube.getBlockByTier(1).asItem()))
-            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
+            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::withAO))
             .register();
 
     public static final BlockEntry<BracketedPressureTubeBlock> BRACKETED_ADVANCED_PRESSURE_TUBE =
@@ -128,7 +130,7 @@ public class CCBlocks {
             .transform(TagGen.pickaxeOnly())
             .blockstate(BracketedPressureTubeBlockStateGenerator::blockState)
             .loot((p, b) -> p.dropOther(b, CCModsReference.PNCPressureTube.getBlockByTier(2).asItem()))
-            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::new))
+            .onRegister(CreateRegistrate.blockModel(() -> PipeAttachmentModel::withAO))
             .register();
 
     public static final DyedBlockList<BracketBlock> DYED_PLASTIC_BRACKETS = new DyedBlockList<>(colour -> {

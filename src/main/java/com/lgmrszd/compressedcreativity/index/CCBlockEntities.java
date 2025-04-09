@@ -21,14 +21,14 @@ public class CCBlockEntities {
 
     public static final BlockEntityEntry<RotationalCompressorBlockEntity> ROTATIONAL_COMPRESSOR = REGISTRATE
             .blockEntity("rotational_compressor", RotationalCompressorBlockEntity::new)
-            .instance(() -> RotationalCompressorInstance::new, false)
+            .visual(() -> RotationalCompressorInstance::new, false)
             .validBlock(CCBlocks.ROTATIONAL_COMPRESSOR)
             .renderer(() -> RotationalCompressorRenderer::new)
             .register();
 
     public static final BlockEntityEntry<CompressedAirEngineBlockEntity> COMPRESSED_AIR_ENGINE = REGISTRATE
             .blockEntity("compressed_air_engine", CompressedAirEngineBlockEntity::new)
-            .instance(() -> CompressedAirEngineInstance::new, false)
+            .visual(() -> CompressedAirEngineInstance::new, false)
             .validBlock(CCBlocks.COMPRESSED_AIR_ENGINE)
             .renderer(() -> CompressedAirEngineRenderer::new)
             .register();

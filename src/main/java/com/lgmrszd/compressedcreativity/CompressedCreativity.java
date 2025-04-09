@@ -4,6 +4,7 @@ import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.index.recipe.CCSequencedAssemblyRecipeGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.api.distmarker.Dist;
@@ -75,6 +76,7 @@ public class CompressedCreativity
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         CCClientSetup.init(event);
+        PonderIndex.addPlugin(new CCPonderPlugin());
     }
 
     private void serverStart(final ServerAboutToStartEvent event) {
@@ -103,7 +105,6 @@ public class CompressedCreativity
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         PackOutput output = gen.getPackOutput();
-        CCPonder.registerLang(REGISTRATE);
         CCLangExtender.ExtendLang(REGISTRATE);
         gen.addProvider(true, new CCSequencedAssemblyRecipeGen(output));
     }

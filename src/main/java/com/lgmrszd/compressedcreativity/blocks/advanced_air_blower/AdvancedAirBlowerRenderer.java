@@ -1,12 +1,12 @@
 package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.content.Mesh;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -34,7 +34,7 @@ public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedA
         Optional<PartialModel> meshPartial = meshType.getModel();
         meshPartial.ifPresent((meshModel) -> {
             // Not sure why it needs to be opposite face
-            SuperByteBuffer mesh = CachedBufferer.partialFacing(meshModel, blockState, facing.getOpposite());
+            SuperByteBuffer mesh = CachedBuffers.partialFacing(meshModel, blockState, facing.getOpposite());
 //            rotateToFacing(mesh, facing);
             if (meshType.shouldTint()) {
                 mesh.color(meshType.getTintColor(te));
@@ -44,9 +44,11 @@ public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedA
         });
         Optional<PartialModel> meshPartialExtra = meshType.getModelExtra();
         meshPartialExtra.ifPresent((meshModelExtra) -> {
-            SuperByteBuffer mesh = CachedBufferer.partialFacing(meshModelExtra, blockState, facing.getOpposite());
+            SuperByteBuffer mesh = CachedBuffers.partialFacing(meshModelExtra, blockState, facing.getOpposite());
             mesh.light(light);
             mesh.renderInto(ms, vb);
         });
     }
+
+
 }

@@ -1,10 +1,10 @@
 package com.lgmrszd.compressedcreativity.content;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.lgmrszd.compressedcreativity.blocks.advanced_air_blower.AdvancedAirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.client.renderer.BiomeColors;
@@ -55,7 +55,7 @@ public class Mesh {
             public Optional<FanProcessingType> getProcessingType(int temp) {
                 return temp > 373 ? Optional.of(AllFanProcessingTypes.BLASTING) : // 100
                         temp > 323 ? Optional.of(AllFanProcessingTypes.SMOKING) :
-                                Optional.of(AllFanProcessingTypes.NONE); // 50
+                                Optional.empty(); // 50
             }
 
             @Override

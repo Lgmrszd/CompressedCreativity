@@ -1,9 +1,9 @@
 package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 
 import com.simibubi.create.foundation.data.AssetLookup;
-import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;

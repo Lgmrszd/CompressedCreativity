@@ -57,19 +57,19 @@ public class HeaterBlock extends Block implements IBE<HeaterBlockEntity> {
     }
 
     public static void registerHeater() {
-        BoilerHeaters.registerHeater(CCBlocks.HEATER.get(), (level, pos, state) -> {
-            BlazeBurnerBlock.HeatLevel value = state.getOptionalValue(HEAT_LEVEL).orElse(BlazeBurnerBlock.HeatLevel.NONE);
-            if (value == BlazeBurnerBlock.HeatLevel.NONE) {
-                return -1;
-            }
-            if (value == BlazeBurnerBlock.HeatLevel.SEETHING) {
-                return 2;
-            }
-            if (value.isAtLeast(BlazeBurnerBlock.HeatLevel.FADING)) {
-                return 1;
-            }
-            return 0;
-        });
+//        BoilerHeaters.registerHeater(CCBlocks.HEATER.get(), (level, pos, state) -> {
+//            BlazeBurnerBlock.HeatLevel value = state.getOptionalValue(HEAT_LEVEL).orElse(BlazeBurnerBlock.HeatLevel.NONE);
+//            if (value == BlazeBurnerBlock.HeatLevel.NONE) {
+//                return -1;
+//            }
+//            if (value == BlazeBurnerBlock.HeatLevel.SEETHING) {
+//                return 2;
+//            }
+//            if (value.isAtLeast(BlazeBurnerBlock.HeatLevel.FADING)) {
+//                return 1;
+//            }
+//            return 0;
+//        });
     }
 
     @Override
