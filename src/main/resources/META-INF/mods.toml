@@ -29,7 +29,12 @@ displayURL="https://github.com/Lgmrszd/CompressedCreativity" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="compcreat_logo.png" #optional
 # A text field displayed in the mod UI
-credits="Create and PNC teams for their mods, desht in particular with quick support on PNC end,\nMRHminer for 'Create Crafts & Additions' mod that has been source of inspiration,\nLylythii for some textures help <3" #optional
+credits="""
+Create and PNC teams for their mods, desht in particular with quick support on PNC end,
+MRHminer for 'Create Crafts & Additions' mod that has been source of inspiration,
+Sintinium for update to Create 6.0.x,
+Lylythii for some textures help <3
+"""
 # A text field displayed in the mod UI
 authors="Lgmrszd" #optional
 # The description text for the mod (multi line!) (#mandatory)
@@ -58,7 +63,7 @@ Bridging Create and PneumaticCraft: Repressurized together
 [[dependencies.compressedcreativity]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.1.e,6.0.0)"
+    versionRange="[6.0.4,6.1.0)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.compressedcreativity]]
