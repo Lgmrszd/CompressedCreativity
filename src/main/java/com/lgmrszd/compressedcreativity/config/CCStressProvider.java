@@ -11,28 +11,15 @@ public class CCStressProvider {
 
     public DoubleSupplier getImpact(Block block) {
         if (block instanceof RotationalCompressorBlock) {
-            return new StressDoubleSupplier(() -> CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0);
+            return (() -> CommonConfig.ROTATIONAL_COMPRESSOR_STRESS.get() / 256.0);
         }
-        return new StressDoubleSupplier(() -> 0.0);
+        return (() -> 0.0);
     }
 
     public DoubleSupplier getCapacity(Block block) {
         if (block instanceof CompressedAirEngineBlock) {
-            return new StressDoubleSupplier (() -> CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0);
+            return (() -> CommonConfig.COMPRESSED_AIR_ENGINE_STRESS.get() / 256.0);
         }
-        return new StressDoubleSupplier(() -> 0.0);
-    }
-
-    private class StressDoubleSupplier implements DoubleSupplier {
-        private Supplier<Double> supplier;
-
-        public StressDoubleSupplier(Supplier<Double> supplier) {
-            this.supplier = supplier;
-        }
-
-        @Override
-        public double getAsDouble() {
-            return supplier.get();
-        }
+        return (() -> 0.0);
     }
 }
