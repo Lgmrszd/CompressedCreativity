@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_light_gray_plastic_bracket": {
+    "has_green_plastic_bracket": {
       "conditions": {
         "items": [
           {
             "items": [
-              "compressedcreativity:light_gray_plastic_bracket"
+              "compressedcreativity:green_plastic_bracket"
             ]
           }
         ]
@@ -15,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "compressedcreativity:crafting/light_gray_plastic_bracket"
+        "recipe": "compressedcreativity:crafting/green_plastic_bracket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_light_gray_plastic_bracket",
+      "has_green_plastic_bracket",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "compressedcreativity:crafting/light_gray_plastic_bracket"
+      "compressedcreativity:crafting/green_plastic_bracket"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

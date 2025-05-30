@@ -3,16 +3,16 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "compressedcreativity:crafting/yellow_plastic_bracket"
+        "recipe": "compressedcreativity:crafting/white_plastic_bracket"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "has_yellow_plastic_bracket": {
+    "has_white_plastic_bracket": {
       "conditions": {
         "items": [
           {
             "items": [
-              "compressedcreativity:yellow_plastic_bracket"
+              "compressedcreativity:white_plastic_bracket"
             ]
           }
         ]
@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_yellow_plastic_bracket",
+      "has_white_plastic_bracket",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "compressedcreativity:crafting/yellow_plastic_bracket"
+      "compressedcreativity:crafting/white_plastic_bracket"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
