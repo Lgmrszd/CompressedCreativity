@@ -15,7 +15,6 @@ import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedA
 import com.lgmrszd.compressedcreativity.blocks.heater.HeaterBlock;
 import com.lgmrszd.compressedcreativity.blocks.plastic_bracket.PlasticBracketGenerator;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlock;
-import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.content.decoration.bracket.BracketBlock;
 import com.simibubi.create.content.decoration.bracket.BracketBlockItem;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
@@ -27,7 +26,6 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.block.DyedBlockList;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.infrastructure.config.CStress;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -65,7 +63,6 @@ public class CCBlocks {
             .initialProperties(SharedProperties::stone)
             .transform(TagGen.axeOrPickaxe())
             .blockstate(BlockStateGen.horizontalBlockProvider(true))
-            .onRegister(BlockStressValues.IMPACTS::get)
             .addLayer(() -> RenderType::cutoutMipped)
             .item()
             .transform(customItemModel())
@@ -75,7 +72,6 @@ public class CCBlocks {
             .initialProperties(SharedProperties::copperMetal)
             .transform(TagGen.pickaxeOnly())
             .blockstate(CompressedAirEngineBlockStateGenerator::blockState)
-            .onRegister(BlockStressValues.CAPACITIES::get)
             .addLayer(() -> RenderType::translucent)
             .item()
             .transform(customItemModel())
