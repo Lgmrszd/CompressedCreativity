@@ -4,6 +4,7 @@ import com.lgmrszd.compressedcreativity.index.*;
 import com.lgmrszd.compressedcreativity.index.CCItems;
 import com.lgmrszd.compressedcreativity.index.recipe.CCSequencedAssemblyRecipeGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.providers.ProviderType;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -105,6 +106,12 @@ public class CompressedCreativity
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         PackOutput output = gen.getPackOutput();
+
+        REGISTRATE.addDataGenerator(ProviderType.LANG, provider -> {
+            PonderIndex.addPlugin(new CCPonderPlugin());
+            PonderIndex.getLangAccess().provideLang(MOD_ID, provider::add);
+        });
+
         CCLangExtender.ExtendLang(REGISTRATE);
         gen.addProvider(true, new CCSequencedAssemblyRecipeGen(output));
     }
