@@ -22,14 +22,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class RotationalCompressorInstance extends KineticBlockEntityVisual<RotationalCompressorBlockEntity> {
+public class RotationalCompressorVisual extends KineticBlockEntityVisual<RotationalCompressorBlockEntity> {
 
     protected final RotatingInstance shaft;
     protected final RotatingInstance fan;
     final Direction direction;
     private final Direction opposite;
 
-    public RotationalCompressorInstance(VisualizationContext context, RotationalCompressorBlockEntity tile, float partialTick) {
+    public RotationalCompressorVisual(VisualizationContext context, RotationalCompressorBlockEntity tile, float partialTick) {
         super(context, tile, partialTick);
 
         direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING);

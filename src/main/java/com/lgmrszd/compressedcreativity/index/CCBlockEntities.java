@@ -6,12 +6,12 @@ import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedAdvancedPressureTubeBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedPressureTubeBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube.BracketedReinforcedPressureTubeBlockEntity;
-import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineInstance;
+import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineVisual;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineRenderer;
 import com.lgmrszd.compressedcreativity.blocks.compressed_air_engine.CompressedAirEngineBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.heater.HeaterBlockEntity;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorBlockEntity;
-import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorInstance;
+import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorVisual;
 import com.lgmrszd.compressedcreativity.blocks.rotational_compressor.RotationalCompressorRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
@@ -21,14 +21,14 @@ public class CCBlockEntities {
 
     public static final BlockEntityEntry<RotationalCompressorBlockEntity> ROTATIONAL_COMPRESSOR = REGISTRATE
             .blockEntity("rotational_compressor", RotationalCompressorBlockEntity::new)
-            .visual(() -> RotationalCompressorInstance::new, false)
+            .visual(() -> RotationalCompressorVisual::new, false)
             .validBlock(CCBlocks.ROTATIONAL_COMPRESSOR)
             .renderer(() -> RotationalCompressorRenderer::new)
             .register();
 
     public static final BlockEntityEntry<CompressedAirEngineBlockEntity> COMPRESSED_AIR_ENGINE = REGISTRATE
             .blockEntity("compressed_air_engine", CompressedAirEngineBlockEntity::new)
-            .visual(() -> CompressedAirEngineInstance::new, false)
+            .visual(() -> CompressedAirEngineVisual::new, false)
             .validBlock(CCBlocks.COMPRESSED_AIR_ENGINE)
             .renderer(() -> CompressedAirEngineRenderer::new)
             .register();
@@ -39,10 +39,10 @@ public class CCBlockEntities {
             .register();
 
 
-    // TODO: fix Flywheel Instance
+    // TODO: fix Flywheel Visual
     public static final BlockEntityEntry<AdvancedAirBlowerBlockEntity> INDUSTRIAL_AIR_BLOWER = REGISTRATE
             .blockEntity("advanced_air_blower", AdvancedAirBlowerBlockEntity::new)
-//            .instance(() -> AdvancedAirBlowerInstance::new, false)
+//            .visual(() -> AdvancedAirBlowerVisual::new, false)
             .validBlock(CCBlocks.INDUSTRIAL_AIR_BLOWER)
             .renderer(() -> AdvancedAirBlowerRenderer::new)
             .register();

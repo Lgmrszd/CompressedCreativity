@@ -5,7 +5,6 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
 import dev.engine_room.flywheel.api.instance.Instance;
-import dev.engine_room.flywheel.api.material.Material;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
@@ -15,13 +14,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class CompressedAirEngineInstance extends KineticBlockEntityVisual<CompressedAirEngineBlockEntity> {
+public class CompressedAirEngineVisual extends KineticBlockEntityVisual<CompressedAirEngineBlockEntity> {
 
     protected final RotatingInstance shaft;
     protected final RotatingInstance rotor;
     final Direction direction;
 
-    public CompressedAirEngineInstance(VisualizationContext context, CompressedAirEngineBlockEntity tile, float partialTick) {
+    public CompressedAirEngineVisual(VisualizationContext context, CompressedAirEngineBlockEntity tile, float partialTick) {
         super(context, tile, partialTick);
 
         direction = blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).getOpposite();
