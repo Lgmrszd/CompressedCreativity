@@ -3,8 +3,6 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.animation.AnimationTickHolder;
@@ -32,7 +30,7 @@ public class RotationalCompressorRenderer extends KineticBlockEntityRenderer<Rot
 
 
         Direction direction = be.getBlockState()
-                .getValue(DirectionalKineticBlock.FACING);
+                .getValue(RotationalCompressorBlock.HORIZONTAL_FACING);
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
 
         int lightBehind = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(direction.getOpposite()));
