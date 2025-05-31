@@ -19,7 +19,7 @@ apply plugin: "org.spongepowered.mixin"
 
 //jarJar.enable()
 
-version = "${minecraft_version}-0.2.0-alpha"
+version = "${minecraft_version}-0.2.0"
 group = 'com.lgmrszd.compressedcreativity' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'compressedcreativity'
 
