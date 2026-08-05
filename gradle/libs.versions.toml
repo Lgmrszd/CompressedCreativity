@@ -1,0 +1,15 @@
+
+[versions]
+# Project
+minecraft = "1.21.1"
+neoforge = "21.1.216"
+create = "0.5.1.i-66+mc1.21.1"
+pneumaticcraft = "8.2.16+mc1.21.1"
+
+[plugins]
+moddevgradle = { id = "net.neoforged.moddev", version = "2.0.92" }
+
+[libraries]
+neoforge = { group = "net.neoforged", name = "neoforge", version.ref = "neoforge" }
+create = { group = "com.simibubi.create", name = "create-neoforge-1.21.1", version.ref = "create" }
+pneumaticcraft = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneumaticcraft" }

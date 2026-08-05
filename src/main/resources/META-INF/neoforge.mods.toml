@@ -1,0 +1,51 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+
+[[mods]]
+    modId = "compressedcreativity"
+    version = "${file.jarVersion}"
+    displayName = "Compressed Creativity"
+    displayURL = "https://github.com/Lgmrszd/CompressedCreativity"
+    logoFile = "compcreat_logo.png"
+    credits = """
+Create and PNC teams for their mods, desht in particular with quick support on PNC end,
+MRHminer for 'Create Crafts & Additions' mod that has been source of inspiration,
+Sintinium for update to Create 6.0.x,
+Lylythii for some textures help <3
+"""
+    authors = "Lgmrszd"
+    description = '''
+Bridging Create and PneumaticCraft: Repressurized together
+'''
+
+[[mixins]]
+    config = "mixins.compressedcreativity.json"
+
+[[dependencies.compressedcreativity]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.compressedcreativity]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[1.21.1,1.22)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.compressedcreativity]]
+    modId = "create"
+    type = "required"
+    versionRange = "[0.6,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.compressedcreativity]]
+    modId = "jei"
+    type = "optional"
+    versionRange = "[19.0,)"
+    ordering = "AFTER"
+    side = "CLIENT"
