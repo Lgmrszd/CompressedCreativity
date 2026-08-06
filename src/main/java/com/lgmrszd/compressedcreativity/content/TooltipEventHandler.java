@@ -7,16 +7,16 @@ import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 
 import static me.desht.pneumaticcraft.common.util.PneumaticCraftUtils.xlate;
 
-@Mod.EventBusSubscriber(modid = CompressedCreativity.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = CompressedCreativity.MOD_ID, value = Dist.CLIENT)
 public class TooltipEventHandler {
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
@@ -30,7 +30,7 @@ public class TooltipEventHandler {
     }
 
     private static void addPressureTooltip(ItemStack stack, List<Component> textList) {
-        stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).ifPresent(airHandler -> {
+        PNCCapabilities.getAirHandler(stack).ifPresent(airHandler -> {
             float f = airHandler.getPressure() / airHandler.maxPressure();
             ChatFormatting color;
             if (f < 0.1f) {

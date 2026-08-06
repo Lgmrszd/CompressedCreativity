@@ -7,7 +7,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class CCModsReference {
 
@@ -16,8 +16,8 @@ public class CCModsReference {
         return miscHelpers.airParticle();
     }
     public static Block getPlasticBrickBlockByColor(DyeColor color) {
-        return ForgeRegistries.BLOCKS.getValue(
-                new ResourceLocation(PneumaticRegistry.MOD_ID, "plastic_brick_" + color.getName()));
+        return BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath(PneumaticRegistry.MOD_ID, "plastic_brick_" + color.getName()));
     }
     public enum PNCPressureTube {
         BASIC(0, "pressure_tube"),
@@ -31,8 +31,8 @@ public class CCModsReference {
         PNCPressureTube(int tier, String id) {
             this.tier = tier;
             this.id = id;
-            this.block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(PneumaticRegistry.MOD_ID, id));
-//            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(PneumaticRegistry.MOD_ID, id));
+            this.block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(PneumaticRegistry.MOD_ID, id));
+
 //            this.block = block == null ? LazyOptional.empty() : LazyOptional.of(() -> block);
         }
 
@@ -63,7 +63,7 @@ public class CCModsReference {
         }
 
         public static PNCPressureTube getByBlock(Block block){
-            ResourceLocation loc = ForgeRegistries.BLOCKS.getKey(block);
+            ResourceLocation loc = BuiltInRegistries.BLOCK.getKey(block);
             if (loc == null || !loc.getNamespace().equals(PneumaticRegistry.MOD_ID)) return null;
             String path = loc.getPath();
             if (path.equals(BASIC.id)) return BASIC;

@@ -1,21 +1,25 @@
 package com.lgmrszd.compressedcreativity.index;
 
+import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.config.ClientConfig;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
-import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.client.pneumatic_armor.ClientArmorRegistry;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.IEventBus;
 
 public class CCConfigHelper {
 
     public static void init() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CommonConfig.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC);
+        ModContainer container = ModList.get().getModContainerById(CompressedCreativity.MOD_ID).orElseThrow();
+        container.registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_SPEC);
+        container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_SPEC);
+    }
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(CCConfigHelper::onConfigChanged);
+    public static void registerConfigListener(IEventBus modEventBus) {
+        modEventBus.addListener(CCConfigHelper::onConfigChanged);
     }
 
     private static void onConfigChanged(final ModConfigEvent event) {
@@ -26,7 +30,6 @@ public class CCConfigHelper {
     }
 
     static void refreshClient() {
-//        PneumaticRegistry.getInstance().getClientArmorRegistry().getInstance().refreshConfig();
         ClientArmorRegistry.getInstance().refreshConfig();
     }
 }

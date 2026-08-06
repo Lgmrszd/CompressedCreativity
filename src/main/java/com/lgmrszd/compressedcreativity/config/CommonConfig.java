@@ -1,7 +1,7 @@
 package com.lgmrszd.compressedcreativity.config;
 
 import com.simibubi.create.api.stress.BlockStressValues;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,54 +16,54 @@ public class CommonConfig {
     public static final String CATEGORY_HEATER = "heater";
     public static final String CATEGORY_CUSTOM_PRESSURE = "custom_pressure";
 
-    public static final Map<String, ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum>>
+    public static final Map<String, ModConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum>>
             MACHINE_PRESSURE_TIERS = new HashMap<>();
 
-    public static final Map<String, ForgeConfigSpec.DoubleValue>
+    public static final Map<String, ModConfigSpec.DoubleValue>
             CUSTOM_DANGER_PRESSURE = new HashMap<>();
 
-    public static final Map<String, ForgeConfigSpec.DoubleValue>
+    public static final Map<String, ModConfigSpec.DoubleValue>
             CUSTOM_CRITICAL_PRESSURE = new HashMap<>();
 
-    public static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec COMMON_SPEC;
+    public static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec COMMON_SPEC;
 
-    public static final ForgeConfigSpec.BooleanValue BACKTANK_COMPAT_ITEM;
+    public static final ModConfigSpec.BooleanValue BACKTANK_COMPAT_ITEM;
 
-    public static final ForgeConfigSpec.BooleanValue BACKTANK_COMPAT_BLOCK;
+    public static final ModConfigSpec.BooleanValue BACKTANK_COMPAT_BLOCK;
 
-    public static final ForgeConfigSpec.BooleanValue CHESTPLATE_COMPAT;
+    public static final ModConfigSpec.BooleanValue CHESTPLATE_COMPAT;
 
-    public static final ForgeConfigSpec.DoubleValue CHESTPLATE_MIN_PRESSURE;
-//    public static final ForgeConfigSpec.IntValue BACKTANK_VOLUME;
+    public static final ModConfigSpec.DoubleValue CHESTPLATE_MIN_PRESSURE;
+//    public static final ModConfigSpec.IntValue BACKTANK_VOLUME;
 
-    public static final ForgeConfigSpec.IntValue ROTATIONAL_COMPRESSOR_STRESS;
-    public static final ForgeConfigSpec.IntValue ROTATIONAL_COMPRESSOR_VOLUME;
-    public static final ForgeConfigSpec.DoubleValue ROTATIONAL_COMPRESSOR_BASE_PRODUCTION;
+    public static final ModConfigSpec.IntValue ROTATIONAL_COMPRESSOR_STRESS;
+    public static final ModConfigSpec.IntValue ROTATIONAL_COMPRESSOR_VOLUME;
+    public static final ModConfigSpec.DoubleValue ROTATIONAL_COMPRESSOR_BASE_PRODUCTION;
 
-    public static final ForgeConfigSpec.IntValue AIR_BLOWER_VOLUME;
-    public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_WORK_PRESSURE;
-    public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_OVERWORK_PRESSURE;
-    public static final ForgeConfigSpec.DoubleValue AIR_BLOWER_AIR_USAGE_PER_BAR;
+    public static final ModConfigSpec.IntValue AIR_BLOWER_VOLUME;
+    public static final ModConfigSpec.DoubleValue AIR_BLOWER_WORK_PRESSURE;
+    public static final ModConfigSpec.DoubleValue AIR_BLOWER_OVERWORK_PRESSURE;
+    public static final ModConfigSpec.DoubleValue AIR_BLOWER_AIR_USAGE_PER_BAR;
 
-    public static final ForgeConfigSpec.IntValue INDUSTRIAL_AIR_BLOWER_VOLUME;
+    public static final ModConfigSpec.IntValue INDUSTRIAL_AIR_BLOWER_VOLUME;
 
 
-    public static final ForgeConfigSpec.IntValue COMPRESSED_AIR_ENGINE_VOLUME;
-    public static final ForgeConfigSpec.IntValue COMPRESSED_AIR_ENGINE_STRESS;
-    public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_WORK_PRESSURE;
-    public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE;
-    public static final ForgeConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK;
+    public static final ModConfigSpec.IntValue COMPRESSED_AIR_ENGINE_VOLUME;
+    public static final ModConfigSpec.IntValue COMPRESSED_AIR_ENGINE_STRESS;
+    public static final ModConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_WORK_PRESSURE;
+    public static final ModConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_IDLE;
+    public static final ModConfigSpec.DoubleValue COMPRESSED_AIR_ENGINE_AIR_USAGE_WORK;
 
-    public static final ForgeConfigSpec.DoubleValue HEATER_THERMAL_CAPACITY;
-    public static final ForgeConfigSpec.DoubleValue HEATER_THERMAL_RESISTANCE;
-    public static final ForgeConfigSpec.IntValue HEATER_TEMPERATURE_PASSIVE;
-    public static final ForgeConfigSpec.IntValue HEATER_TEMPERATURE_KINDLED;
-    public static final ForgeConfigSpec.IntValue HEATER_TEMPERATURE_SEETHING;
-    public static final ForgeConfigSpec.IntValue HEATER_STARTING_TEMPERATURE;
-    public static final ForgeConfigSpec.DoubleValue HEATER_TEMPERATURE_COEFFICIENT;
+    public static final ModConfigSpec.DoubleValue HEATER_THERMAL_CAPACITY;
+    public static final ModConfigSpec.DoubleValue HEATER_THERMAL_RESISTANCE;
+    public static final ModConfigSpec.IntValue HEATER_TEMPERATURE_PASSIVE;
+    public static final ModConfigSpec.IntValue HEATER_TEMPERATURE_KINDLED;
+    public static final ModConfigSpec.IntValue HEATER_TEMPERATURE_SEETHING;
+    public static final ModConfigSpec.IntValue HEATER_STARTING_TEMPERATURE;
+    public static final ModConfigSpec.DoubleValue HEATER_TEMPERATURE_COEFFICIENT;
 
-    private static ForgeConfigSpec.IntValue makeVolumeField(int def) {
+    private static ModConfigSpec.IntValue makeVolumeField(int def) {
         return COMMON_BUILDER
                 .comment("Air Volume of the machine\n" +
                         "Default value: " + def)
@@ -71,17 +71,17 @@ public class CommonConfig {
     }
 
     private static void makePressureFields(String name, PressureTierConfig.PressureTierEnum pressureTier) {
-        ForgeConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> pressure_tier = COMMON_BUILDER
+        ModConfigSpec.EnumValue<PressureTierConfig.PressureTierEnum> pressure_tier = COMMON_BUILDER
                 .comment("Pressure Tier of the machine\n" +
                         "All but CUSTOM one match Pressure Tiers from PNC:R")
                 .defineEnum("pressure_tier", pressureTier);
         COMMON_BUILDER
                 .comment("Values from Custom Air Pressure for this machine").push(CATEGORY_CUSTOM_PRESSURE);
-        ForgeConfigSpec.DoubleValue dangerPressure = COMMON_BUILDER
+        ModConfigSpec.DoubleValue dangerPressure = COMMON_BUILDER
                 .comment("Danger Pressure of the machine\n" +
                         "Default value: " + 5d)
                 .defineInRange("danger_pressure", 5d, 0d, 20d);
-        ForgeConfigSpec.DoubleValue criticalPressure = COMMON_BUILDER
+        ModConfigSpec.DoubleValue criticalPressure = COMMON_BUILDER
                 .comment("""
                         Additional Critical Pressure of the machine.
                         Actual Critical Pressure is the sum of this value and Danger Pressure

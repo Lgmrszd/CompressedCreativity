@@ -7,6 +7,7 @@ import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorRegistry;
+import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonUpgradeHandlers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,13 +19,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber
 public class CCMisc {
     public static void appendPneumaticHoverText(Supplier<BlockEntity> BEProvider, List<Component> infoList) {
         if (Screen.hasShiftDown()) {
@@ -43,17 +42,25 @@ public class CCMisc {
         AtomicInteger oldAir = new AtomicInteger();
         BlockEntity oldBE = world.getBlockEntity(blockPos);
         if (oldBE != null) {
-            oldBE.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent((cap) -> oldAir.set(cap.getAir()));
+            // NeoForge 1.21: Query capability from Level
+            IAirHandlerMachine cap = world.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE, blockPos, null);
+            if (cap != null) {
+                oldAir.set(cap.getAir());
+            }
         }
         world.setBlockAndUpdate(blockPos, newState);
         BlockEntity newBE = world.getBlockEntity(blockPos);
         if (newBE != null) {
-            newBE.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent((cap) -> cap.addAir(oldAir.get() - cap.getAir()));
+            // NeoForge 1.21: Query capability from Level
+            IAirHandlerMachine cap = world.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE, blockPos, null);
+            if (cap != null) {
+                cap.addAir(oldAir.get() - cap.getAir());
+            }
         }
     }
 
     public static ResourceLocation CCRL(String path) {
-        return new ResourceLocation(CompressedCreativity.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(CompressedCreativity.MOD_ID, path);
     }
 
     public static float chestplatePressureAvailable(Player player) {
