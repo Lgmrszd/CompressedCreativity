@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "compressedcreativity:mesh_empty"
+    },
+    "I": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    " F ",
+    "III",
+    " F "
+  ],
+  "result": {
+    "id": "compressedcreativity:mesh_woven"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "compressedcreativity:mesh_empty"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    " F ",
+    "III",
+    " F "
+  ],
+  "result": {
+    "id": "compressedcreativity:mesh_dense"
+  }
+}

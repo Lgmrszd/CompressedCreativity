@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "create:andesite_alloy"
+    },
+    "P": {
+      "item": "pneumaticcraft:plastic_brick_light_gray"
+    }
+  },
+  "pattern": [
+    " P ",
+    "PAP"
+  ],
+  "result": {
+    "count": 6,
+    "id": "compressedcreativity:light_gray_plastic_bracket"
+  }
+}

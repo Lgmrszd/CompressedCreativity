@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:ingots/compressed_iron"
+    },
+    "G": {
+      "item": "create:goggles"
+    },
+    "P": {
+      "item": "create:precision_mechanism"
+    },
+    "T": {
+      "item": "create:electron_tube"
+    },
+    "U": {
+      "tag": "compressedcreativity:upgrade_components"
+    }
+  },
+  "pattern": [
+    "UTU",
+    "CGC",
+    "UPU"
+  ],
+  "result": {
+    "id": "compressedcreativity:mechanical_visor_upgrade"
+  }
+}

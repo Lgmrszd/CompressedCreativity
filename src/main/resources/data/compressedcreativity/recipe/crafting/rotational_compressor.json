@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "pneumaticcraft:reinforced_bricks"
+    },
+    "C": {
+      "item": "create:brass_casing"
+    },
+    "P": {
+      "item": "create:propeller"
+    },
+    "R": {
+      "item": "create:cogwheel"
+    },
+    "S": {
+      "item": "create:shaft"
+    },
+    "T": {
+      "item": "pneumaticcraft:pressure_tube"
+    }
+  },
+  "pattern": [
+    "BPB",
+    "TCT",
+    "RSR"
+  ],
+  "result": {
+    "id": "compressedcreativity:rotational_compressor"
+  }
+}

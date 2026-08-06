@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:ingots/brass"
+    },
+    "C": {
+      "tag": "c:plates/copper"
+    },
+    "I": {
+      "tag": "c:ingots/compressed_iron"
+    },
+    "R": {
+      "item": "compressedcreativity:engine_rotor"
+    },
+    "T": {
+      "item": "pneumaticcraft:pressure_tube"
+    }
+  },
+  "pattern": [
+    " TB",
+    "CRI",
+    " CB"
+  ],
+  "result": {
+    "id": "compressedcreativity:compressed_air_engine"
+  }
+}
