@@ -9,9 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +26,7 @@ public class BackTankUtilMixinClient {
     @Inject(method = "isBarVisible", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;getAllWithAir(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;"), cancellable = true, remap = false)
     private static void atIsBarVisible(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Boolean> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
-        LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
+        LocalPlayer player = Minecraft.getInstance().player;
         if(chestplatePressureAvailable(player) > 0) {
             cir.setReturnValue(true);
         }
@@ -36,7 +35,7 @@ public class BackTankUtilMixinClient {
     @Inject(method = "getBarWidth", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;getAllWithAir(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;"), cancellable = true, remap = false)
     private static void atGetBarWidth(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Integer> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
-        LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
+        LocalPlayer player = Minecraft.getInstance().player;
         float pressure = chestplatePressureAvailable(player);
         if(pressure > 0) {
             cir.setReturnValue(Math.round(
@@ -48,7 +47,7 @@ public class BackTankUtilMixinClient {
     @Inject(method = "getBarColor", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/simibubi/create/content/equipment/armor/BacktankUtil;getAllWithAir(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;"), cancellable = true, remap = false)
     private static void atGetBarColor(ItemStack stack, int usesPerTank, CallbackInfoReturnable<Integer> cir) {
         if (!CHESTPLATE_COMPAT.get()) return;
-        LocalPlayer player = DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
+        LocalPlayer player = Minecraft.getInstance().player;
         ICommonArmorRegistry reg = PneumaticRegistry.getInstance().getCommonArmorRegistry();
         ICommonArmorHandler handler = reg.getCommonArmorHandler(player);
         float pressure = handler.getArmorPressure(EquipmentSlot.CHEST);

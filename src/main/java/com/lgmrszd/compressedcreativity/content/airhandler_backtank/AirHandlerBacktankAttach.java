@@ -1,69 +1,48 @@
 package com.lgmrszd.compressedcreativity.content.airhandler_backtank;
 
-import com.lgmrszd.compressedcreativity.index.CCMisc;
+import com.simibubi.create.AllBlockEntityTypes;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
-import com.simibubi.create.content.equipment.armor.BacktankItem;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 
-import static com.lgmrszd.compressedcreativity.config.CommonConfig.BACKTANK_COMPAT_ITEM;
 import static com.lgmrszd.compressedcreativity.config.CommonConfig.BACKTANK_COMPAT_BLOCK;
+import static com.lgmrszd.compressedcreativity.config.CommonConfig.BACKTANK_COMPAT_ITEM;
 
-@Mod.EventBusSubscriber
 public class AirHandlerBacktankAttach {
-    @SubscribeEvent
-    public static void onAttachingCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
-        if (!(event.getObject().getItem() instanceof BacktankItem)) return;
-        if (!BACKTANK_COMPAT_ITEM.get()) return;
+    private static final Map<BacktankBlockEntity, AirHandlerBacktankBlockEntity> HANDLERS =
+            Collections.synchronizedMap(new WeakHashMap<>());
 
-        LazyOptional<AirHandlerBacktankItem> airHandlerBacktankCap = LazyOptional.of(() -> new AirHandlerBacktankItem(event.getObject()));
-
-        ICapabilityProvider provider = new ICapabilityProvider() {
-            @Nonnull
-            @Override
-            public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction) {
-                if (cap == PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY) {
-                    return airHandlerBacktankCap.cast();
-                }
-                return LazyOptional.empty();
-            }
-        };
-
-        event.addCapability(CCMisc.CCRL("airhandler_backtank_item"), provider);
+    public static AirHandlerBacktankBlockEntity getOrCreate(BacktankBlockEntity be) {
+        return HANDLERS.computeIfAbsent(be, AirHandlerBacktankBlockEntity::new);
     }
-    @SubscribeEvent
-    public static void onAttachingCapabilitiesBE(final AttachCapabilitiesEvent<BlockEntity> event) {
-        if (!(event.getObject() instanceof BacktankBlockEntity bbe)) return;
 
-        AirHandlerBacktankBlockEntity airHandlerBacktankBlockEntity =
-                new AirHandlerBacktankBlockEntity(bbe);
-        LazyOptional<AirHandlerBacktankBlockEntity> airHandlerBacktankCap = LazyOptional.of(() -> airHandlerBacktankBlockEntity);
-
-        ICapabilityProvider provider = new ICapabilityProvider() {
-            @Nonnull
-            @Override
-            public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction direction) {
-                if (BACKTANK_COMPAT_BLOCK.get() &&
-                        cap == PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY &&
-                        (direction == null || direction == Direction.DOWN)) {
-                    return airHandlerBacktankCap.cast();
+    public static void register(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                PNCCapabilities.AIR_HANDLER_MACHINE,
+                AllBlockEntityTypes.BACKTANK.get(),
+                (be, side) -> {
+                    if (!BACKTANK_COMPAT_BLOCK.get()) return null;
+                    if (!(be instanceof BacktankBlockEntity backtankBE)) return null;
+                    if (side != null && side != Direction.DOWN) return null;
+                    return getOrCreate(backtankBE);
                 }
-                return LazyOptional.empty();
-            }
-        };
+        );
 
-        event.addCapability(CCMisc.CCRL("airhandler_backtank_be"), provider);
+        event.registerItem(
+                PNCCapabilities.AIR_HANDLER_ITEM,
+                (stack, ctx) -> {
+                    if (!BACKTANK_COMPAT_ITEM.get()) return null;
+                    return new AirHandlerBacktankItem(stack);
+                },
+                AllItems.COPPER_BACKTANK.get(),
+                AllItems.NETHERITE_BACKTANK.get()
+        );
     }
 // Debug just in case
 //    @SubscribeEvent

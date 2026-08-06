@@ -9,17 +9,17 @@ import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.util.PneumaticCraftUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     private final float MAX_PRESSURE = 3;
@@ -80,15 +80,14 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     private void disperseAir() {
         // Basically copying code from MachineAirHandler default implementation
         // 1. Since we only have one connection we don't need lists, we simply cache AirHandler itself
+        BlockEntity blockEntityBelow = Objects.requireNonNull(BacktankBE.getLevel())
+                .getBlockEntity(BacktankBE.getBlockPos().relative(Direction.DOWN));
+        if (blockEntityBelow == null) {
+            connectedAirHandler = null;
+            return;
+        }
         if (connectedAirHandler == null) {
-            BlockEntity blockEntityBelow = Objects.requireNonNull(BacktankBE.getLevel())
-                    .getBlockEntity(BacktankBE.getBlockPos().relative(Direction.DOWN));
-            if (blockEntityBelow == null) return;
-            LazyOptional<IAirHandlerMachine> lazyCap = blockEntityBelow.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY);
-            lazyCap.ifPresent(cap -> {
-                connectedAirHandler = cap;
-                lazyCap.addListener(self -> connectedAirHandler = null);
-            });
+            PNCCapabilities.getAirHandler(blockEntityBelow).ifPresent(cap -> connectedAirHandler = cap);
         }
         if (connectedAirHandler == null) return;
         if (connectedAirHandler.getPressure() > getPressure()) return;
@@ -125,7 +124,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     }
 
     @Override
-    public void setConnectedFaces(List<Direction> sides) {
+    public void setConnectableFaces(Collection<Direction> sides) {
 
     }
 
@@ -146,6 +145,11 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
         delta = total - transformed * RATIO;
         BacktankBE.setAirLevel(transformed);
 //        if (total == maxVolume) copperBacktankBE.sendData();
+    }
+
+    @Override
+    public void addPendingAir(int pendingAir) {
+
     }
 
     @Override
@@ -185,7 +189,7 @@ public class AirHandlerBacktankBlockEntity implements IAirHandlerMachine {
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public Tag serializeNBT() {
         return null;
     }
 
