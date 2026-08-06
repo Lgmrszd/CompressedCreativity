@@ -10,10 +10,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraftforge.client.gui.widget.ExtendedButton;
+import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
 
 public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<MechanicalVisorClientHandler> {
@@ -68,7 +67,6 @@ public class MechanicalVisorOptions extends IOptionPage.SimpleOptionPage<Mechani
     @Override
     public void renderPost(GuiGraphics graphics, int x, int y, float partialTicks) {
         Font font = this.getGuiScreen().getFontRenderer();
-        Screen guiScreen = this.getGuiScreen().getScreen();
         FormattedCharSequence widgetCharSequence =
                 Component.translatable("compressedcreativity.mechanical_visor.armor.gui.tooltip_mode")
                         .withStyle(ChatFormatting.GOLD).getVisualOrderText();

@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity;
 
-import com.lgmrszd.compressedcreativity.config.MechanicalVisorConfig;
 import com.lgmrszd.compressedcreativity.index.CCClientSetup;
 import com.lgmrszd.compressedcreativity.index.CCCommonUpgradeHandlers;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;

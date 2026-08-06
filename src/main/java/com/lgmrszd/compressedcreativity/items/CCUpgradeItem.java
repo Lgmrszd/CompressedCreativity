@@ -9,12 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 
 public class CCUpgradeItem extends Item implements IUpgradeItem {
@@ -39,7 +37,7 @@ public class CCUpgradeItem extends Item implements IUpgradeItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level world, List<Component> infoList, TooltipFlag par4) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> infoList, TooltipFlag par4) {
         if (Screen.hasShiftDown()) {
             infoList.add(Component.translatable("pneumaticcraft.gui.tooltip.item.upgrade.usedIn").withStyle(ChatFormatting.GOLD));
             PneumaticRegistry.getInstance().getUpgradeRegistry().addUpgradeTooltip(upgrade, infoList);

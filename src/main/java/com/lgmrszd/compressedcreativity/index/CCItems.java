@@ -7,7 +7,7 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,11 +15,6 @@ import java.util.Map;
 import static com.lgmrszd.compressedcreativity.CompressedCreativity.REGISTRATE;
 
 public class CCItems {
-
-    static {
-        REGISTRATE.setCreativeTab(CCCreativeTabs.BASE_CREATIVE_TAB);
-    }
-
     public static final ItemEntry<Item> MECHANICAL_VISOR_UPGRADE = REGISTRATE.item(
             "mechanical_visor_upgrade", (properties) -> (Item) new CCUpgradeItem(properties, CCUpgrades.MECHANICAL_VISOR, 1)
     )

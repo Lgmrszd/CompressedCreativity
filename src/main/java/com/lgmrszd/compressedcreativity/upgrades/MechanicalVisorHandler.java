@@ -13,7 +13,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 public class MechanicalVisorHandler extends BaseArmorUpgradeHandler<IArmorExtensionData> {
     @Override
     public ResourceLocation getID() {
-        return new ResourceLocation(CompressedCreativity.MOD_ID, "mechanical_visor");
+        return ResourceLocation.fromNamespaceAndPath(CompressedCreativity.MOD_ID, "mechanical_visor");
     }
 
     @Override

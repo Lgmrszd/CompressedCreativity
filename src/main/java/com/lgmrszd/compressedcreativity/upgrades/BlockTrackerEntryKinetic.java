@@ -16,7 +16,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,9 +26,9 @@ import java.util.List;
 
 public class BlockTrackerEntryKinetic implements IBlockTrackEntry {
 
-    public static final ResourceLocation ID = new ResourceLocation(CompressedCreativity.MOD_ID, "block_tracker_module_kinetic");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(CompressedCreativity.MOD_ID, "block_tracker_module_kinetic");
     @Override
-    public boolean shouldTrackWithThisEntry(BlockGetter world, BlockPos pos, BlockState state, BlockEntity te) {
+    public boolean shouldTrackWithThisEntry(Level world, BlockPos pos, BlockState state, BlockEntity te) {
         Player player = Minecraft.getInstance().player;
         ICommonArmorHandler handler = PneumaticRegistry.getInstance().getCommonArmorRegistry().getCommonArmorHandler(player);
         if (!handler.upgradeUsable(CCCommonUpgradeHandlers.mechanicalVisorHandler, true)) return false;
