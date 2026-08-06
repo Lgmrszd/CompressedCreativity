@@ -9,7 +9,7 @@ import java.util.*;
 
 public class CCBlockPartials {
     public static final PartialModel
-        AIR_ENGINE_ROTOR = PartialModel.of(new ResourceLocation(CompressedCreativity.MOD_ID, "block/compressed_air_engine/rotor"));
+        AIR_ENGINE_ROTOR = PartialModel.of(ResourceLocation.fromNamespaceAndPath(CompressedCreativity.MOD_ID, "block/compressed_air_engine/rotor"));
 
     public static Map<String, PartialModel> MESHES = new HashMap<>();
 
@@ -17,7 +17,7 @@ public class CCBlockPartials {
         for (Mesh.MeshType meshType : Mesh.MeshType.values()) {
             MESHES.put(
                     meshType.getName(),
-                    PartialModel.of(new ResourceLocation(
+                    PartialModel.of(ResourceLocation.fromNamespaceAndPath(
                             CompressedCreativity.MOD_ID,
                             "block/industrial_air_blower/mesh/" + meshType.getName()
                     ))

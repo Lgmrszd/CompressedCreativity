@@ -6,7 +6,7 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 
 public class CompressedAirEngineBlockStateGenerator {
     public static void blockState(DataGenContext<Block, CompressedAirEngineBlock> c, RegistrateBlockstateProvider p) {

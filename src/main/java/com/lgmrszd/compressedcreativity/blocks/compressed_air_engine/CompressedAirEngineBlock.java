@@ -136,7 +136,11 @@ public class CompressedAirEngineBlock extends PneumaticHorizontalKineticBlock<Co
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
         if (facing == Direction.UP) {
             BlockEntity other_te = worldIn.getBlockEntity(currentPos.relative(facing));
-            boolean has_connection = other_te != null && other_te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
+            // NeoForge 1.21: Query capability from Level
+            boolean has_connection = false;
+            if (other_te != null && worldIn instanceof Level level) {
+                has_connection = level.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE, other_te.getBlockPos(), facing.getOpposite()) != null;
+            }
             stateIn = stateIn.setValue(UP, has_connection);
         }
         if (facing.getAxis().isHorizontal() && facingState.getBlock() instanceof CompressedAirEngineBlock &&

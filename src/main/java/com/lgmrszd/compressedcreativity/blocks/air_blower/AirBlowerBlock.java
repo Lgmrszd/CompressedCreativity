@@ -5,7 +5,6 @@ import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.block.IPneumaticWrenchable;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
@@ -13,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -35,8 +35,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -45,7 +45,6 @@ import static com.lgmrszd.compressedcreativity.index.CCMisc.appendPneumaticHover
 
 
 public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWrenchable, IBE<AirBlowerBlockEntity> {
-
     public static final Property<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
@@ -92,7 +91,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
         for (Direction dir : Direction.values()) {
             if (dir == facing) continue;
             BlockEntity te = context.getLevel().getBlockEntity(context.getClickedPos().relative(dir));
-            if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, dir.getOpposite()).isPresent()) {
+            if (te != null && hasAirHandler(te, dir.getOpposite())) {
                 state = state.setValue(CONNECTION_PROPERTIES[dir.get3DDataValue()], true);
             }
         }
@@ -120,8 +119,6 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     @Nonnull
     @Override
     public BlockState updateShape(BlockState stateIn, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull LevelAccessor worldIn, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
-//        BlockEntity te = worldIn.getBlockEntity(currentPos);
-//        if (te != null && te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing).isPresent()) {
         if (facing != stateIn.getValue(FACING)) {
             BlockEntity other_te = worldIn.getBlockEntity(currentPos.relative(facing));
             boolean has_connection = canConnect(facing, other_te);
@@ -133,10 +130,18 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
     }
 
     public boolean canConnect(Direction facing, BlockEntity other_te) {
-        return other_te != null && other_te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent();
+        return other_te != null && hasAirHandler(other_te, facing.getOpposite());
+    }
+    
+    private boolean hasAirHandler(BlockEntity te, Direction side) {
+        if (te instanceof AirBlowerBlockEntity able) {
+            return able.getAirHandler(side) != null;
+        }
+        return false;
     }
 
     @Override
+    @SuppressWarnings("removal")
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         InteractionResult result = IWrenchable.super.onWrenched(state, context);
         if (result == InteractionResult.SUCCESS) {
@@ -191,7 +196,7 @@ public class AirBlowerBlock extends Block implements IPneumaticWrenchable, IWren
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(@Nonnull ItemStack stack, BlockGetter world, @Nonnull List<Component> infoList, @Nonnull TooltipFlag par4) {
+    public void appendHoverText(@Nonnull ItemStack stack, Item.TooltipContext context, @Nonnull List<Component> infoList, @Nonnull TooltipFlag par4) {
         appendPneumaticHoverText(
                 () -> newBlockEntity(BlockPos.ZERO, defaultBlockState()),
                 infoList);

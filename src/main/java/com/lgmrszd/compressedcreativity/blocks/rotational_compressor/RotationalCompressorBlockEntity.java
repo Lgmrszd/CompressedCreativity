@@ -8,10 +8,10 @@ import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,17 +20,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RotationalCompressorBlockEntity extends KineticBlockEntity implements IObserveTileEntity, IPneumaticTileEntity {
     protected final IAirHandlerMachine airHandler;
-    private final LazyOptional<IAirHandlerMachine> airHandlerCap;
     private double airGeneratedPerTick = 0.0f;
     private boolean updateGeneratedAir = true;
     private boolean isWrongDirection = false;
@@ -44,7 +38,6 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
                 .createAirHandler(
                         PressureTierConfig.CustomTier.ROTATIONAL_COMPRESSOR_TIER,
                         CommonConfig.ROTATIONAL_COMPRESSOR_VOLUME.get());
-        this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 
     @Override
@@ -92,11 +85,9 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
         ObservePacket.send(worldPosition, 0);
         boolean added = super.addToTooltip(tooltip, isPlayerSneaking);
         if (isWrongDirection) {
-            // "Rotation Direction Requirement:"
             CCLang.translate("tooltip.rotational_compressor.wrong_direction")
                     .style(ChatFormatting.GOLD)
                     .forGoggles(tooltip);
-            // "This machine would not work with rotation in this direction"
             CCLang.translate("tooltip.rotational_compressor.wrong_direction_desc")
                     .style(ChatFormatting.GRAY)
                     .forGoggles(tooltip);
@@ -113,7 +104,7 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
     @Override
     public void invalidate() {
         super.invalidate();
-        airHandlerCap.invalidate();
+        // NeoForge 1.21: LazyOptional capabilities removed - no airHandlerCap.invalidate() needed
     }
 
     public void tick() {
@@ -165,6 +156,9 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
                         this.getLevel().addParticle(ParticleTypes.POOF, (px + f4), py, (pz + f3), 0.0D, 0.0D, -0.1D);
                 case NORTH ->
                         this.getLevel().addParticle(ParticleTypes.POOF, (px + f4), py, (pz - f3), 0.0D, 0.0D, 0.1D);
+                case UP, DOWN -> {
+                    // HORIZONTAL_FACING should never produce vertical directions.
+                }
             }
 
         }
@@ -177,7 +171,7 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
                 sides.add(side);
             }
         }
-        airHandler.setConnectedFaces(sides);
+        airHandler.setConnectableFaces(sides);
     }
 
     public void onSpeedChanged(float previousSpeed) {
@@ -185,13 +179,12 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
         updateGeneratedAir = true;
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY && canConnectPneumatic(side)) {
-            return airHandlerCap.cast();
+    // Capability system removed in NeoForge 1.21 - needs refactoring to new API
+    public IAirHandlerMachine getAirHandler(Direction side) {
+        if (canConnectPneumatic(side)) {
+            return airHandler;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
     public boolean canConnectPneumatic(Direction dir) {
@@ -200,8 +193,9 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
     }
 
 
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
+    @Override
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.write(compound, registries, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
         if (clientPacket) {
             compound.putDouble("airGeneratedPerTick", airGeneratedPerTick);
@@ -210,8 +204,8 @@ public class RotationalCompressorBlockEntity extends KineticBlockEntity implemen
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(compound, registries, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
         if (clientPacket) {
             airGeneratedPerTick = compound.getDouble("airGeneratedPerTick");

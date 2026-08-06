@@ -8,28 +8,22 @@ import com.lgmrszd.compressedcreativity.network.IObserveTileEntity;
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.utility.CreateLang;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CompressedAirEngineBlockEntity extends GeneratingKineticBlockEntity implements IPneumaticTileEntity, IObserveTileEntity {
 
     protected final IAirHandlerMachine airHandler;
-    private final LazyOptional<IAirHandlerMachine> airHandlerCap;
 
     private float airUsage, airBuffer;
 //    private float currentSpeed;
@@ -41,7 +35,6 @@ public class CompressedAirEngineBlockEntity extends GeneratingKineticBlockEntity
                 .createAirHandler(
                         PressureTierConfig.CustomTier.COMPRESSED_AIR_ENGINE_TIER,
                         CommonConfig.COMPRESSED_AIR_ENGINE_VOLUME.get());
-        this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 
     @Override
@@ -125,13 +118,13 @@ public class CompressedAirEngineBlockEntity extends GeneratingKineticBlockEntity
             }
         }
         sides.add(Direction.UP);
-        airHandler.setConnectedFaces(sides);
+        airHandler.setConnectableFaces(sides);
     }
 
     @Override
     public void invalidate() {
         super.invalidate();
-        airHandlerCap.invalidate();
+        // NeoForge 1.21: LazyOptional capabilities removed - no airHandlerCap.invalidate() needed
     }
 
     @Override
@@ -189,8 +182,9 @@ public class CompressedAirEngineBlockEntity extends GeneratingKineticBlockEntity
 //        return convertToDirection(currentSpeed, getBlockState().getValue(CompressedAirEngineBlock.HORIZONTAL_FACING));
     }
 
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
+    @Override
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.write(compound, registries, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
         if (clientPacket) {
             compound.putBoolean("working", working);
@@ -200,8 +194,8 @@ public class CompressedAirEngineBlockEntity extends GeneratingKineticBlockEntity
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(compound, registries, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
         if (clientPacket) {
             working = compound.getBoolean("working");
@@ -210,13 +204,12 @@ public class CompressedAirEngineBlockEntity extends GeneratingKineticBlockEntity
         }
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY && canConnectPneumatic(side)) {
-            return airHandlerCap.cast();
+    // Capability system removed in NeoForge 1.21 - needs refactoring to new API
+    public IAirHandlerMachine getAirHandler(Direction side) {
+        if (canConnectPneumatic(side)) {
+            return airHandler;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
     public boolean canConnectPneumatic(Direction dir) {

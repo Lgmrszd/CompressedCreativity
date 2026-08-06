@@ -1,14 +1,13 @@
 package com.lgmrszd.compressedcreativity.blocks.heater;
 
-import com.lgmrszd.compressedcreativity.index.CCBlocks;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
 import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
-import com.simibubi.create.content.fluids.tank.BoilerHeaters;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -82,8 +81,8 @@ public class HeaterBlock extends Block implements IBE<HeaterBlockEntity> {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> curInfo, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> curInfo, TooltipFlag flag) {
         curInfo.add(Component.literal("[Work in progress!!!]"));
-        super.appendHoverText(stack, world, curInfo, flag);
+        super.appendHoverText(stack, context, curInfo, flag);
     }
 }

@@ -3,21 +3,16 @@ package com.lgmrszd.compressedcreativity.blocks.bracketed_pressure_tube;
 import com.simibubi.create.content.decoration.bracket.BracketedBlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +21,6 @@ import static com.lgmrszd.compressedcreativity.index.CCModsReference.getAirParti
 
 public class BracketedPressureTubeBlockEntity extends SmartBlockEntity {
     protected final IAirHandlerMachine airHandler;
-    private final LazyOptional<IAirHandlerMachine> airHandlerCap;
     public BracketedPressureTubeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         this(type, pos, state, PressureTier.TIER_ONE, 1000);
     }
@@ -34,7 +28,6 @@ public class BracketedPressureTubeBlockEntity extends SmartBlockEntity {
         super(type, pos, state);
         this.airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(tier, volume);
-        this.airHandlerCap = LazyOptional.of(() -> airHandler);
     }
 //
 //    public BracketedPressureTubeBlockEntity basic(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -55,7 +48,7 @@ public class BracketedPressureTubeBlockEntity extends SmartBlockEntity {
     @Override
     public void invalidate() {
         super.invalidate();
-        airHandlerCap.invalidate();
+        // NeoForge 1.21: LazyOptional capabilities removed - no airHandlerCap.invalidate() needed
     }
 
     private Direction getLeakDirection() {
@@ -111,24 +104,24 @@ public class BracketedPressureTubeBlockEntity extends SmartBlockEntity {
         }
     }
 
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
+    @Override
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.write(compound, registries, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(compound, registries, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY && canConnectPneumatic(side)) {
-            return airHandlerCap.cast();
+    // Capability system removed in NeoForge 1.21 - needs refactoring to new API
+    public IAirHandlerMachine getAirHandler(Direction side) {
+        if (canConnectPneumatic(side)) {
+            return airHandler;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
     public void updateAirHandler() {
@@ -138,7 +131,7 @@ public class BracketedPressureTubeBlockEntity extends SmartBlockEntity {
                 sides.add(side);
             }
         }
-        airHandler.setConnectedFaces(sides);
+        airHandler.setConnectableFaces(sides);
     }
 
     public boolean canConnectPneumatic(Direction dir) {

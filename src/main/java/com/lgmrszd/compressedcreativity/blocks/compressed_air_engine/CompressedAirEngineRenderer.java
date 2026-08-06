@@ -3,7 +3,6 @@ package com.lgmrszd.compressedcreativity.blocks.compressed_air_engine;
 import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.render.CachedBuffers;
@@ -16,28 +15,25 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
 
-public class CompressedAirEngineRenderer extends KineticBlockEntityRenderer {
+public class CompressedAirEngineRenderer extends KineticBlockEntityRenderer<CompressedAirEngineBlockEntity> {
     public CompressedAirEngineRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    protected void renderSafe(KineticBlockEntity ote, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+        protected void renderSafe(CompressedAirEngineBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
 
 //        super.renderSafe(ote, partialTicks, ms, buffer, light, overlay);
 
 
-        if (VisualizationManager.supportsVisualization(ote.getLevel())) return;
-
-        if (!(ote instanceof CompressedAirEngineBlockEntity te)) return;
+        if (VisualizationManager.supportsVisualization(te.getLevel())) return;
 
         Direction direction = te.getBlockState()
                 .getValue(CompressedAirEngineBlock.HORIZONTAL_FACING);
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
 
         int lightBehind = LevelRenderer.getLightColor(te.getLevel(), te.getBlockPos().relative(direction.getOpposite()));
-        int lightInFront = LevelRenderer.getLightColor(te.getLevel(), te.getBlockPos().relative(direction));
 
 //        SuperByteBuffer shaftHalf =
 //                CachedBufferer.partial(shaft(getRotationAxisOf(te)));

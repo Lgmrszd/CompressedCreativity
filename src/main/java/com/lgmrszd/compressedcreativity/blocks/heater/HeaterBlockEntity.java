@@ -9,36 +9,29 @@ import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HEAT_LEVEL;
 
 public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockEntity, IUpdateBlockEntity, IHaveGoggleInformation {
     protected final IHeatExchangerLogic heatExchanger;
-    private final LazyOptional<IHeatExchangerLogic> heatCap;
     private BlazeBurnerBlock.HeatLevel heatLevel = BlazeBurnerBlock.HeatLevel.NONE;
     public HeaterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
         heatExchanger.setThermalCapacity(CommonConfig.HEATER_THERMAL_CAPACITY.get());
         heatExchanger.setThermalResistance(CommonConfig.HEATER_THERMAL_RESISTANCE.get());
-        heatCap = LazyOptional.of(() -> heatExchanger);
     }
 
     @Override
@@ -50,7 +43,7 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
         CCLang.translate("tooltip.temperature")
                 .style(ChatFormatting.GRAY)
                 .forGoggles(tooltip);
-        // "0.0C°"
+        // "0.0CÂ°"
         CCLang.number(heatExchanger.getTemperature() - 273)
                 .translate("unit.temp")
                 .style(ChatFormatting.AQUA)
@@ -68,13 +61,11 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
         return true;
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PNCCapabilities.HEAT_EXCHANGER_CAPABILITY && (side != Direction.UP)) {
-            return heatCap.cast();
+    public IHeatExchangerLogic getHeatExchanger(Direction side) {
+        if (side != Direction.UP) {
+            return heatExchanger;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
     public void updateHeatExchanger() {
@@ -92,7 +83,6 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
     public double getCoolingSpeed() {
         double heat = CommonConfig.HEATER_TEMPERATURE_COEFFICIENT.get() * (heatExchanger.getTemperature() - CommonConfig.HEATER_STARTING_TEMPERATURE.get() - 273);
         return heat > 0 ? heat : 0;
-//        return 0;
     }
 
     @Override
@@ -151,19 +141,19 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
     @Override
     public void invalidate() {
         super.invalidate();
-        heatCap.invalidate();
+        // NeoForge 1.21: LazyOptional capabilities removed - no heatCap.invalidate() needed
     }
 
     @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         compound.put("HeatExchanger", heatExchanger.serializeNBT());
-        super.write(compound, clientPacket);
+        super.write(compound, registries, clientPacket);
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         heatExchanger.deserializeNBT(compound.getCompound("HeatExchanger"));
-        super.read(compound, clientPacket);
+        super.read(compound, registries, clientPacket);
     }
 
     @Override
@@ -189,7 +179,7 @@ public class HeaterBlockEntity extends SmartBlockEntity implements ITintedBlockE
     @Override
     public int getTintColor(int tintIndex) {
         if (tintIndex == 0)
-            return HeatUtil.getColourForTemperature(heatExchanger.getTemperatureAsInt()).getRGB();
-        return HeatUtil.getColourForTemperature(300).getRGB();
+            return HeatUtil.getColourForTemperature(heatExchanger.getTemperatureAsInt()).getARGB();
+        return HeatUtil.getColourForTemperature(300).getARGB();
     }
 }

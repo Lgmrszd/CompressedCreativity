@@ -5,7 +5,7 @@ import com.lgmrszd.compressedcreativity.index.CCBlockPartials;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
+import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.client.renderer.BiomeColors;
 
@@ -47,9 +47,12 @@ public class Mesh {
             }
             @Override
             public int getTintColor(AdvancedAirBlowerBlockEntity te) {
-                return  te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY)
-                        .map((cap) -> HeatUtil.getColourForTemperature(cap.getTemperatureAsInt()).getRGB())
-                        .orElse(0xffffffff);
+                // Use the heatExchanger directly from the BlockEntity
+                IHeatExchangerLogic heatExchanger = te.getHeatExchanger(null);
+                if (heatExchanger != null) {
+                    return HeatUtil.getColourForTemperature(heatExchanger.getTemperatureAsInt()).getARGB();
+                }
+                return 0xffffffff;
             }
             @Override
             public Optional<FanProcessingType> getProcessingType(int temp) {

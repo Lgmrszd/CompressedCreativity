@@ -3,7 +3,6 @@ package com.lgmrszd.compressedcreativity.blocks.rotational_compressor;
 import com.lgmrszd.compressedcreativity.blocks.common.PneumaticHorizontalKineticBlock;
 import com.lgmrszd.compressedcreativity.index.CCBlockEntities;
 import com.lgmrszd.compressedcreativity.index.CCShapes;
-import com.simibubi.create.content.kinetics.base.IRotate;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.misc.IMiscHelpers;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +21,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 
 
-public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<RotationalCompressorBlockEntity> implements IRotate {
+@SuppressWarnings("removal")
+public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<RotationalCompressorBlockEntity> {
 
 //    public static final VoxelShape shape = Block.box(0, 0, 0, 16, 10, 16);
 
@@ -55,7 +55,6 @@ public class RotationalCompressorBlock extends PneumaticHorizontalKineticBlock<R
     }
 
     // TODO: check docs for diff in onNeighborChange / neighborChanged
-
     @Override
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);

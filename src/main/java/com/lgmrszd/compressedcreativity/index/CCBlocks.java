@@ -41,10 +41,6 @@ import java.util.function.Supplier;
 @SuppressWarnings("removal")
 public class CCBlocks {
 
-    static {
-        REGISTRATE.setCreativeTab(CCCreativeTabs.BASE_CREATIVE_TAB);
-    }
-
     public static <B extends CasingBlock> NonNullUnaryOperator<BlockBuilder<B, CreateRegistrate>> myCasing(
             Supplier<CTSpriteShiftEntry> ct) {
         return b -> b.initialProperties(SharedProperties::stone)

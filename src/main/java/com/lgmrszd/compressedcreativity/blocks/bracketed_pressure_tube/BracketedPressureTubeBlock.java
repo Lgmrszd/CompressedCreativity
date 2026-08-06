@@ -37,14 +37,14 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.List;
 import java.util.Optional;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
         IBE<BracketedPressureTubeBlockEntity>, IWrenchableWithBracket, SimpleWaterloggedBlock,
         SpecialBlockItemRequirement, ITubeNetworkConnector {
@@ -68,6 +68,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
     }
 
     @Override
+    @SuppressWarnings("removal")
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         boolean blockTypeChanged = state.getBlock() != newState.getBlock();
         if (state != newState && !isMoving)
@@ -79,6 +80,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
     }
 
     @Override
+    @SuppressWarnings("removal")
     public boolean tryRemoveBracket(UseOnContext context) {
         boolean removed = IWrenchableWithBracket.super.tryRemoveBracket(context);
         if(removed) {
@@ -146,7 +148,7 @@ public class BracketedPressureTubeBlock extends RotatedPillarBlock implements
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         CCModsReference.BracketedPressureTube bracketedPressureTube =
                 CCModsReference.BracketedPressureTube.getByBlock(state.getBlock());
         if (bracketedPressureTube == null) return super.getCloneItemStack(state, target, level, pos, player);

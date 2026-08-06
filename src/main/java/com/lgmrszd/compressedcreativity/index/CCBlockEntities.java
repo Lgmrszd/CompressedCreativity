@@ -38,7 +38,6 @@ public class CCBlockEntities {
             .validBlock(CCBlocks.AIR_BLOWER)
             .register();
 
-
     // TODO: fix Flywheel Visual
     public static final BlockEntityEntry<AdvancedAirBlowerBlockEntity> INDUSTRIAL_AIR_BLOWER = REGISTRATE
             .blockEntity("advanced_air_blower", AdvancedAirBlowerBlockEntity::new)

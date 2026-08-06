@@ -1,6 +1,5 @@
 package com.lgmrszd.compressedcreativity.blocks.air_blower;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.common.IPneumaticTileEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
@@ -15,10 +14,10 @@ import com.simibubi.create.content.logistics.chute.ChuteBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.pressure.PressureTier;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,9 +28,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -47,7 +43,6 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
 //    protected boolean isWorking;
 
     protected final IAirHandlerMachine airHandler;
-    private final LazyOptional<IAirHandlerMachine> airHandlerCap;
 
     private float airBuffer;
     private float airUsage = 0.0f;
@@ -69,7 +64,6 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
         super(type, pos, state);
         airHandler = PneumaticRegistry.getInstance().getAirHandlerMachineFactory()
                 .createAirHandler(pressureTier, volume);
-        airHandlerCap = LazyOptional.of(() -> airHandler);
 
         airCurrent = new AirCurrent(this);
         updateAirFlow = true;
@@ -155,8 +149,7 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
                 sides.add(side);
             }
         }
-        airHandler.setConnectedFaces(sides);
-        CompressedCreativity.LOGGER.debug("Updated Air Handler! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
+        airHandler.setConnectableFaces(sides);
     }
 
 
@@ -223,7 +216,7 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
     @Override
     public void invalidate() {
         super.invalidate();
-        airHandlerCap.invalidate();
+        // NeoForge 1.21: LazyOptional capabilities removed - no airHandlerCap.invalidate() needed
     }
 
     @Override
@@ -246,13 +239,12 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
             chuteBE.updatePush(1);
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY && canConnectPneumatic(side)) {
-            return airHandlerCap.cast();
+    // Capability system removed in NeoForge 1.21 - needs refactoring to new API
+    public IAirHandlerMachine getAirHandler(Direction side) {
+        if (canConnectPneumatic(side)) {
+            return airHandler;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
 
@@ -262,14 +254,14 @@ public class AirBlowerBlockEntity extends SmartBlockEntity implements IHaveHover
     }
 
     @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.write(compound, registries, clientPacket);
         compound.put("AirHandler", airHandler.serializeNBT());
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(compound, registries, clientPacket);
         airHandler.deserializeNBT(compound.getCompound("AirHandler"));
         if (clientPacket)
             airCurrent.rebuild();

@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -31,10 +32,12 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
 
     @Override
     public boolean canConnect(Direction facing, BlockEntity other_te) {
-        return other_te != null && (
-                other_te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY, facing.getOpposite()).isPresent()
-                || other_te.getCapability(PNCCapabilities.HEAT_EXCHANGER_CAPABILITY, facing.getOpposite()).isPresent()
-        );
+        if (other_te == null || other_te.getLevel() == null) return false;
+        Level level = other_te.getLevel();
+        BlockPos pos = other_te.getBlockPos();
+        // NeoForge 1.21: Query capability from Level
+        return level.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE, pos, facing.getOpposite()) != null
+                || level.getCapability(PNCCapabilities.HEAT_EXCHANGER_BLOCK, pos, facing.getOpposite()) != null;
     }
 
     @Override
@@ -68,9 +71,10 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
 
 
 
-    @Override
+    // Note: onNeighborChange may need to be replaced with neighborChanged or similar
+    // in MC 1.21 - removing @Override for now
     public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
-        super.onNeighborChange(state, world, pos, neighbor);
+        // super.onNeighborChange(state, world, pos, neighbor);
         BlockEntity te = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
         if (te instanceof AdvancedAirBlowerBlockEntity be) {
             be.updateHeatExchanger();
@@ -79,28 +83,27 @@ public class AdvancedAirBlowerBlock extends AirBlowerBlock {
 
     @Nonnull
     @Override
-    public InteractionResult use(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos, Player player, @Nonnull InteractionHand hand,
+    protected ItemInteractionResult useItemOn(@Nonnull ItemStack heldItem, @Nonnull BlockState state, Level world, @Nonnull BlockPos pos, Player player, @Nonnull InteractionHand hand,
                                  @Nonnull BlockHitResult blockRayTraceResult) {
-        ItemStack heldItem = player.getItemInHand(hand);
         boolean client = world.isClientSide();
         if(heldItem.getItem() instanceof MeshItem) {
-            return onBlockEntityUse(world, pos, be -> {
+            return onBlockEntityUseItemOn(world, pos, be -> {
                 if (!(be instanceof AdvancedAirBlowerBlockEntity abbe))
-                    return InteractionResult.PASS;
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 ItemStack installedMesh = abbe.getMesh();
                 // Ignoring if mesh is the same
                 if (heldItem.getItem() == installedMesh.getItem()) {
-                    return InteractionResult.PASS;
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
-                if (client) return InteractionResult.SUCCESS;
+                if (client) return ItemInteractionResult.SUCCESS;
                 ItemStack oldMesh = tryInstallMesh(world, pos, abbe, heldItem);
                 if (!oldMesh.isEmpty()) {
                     player.getInventory().placeItemBackInInventory(oldMesh);
                 }
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             });
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public ItemStack tryInstallMesh(Level world, BlockPos pos, AdvancedAirBlowerBlockEntity abte, ItemStack stack) {

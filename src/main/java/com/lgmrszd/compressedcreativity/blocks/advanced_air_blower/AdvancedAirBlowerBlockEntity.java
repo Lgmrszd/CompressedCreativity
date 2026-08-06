@@ -1,8 +1,6 @@
 package com.lgmrszd.compressedcreativity.blocks.advanced_air_blower;
 
-import com.lgmrszd.compressedcreativity.CompressedCreativity;
 import com.lgmrszd.compressedcreativity.blocks.ITintedBlockEntity;
-import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlock;
 import com.lgmrszd.compressedcreativity.blocks.air_blower.AirBlowerBlockEntity;
 import com.lgmrszd.compressedcreativity.config.CommonConfig;
 import com.lgmrszd.compressedcreativity.config.PressureTierConfig;
@@ -15,27 +13,23 @@ import com.lgmrszd.compressedcreativity.network.IUpdateBlockEntity;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.utility.CreateLang;
-import net.createmod.catnip.lang.Lang;
-import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.heat.IHeatExchangerLogic;
+import me.desht.pneumaticcraft.api.tileentity.IAirHandlerMachine;
 import me.desht.pneumaticcraft.common.heat.HeatExchangerLogicAmbient;
 import me.desht.pneumaticcraft.common.heat.HeatUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
 
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +38,6 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
     private ItemStack mesh;
     private final IHeatExchangerLogic airExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
     protected final IHeatExchangerLogic heatExchanger;
-    private final LazyOptional<IHeatExchangerLogic> heatCap;
     private double ambientTemp;
     private float coolingStatus = 0.0f;
 
@@ -60,7 +53,6 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
                 CommonConfig.INDUSTRIAL_AIR_BLOWER_VOLUME.get()
         );
         heatExchanger = PneumaticRegistry.getInstance().getHeatRegistry().makeHeatExchangerLogic();
-        heatCap = LazyOptional.of(() -> heatExchanger);
         heatExchanger.setThermalCapacity(5);
         airExchanger.addConnectedExchanger(heatExchanger);
         airExchanger.setThermalResistance(25.0);
@@ -89,8 +81,8 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
 
     public int getTintColor(int tintIndex) {
         if (tintIndex == 0)
-            return HeatUtil.getColourForTemperature(heatExchanger.getTemperatureAsInt()).getRGB();
-        return HeatUtil.getColourForTemperature(300).getRGB();
+            return HeatUtil.getColourForTemperature(heatExchanger.getTemperatureAsInt()).getARGB();
+        return HeatUtil.getColourForTemperature(300).getARGB();
     }
 
     protected ItemStack getMesh() {
@@ -163,16 +155,18 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
         }
         Direction[] sides_2 = new Direction[sides.size()];
         heatExchanger.initializeAsHull(getLevel(), getBlockPos(), (levelAccessor, blockPos) -> true, sides.toArray(sides_2));
-        CompressedCreativity.LOGGER.debug("Updated Heat Exchanger! Side: " + getBlockState().getValue(AirBlowerBlock.FACING));
     }
 
-    @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == PNCCapabilities.HEAT_EXCHANGER_CAPABILITY && canConnectPneumatic(side)) {
-            return heatCap.cast();
+    public IAirHandlerMachine getAirHandler(Direction side) {
+        return super.getAirHandler(side);
+    }
+    
+    public IHeatExchangerLogic getHeatExchanger(Direction side) {
+        if (canConnectPneumatic(side)) {
+            return heatExchanger;
         }
-        return super.getCapability(cap, side);
+        return null;
     }
 
     @Override
@@ -250,23 +244,23 @@ public class AdvancedAirBlowerBlockEntity extends AirBlowerBlockEntity implement
     @Override
     public void invalidate() {
         super.invalidate();
-        heatCap.invalidate();
+        // NeoForge 1.21: LazyOptional capabilities removed - no heatCap.invalidate() needed
     }
 
     @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        compound.put("mesh", getMesh().serializeNBT());
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        compound.put("mesh", getMesh().save(registries));
         compound.put("HeatExchanger", heatExchanger.serializeNBT());
         compound.put("airExchanger", airExchanger.serializeNBT());
-        super.write(compound, clientPacket);
+        super.write(compound, registries, clientPacket);
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        mesh = ItemStack.of(compound.getCompound("mesh"));
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        mesh = ItemStack.parseOptional(registries, compound.getCompound("mesh"));
         heatExchanger.deserializeNBT(compound.getCompound("HeatExchanger"));
         airExchanger.deserializeNBT(compound.getCompound("airExchanger"));
-        super.read(compound, clientPacket);
+        super.read(compound, registries, clientPacket);
     }
 
     @Override

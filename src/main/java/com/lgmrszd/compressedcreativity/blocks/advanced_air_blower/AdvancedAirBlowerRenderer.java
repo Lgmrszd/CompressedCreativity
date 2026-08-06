@@ -15,7 +15,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
 
+/**
+ * Renderer for the Advanced (Industrial) Air Blower block entity.
+ * Handles rendering of mesh overlays with proper tinting.
+ */
 public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedAirBlowerBlockEntity> {
+    
     public AdvancedAirBlowerRenderer(BlockEntityRendererProvider.Context context) {
     }
 
@@ -23,7 +28,6 @@ public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedA
     protected void renderSafe(AdvancedAirBlowerBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         // TODO: fix Flywheel Instance
 //        if (Backend.canUseInstancing(te.getLevel())) return;
-
         VertexConsumer vb = buffer.getBuffer(RenderType.translucent());
 
         BlockState blockState = te.getBlockState();
@@ -31,17 +35,17 @@ public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedA
 
         Mesh.IMeshType meshType = te.getMeshType();
         if (meshType == null) return;
+        
         Optional<PartialModel> meshPartial = meshType.getModel();
         meshPartial.ifPresent((meshModel) -> {
-            // Not sure why it needs to be opposite face
             SuperByteBuffer mesh = CachedBuffers.partialFacing(meshModel, blockState, facing.getOpposite());
-//            rotateToFacing(mesh, facing);
             if (meshType.shouldTint()) {
                 mesh.color(meshType.getTintColor(te));
             }
             mesh.light(light);
             mesh.renderInto(ms, vb);
         });
+        
         Optional<PartialModel> meshPartialExtra = meshType.getModelExtra();
         meshPartialExtra.ifPresent((meshModelExtra) -> {
             SuperByteBuffer mesh = CachedBuffers.partialFacing(meshModelExtra, blockState, facing.getOpposite());
@@ -49,6 +53,4 @@ public class AdvancedAirBlowerRenderer extends SafeBlockEntityRenderer<AdvancedA
             mesh.renderInto(ms, vb);
         });
     }
-
-
 }
