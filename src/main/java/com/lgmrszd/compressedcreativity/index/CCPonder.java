@@ -14,10 +14,10 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 
 public class CCPonder {
 
-    public static final ResourceLocation PRESSURE = new ResourceLocation(CompressedCreativity.MOD_ID, "pressure");
+    public static final ResourceLocation PRESSURE = ResourceLocation.fromNamespaceAndPath(CompressedCreativity.MOD_ID, "pressure");
 
     public static void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
-        PonderTagRegistrationHelper<RegistryEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
+        PonderTagRegistrationHelper<RegistryEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
 
         HELPER.registerTag(PRESSURE)
                 .addToIndex()
@@ -33,7 +33,7 @@ public class CCPonder {
     }
 
     public static void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
-        PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
+        PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
 
         HELPER.addStoryBoard(CCBlocks.ROTATIONAL_COMPRESSOR, "rotational_compressor", PonderScenes::rotationalCompressor, PRESSURE);
         HELPER.addStoryBoard(CCBlocks.AIR_BLOWER, "air_blower", PonderScenes::airBlower, PRESSURE);

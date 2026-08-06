@@ -7,23 +7,18 @@ import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
-import net.createmod.ponder.foundation.instruction.EmitParticlesInstruction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import static com.lgmrszd.compressedcreativity.index.CCModsReference.getAirParticle;
 
 public class PonderScenes {
 
-    private static final Logger logger = LogManager.getLogger(CompressedCreativity.MOD_ID);
-
     private static void updatePressure(SceneBuilder scene, BlockPos air_blower) {
         scene.world().modifyBlockEntity(air_blower, AirBlowerBlockEntity.class, te -> {
-            te.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY).ifPresent(cap -> {
+            PNCCapabilities.getAirHandler(te).ifPresent(cap -> {
                 cap.setPressure(cap.getDangerPressure());
             });
         });
@@ -76,10 +71,10 @@ public class PonderScenes {
             return -f;
         });
 //        scene.idle(20);
-//        scene.world().modifyTileEntity(compressor, RotationalCompressorTileEntity.class, rct -> {
+//        scene.world().modifyTileEntity(compressor, RotationalCompressorBlockEntity.class, rct -> {
 //            rct.onSpeedChanged(-128);
 //        });
-//        scene.world().modifyTileEntity(compressor, RotationalCompressorTileEntity.class, rct -> {
+//        scene.world().modifyTileEntity(compressor, RotationalCompressorBlockEntity.class, rct -> {
 //            LazyOptional<IAirHandlerMachine> cap = rct.getCapability(PNCCapabilities.AIR_HANDLER_MACHINE_CAPABILITY);
 //            cap.ifPresent((h) -> {
 //                logger.debug("Air handler in Ponder: " + h.getPressure() + " " + h.getAir());
