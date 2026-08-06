@@ -6,16 +6,14 @@ package com.lgmrszd.compressedcreativity.event;
  */
 
 import com.lgmrszd.compressedcreativity.network.ObservePacket;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class GameEvents {
     @SubscribeEvent
-    public static void clientTickEvent(TickEvent.ClientTickEvent evt) {
-        if(evt.phase == TickEvent.Phase.START)
-            return;
+    public static void clientTickEvent(ClientTickEvent.Pre evt) {
         ObservePacket.tick();
     }
 }

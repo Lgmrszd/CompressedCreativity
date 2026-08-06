@@ -5,52 +5,52 @@ package com.lgmrszd.compressedcreativity.network;
     taken with the permission of the original creator
  */
 
-import java.util.function.Supplier;
-
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ObservePacket {
-    private BlockPos pos;
-    private int node;
+public record ObservePacket(BlockPos pos, int node) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ObservePacket> TYPE = 
+        new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("compressedcreativity", "observe"));
+    
+    public static final StreamCodec<ByteBuf, ObservePacket> STREAM_CODEC = StreamCodec.composite(
+        BlockPos.STREAM_CODEC,
+        ObservePacket::pos,
+        ByteBufCodecs.VAR_INT,
+        ObservePacket::node,
+        ObservePacket::new
+    );
+
     private static int cooldown = 0;
 
-    public ObservePacket(BlockPos pos, int node) {
-        this.pos = pos;
-        this.node = node;
+    @Override
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    public static void encode(ObservePacket packet, FriendlyByteBuf buf) {
-        buf.writeBlockPos(packet.pos);
-        buf.writeInt(packet.node);
-    }
-
-    public static ObservePacket decode(FriendlyByteBuf buf) {
-        return new ObservePacket(buf.readBlockPos(), buf.readInt());
-    }
-
-    public static void handle(ObservePacket pkt, Supplier<Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    public static void handle(ObservePacket pkt, IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
             try {
-                ServerPlayer player = ctx.get().getSender();
+                ServerPlayer player = (ServerPlayer) ctx.player();
                 if (player != null) {
                     sendUpdate(pkt, player);
                 }
             } catch (Exception var3) {
                 var3.printStackTrace();
             }
-
         });
-        ((Context)ctx.get()).setPacketHandled(true);
     }
 
     private static void sendUpdate(ObservePacket pkt, ServerPlayer player) {
-        BlockEntity te = player.level().getBlockEntity(pkt.pos);
+        BlockEntity te = player.level().getBlockEntity(pkt.pos());
         if (te instanceof IObserveTileEntity) {
             ((IObserveTileEntity)te).onObserved(player, pkt);
             Packet<ClientGamePacketListener> supdatetileentitypacket = te.getUpdatePacket();
@@ -72,15 +72,7 @@ public class ObservePacket {
     public static void send(BlockPos pos, int node) {
         if (cooldown <= 0) {
             cooldown = 10;
-            CCNetwork.NETWORK.sendToServer(new ObservePacket(pos, node));
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new ObservePacket(pos, node));
         }
-    }
-
-    public BlockPos getPos() {
-        return this.pos;
-    }
-
-    public int getNode() {
-        return this.node;
     }
 }

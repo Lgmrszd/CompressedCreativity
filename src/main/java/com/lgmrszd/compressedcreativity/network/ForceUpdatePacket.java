@@ -1,41 +1,40 @@
 package com.lgmrszd.compressedcreativity.network;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.function.Supplier;
+public record ForceUpdatePacket(BlockPos pos) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ForceUpdatePacket> TYPE =
+        new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("compressedcreativity", "force_update"));
 
-public class ForceUpdatePacket {
+    public static final StreamCodec<ByteBuf, ForceUpdatePacket> STREAM_CODEC = StreamCodec.composite(
+        BlockPos.STREAM_CODEC,
+        ForceUpdatePacket::pos,
+        ForceUpdatePacket::new
+    );
 
-    private BlockPos pos;
-
-    public ForceUpdatePacket(BlockPos pos) {
-        this.pos = pos;
+    @Override
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    public static void encode(ForceUpdatePacket packet, FriendlyByteBuf buf) {
-        buf.writeBlockPos(packet.pos);
-    }
-
-    public static ForceUpdatePacket decode(FriendlyByteBuf buf) {
-        return new ForceUpdatePacket(buf.readBlockPos());
-    }
-
-    public static void handle(ForceUpdatePacket packet, Supplier<Context> context) {
-        context.get().enqueueWork(() -> {
+    public static void handle(ForceUpdatePacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> {
             handlePacket(packet, context);
         });
-        context.get().setPacketHandled(true);
     }
 
-    private static void handlePacket(ForceUpdatePacket packet, Supplier<Context> context) {
-        BlockPos pos = packet.pos;
+    private static void handlePacket(ForceUpdatePacket packet, IPayloadContext context) {
+        BlockPos pos = packet.pos();
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null || !level.isLoaded(pos)) return;
         BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -45,9 +44,8 @@ public class ForceUpdatePacket {
     }
 
     public static void send(Level world, BlockPos pos) {
-        CCNetwork.NETWORK.send(
-                PacketDistributor.NEAR.with(PacketDistributor.TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), 16, world.dimension())),
-                new ForceUpdatePacket(pos)
-        );
+        PacketDistributor.sendToPlayersTrackingChunk((net.minecraft.server.level.ServerLevel) world, 
+            new net.minecraft.world.level.ChunkPos(pos), 
+            new ForceUpdatePacket(pos));
     }
 }
